@@ -1,11 +1,15 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { fontRegular } from "src/types/fontType";
 
 
-// App chính
 const HomeScreen = () => {
     return (
         <View>
+            <Text style={styles.text}>HOme</Text>
+            <Text style={styles.text}>HOme</Text>
+            <Text style={styles.text}>HOme</Text>
+            <Text style={styles.text}>HOme</Text>
             <Text style={styles.text}>HOme</Text>
         </View>
     );
@@ -13,7 +17,7 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
     text:{
-        fontFamily:'P'
+        fontFamily : fontRegular
     }
 })
 
