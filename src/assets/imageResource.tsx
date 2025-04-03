@@ -1,5 +1,5 @@
 import { ImageSourcePropType } from 'react-native';
 
-export const images: { [key: string]: ImageSourcePropType } = {
+export const imageResource: { [key: string]: ImageSourcePropType } = {
   iconAladin: require('./image/logoAladin.png'),
 };
