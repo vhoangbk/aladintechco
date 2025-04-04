@@ -9,6 +9,8 @@ import ViSao from "../components/ViSao";
 import FloatingBtnChat from "../components/FloatingBtnChat";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "src/types/RootStackParamList";
+import '../language/i18n';
+import { useTranslation } from 'react-i18next'
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList,'HomeScreen'>
 
@@ -16,6 +18,8 @@ const HomeScreen = ( {navigation,route} : HomeScreenProps ) => {
 
     const heightScreen = useWindowDimensions().height
     const widthScreen = useWindowDimensions().width
+
+    const { t } = useTranslation()
 
     const handleChat = () => {
         navigation.navigate('ChatScreen')
@@ -59,7 +63,7 @@ const HomeScreen = ( {navigation,route} : HomeScreenProps ) => {
                         </View>
 
                         <Text style={styles.text1}>
-                            Cung cấp hệ thống, giải pháp toàn diện Telecom
+                            {t('tieude1')}
                         </Text>
                     </View>
 
@@ -70,21 +74,21 @@ const HomeScreen = ( {navigation,route} : HomeScreenProps ) => {
                             width:'100%'
                         }
                         ]}>
-                        <Text style={styles.text2}>Tìm hiểu thêm về các cơ hội hợp tác cùng phát triển.</Text>
+                        <Text style={styles.text2}>{t('tieude2')}</Text>
 
-                        <TouchableOpacity>
-                            <View style={styles.button}>
-                                <NutBam 
-                                    text={'Liên hệ!'} 
-                                    colorBG = {colorGreen} 
-                                    colorTxt = {colorWhite}/>
-                            </View>
-                        </TouchableOpacity>
+                        <View style={styles.button}>
+                            <TouchableOpacity>
+                            <NutBam 
+                                text={ t('lienhe') } 
+                                colorBG = {colorGreen} 
+                                colorTxt = {colorWhite}/>
+                            </TouchableOpacity>
+                        </View>
 
                     </View>
 
                     <View style={styles.view3}>
-                        <Text style = {styles.text3}>Các dịch vụ của chúng tôi</Text>
+                        <Text style = {styles.text3}>{t('tieude3')}</Text>
                         <Line />
                     </View>
 
@@ -110,7 +114,7 @@ const HomeScreen = ( {navigation,route} : HomeScreenProps ) => {
                     </View>
 
                     <View style={styles.view3}>
-                        <Text style = {styles.text3}>Vì sao nên chọn AladinTech?</Text>
+                        <Text style = {styles.text3}>{t('tieude4')}</Text>
                         <Line />
                     </View>
 
@@ -119,15 +123,15 @@ const HomeScreen = ( {navigation,route} : HomeScreenProps ) => {
                             contentContainerStyle={{flexGrow:1}} 
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}>
-                            <ViSao image={imageResource.visao1} text={`Môi trường làm việc năng động & sáng tạo`}/>
-                            <ViSao image={imageResource.visao2} text={`Quy trình chuyên nghiệp & hiệu quả`}/>
-                            <ViSao image={imageResource.visao3} text={`Cơ hội đào tạo & phát triển sự nghiệp`}/>
-                            <ViSao image={imageResource.visao4} text={`Hoạt động ngoại khóa`}/>
+                            <ViSao image={imageResource.visao1} text={t('visao1')}/>
+                            <ViSao image={imageResource.visao2} text={t('visao2')}/>
+                            <ViSao image={imageResource.visao3} text={t('visao3')}/>
+                            <ViSao image={imageResource.visao4} text={t('visao4')}/>
                         </ScrollView>
                     </View>
 
                     <View style={styles.view3}>
-                        <Text style = {styles.text3}>Vì sao nên chọn AladinTech?</Text>
+                        <Text style = {styles.text3}>{t('tieude5')}</Text>
                         <Line />
                     </View>
 
@@ -141,6 +145,7 @@ const HomeScreen = ( {navigation,route} : HomeScreenProps ) => {
                             <FloatingBtnChat/>
                         </TouchableOpacity>
                     </View>
+                    
         </SafeAreaView>
     )
 }

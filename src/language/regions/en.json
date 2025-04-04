@@ -1,7 +1,19 @@
 {
     "trangchu": "Home",
-    "tuyendung": "Recruiment",
+    "tuyendung": "Recruitment",
     "nhanvien": "Employee",
-    "canhan": "Person"
-}
+    "canhan": "Profile",
+    "lienhe": "Contact!",
+  
+    "tieude1": "Providing comprehensive Telecom systems and solutions",
+    "tieude2": "Explore opportunities for collaborative growth",
+    "tieude3": "Our Services",
+    "tieude4": "Why Choose AladinTech",
+    "tieude5": "Technologies We Use",
+  
+    "visao1": "Dynamic and creative working environment",
+    "visao2": "Professional and efficient workflow",
+    "visao3": "Career training and development opportunities",
+    "visao4": "Team-building activities"
+  }
   
