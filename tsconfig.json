@@ -2,10 +2,10 @@
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./",
+    "jsx": "react-native",
     "paths": {
-      "@assets/*": ["src/assets/*"],
-      "@fonts/*": ["src/fonts/*"]
+      "@fonts/*": ["src/fonts/*"],
+      "src/*": ["src/*"],
     }
   }
 }
-
