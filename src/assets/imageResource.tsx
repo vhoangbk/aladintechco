@@ -7,7 +7,10 @@ export const imageResource: { [key: string]: ImageSourcePropType } = {
     tabtuyendung: require('./image/tabtuyendung.png'),
     tabcanhan: require('./image/tabcanhan.png'),
     bgtrangchu: require('./image/bgtrangchu.png'),
+
     covietnam: require('./image/covietnam.png'),
+    coanh: require('./image/coanh.png'),
+
     muitenxuong: require('./image/muitenxuong.png'),
     bgtrangchu2: require('./image/bgtrangchu2.png'),
     
@@ -38,4 +41,7 @@ export const imageResource: { [key: string]: ImageSourcePropType } = {
     congnghe3b: require('./image/congnghe3b.png'),
     congnghe3c: require('./image/congnghe3c.png'),
     congnghe3d: require('./image/congnghe3d.png'),
+
+    iconemail: require('../assets/image/iconemail.png'),
+    iconpassword: require('../assets/image/iconpassword.png'),
 }

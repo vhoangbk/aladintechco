@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View,SafeAreaView,ScrollView, Image, useWindowDimensions, TouchableOpacity, ImageComponent  } from "react-native";
 import { fontBold, fontRegular } from '../types/typeFont';
 import { imageResource } from "../assets/imageResource";
@@ -12,19 +12,29 @@ import { RootStackParamList } from "src/types/RootStackParamList";
 import '../language/i18n';
 import { useTranslation } from 'react-i18next'
 import CongNgheSuDung from "src/components/CongNgheSuDung";
+import ChangeLanguageBox from "src/components/ChangeLanguageBox";
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList,'HomeScreen'>
 
-const HomeScreen = ( {navigation,route} : HomeScreenProps ) => {
+const HomeScreen = ( {navigation} : HomeScreenProps ) => {
 
     const heightScreen = useWindowDimensions().height
     const widthScreen = useWindowDimensions().width
 
     const { t } = useTranslation()
+    const { i18n } = useTranslation()
 
     const handleChat = () => {
         navigation.navigate('ChatScreen')
     }
+
+    const [showChangeLanguageBox, setShowChangeLanguageBox] = useState(false)
+
+    const openSelectLanguage = () => {
+        setShowChangeLanguageBox(true)
+        console.log("open box")
+    }
+
 
     return (
         <SafeAreaView style={{flex:1}}>
@@ -49,16 +59,10 @@ const HomeScreen = ( {navigation,route} : HomeScreenProps ) => {
                             style={styles.logo}/>
 
                         <View style={styles.viewNgongu}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={openSelectLanguage}>
                                 <Image 
-                                    source={imageResource.covietnam}
+                                    source={i18n.language === 'vi'? imageResource.covietnam : imageResource.coanh}
                                     style={styles.logo2}
-                                    resizeMode="contain"/>
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <Image 
-                                    source={imageResource.muitenxuong}
-                                    style={styles.logo1}
                                     resizeMode="contain"/>
                             </TouchableOpacity>
                         </View>
@@ -205,8 +209,13 @@ const HomeScreen = ( {navigation,route} : HomeScreenProps ) => {
                             <FloatingBtnChat/>
                         </TouchableOpacity>
                     </View>
-                    
+
+        <ChangeLanguageBox 
+            showModal={showChangeLanguageBox} 
+            setShowModal={setShowChangeLanguageBox}/>            
         </SafeAreaView>
+
+        
     )
 }
 
@@ -251,7 +260,7 @@ const styles = StyleSheet.create({
     viewNgongu:{
         position:'absolute',
         height:45,
-        width:80,
+        width:60,
         top:15,
         right:15,
         backgroundColor:colorWhite,
