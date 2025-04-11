@@ -37,12 +37,9 @@ const LoginScreen = ({navigation}:LoginScreenProps) => {
                 </View>
 
                 {/* Nút đăng nhập */}
-                {/* <TouchableOpacity style={styles.loginButton}>
-                    <Text style={styles.loginText}>{t('dangnhap')}</Text>
-                </TouchableOpacity> */}
                 <TouchableOpacity>
                     <View style={{alignItems:'center'}}>
-                        <NutBam text={t('dangnhap')} colorBG={colorGreen} colorTxt={colorWhite} widthbtn={370}/>
+                        <NutBam text={t('dangnhap')} colorBG={colorGreen} colorTxt={colorWhite} widthbtn={'auto'}/>
                     </View>
                 </TouchableOpacity>
 
@@ -50,7 +47,7 @@ const LoginScreen = ({navigation}:LoginScreenProps) => {
                 {/* Nút Google */}
                 <TouchableOpacity>
                     <View style={{alignItems:'center',marginTop:20}}>
-                        <NutBam text={t('dangnhapgg')} colorBG={colorWhite} colorTxt={colorBlack} widthbtn={370}/>
+                        <NutBam text={t('dangnhapgg')} colorBG={colorWhite} colorTxt={colorBlack} widthbtn={'auto'}/>
                     </View>
                 </TouchableOpacity>
 

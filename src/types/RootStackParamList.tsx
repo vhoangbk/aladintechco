@@ -6,5 +6,6 @@ export type RootStackParamList = {
     TuyenDungScreen: undefined;
     PersonScreen:undefined;
     EmployeeScreen:undefined;
-    LoginScreen:undefined
+    LoginScreen:undefined;
+    ContactUs:undefined
 }

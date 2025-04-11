@@ -29,7 +29,18 @@
     "chonngongu" : "Select language",
 
     "dangnhap": "Login",
-    "dangnhapgg": "Login with Google"
+    "dangnhapgg": "Login with Google",
+
+    "sua":"Edit",
+    "thongtin":"Information",
+    "lienhevoichungtoi":"Contact us",
+    "vechungtoi" : "About us",
+
+    "thongtinlienhe1": "NORTHERN OFFICE: 4th Floor, HH1 Office Building, Meco Complex, Alley 102 Truong Chinh Street, Phuong Dinh, Dong Da District, Hanoi, Vietnam",
+    "thongtinlienhe2": "SOUTHERN OFFICE: 86/59 Pham Quang Street, Ward 2, Tan Binh District, Ho Chi Minh City, Vietnam",
+    "thongtinlienhe3": "Email: support@aladintech.co",
+    "thongtinlienhe4": "Mobile: 0936 881 298"
+
     
     
     

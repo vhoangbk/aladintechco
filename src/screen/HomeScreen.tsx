@@ -82,7 +82,7 @@ const HomeScreen = ( {navigation} : HomeScreenProps ) => {
                         <Text style={styles.text2}>{t('tieude2')}</Text>
 
                         <View style={styles.button}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=>navigation.navigate('ContactUs')}>
                             <NutBam 
                                 text={ t('lienhe') } 
                                 colorBG = {colorGreen} 
@@ -223,9 +223,9 @@ const styles = StyleSheet.create({
     text1:{
         fontFamily : fontBold,
         position:'absolute',
-        top:150,
+        top:130,
         left:19,
-        fontSize:30,
+        fontSize:25,
         color:colorWhite,
         textShadowColor: colorBlack,             
         textShadowOffset: { width: 4, height: 4 },

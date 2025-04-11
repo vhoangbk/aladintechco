@@ -6,6 +6,7 @@ import SplashScreen from '../screen/SplashScreen'
 import { RootStackParamList } from 'src/types/RootStackParamList'
 import ChatScreen from '../screen/ChatScreen'
 import LoginScreen from 'src/screen/LoginScreen'
+import ContactUs from 'src/screen/ContactUs'
 
 const Stack = createNativeStackNavigator <RootStackParamList>()
 
@@ -40,6 +41,14 @@ const MainNavigator = () =>  {
               <Stack.Screen 
                   name="LoginScreen" 
                   component={LoginScreen} 
+                  options={{
+                    animation: 'fade',
+                  }}
+              />
+
+              <Stack.Screen 
+                  name="ContactUs" 
+                  component={ContactUs} 
                   options={{
                     animation: 'fade',
                   }}

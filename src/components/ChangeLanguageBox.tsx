@@ -9,9 +9,12 @@ const ChangeLanguageBox = ({ showModal, setShowModal }: any) => {
 
     const { t } = useTranslation()
 
-    const handleToggleLanguage = () => {
-        const newLang = i18n.language === 'vi' ? 'en' : 'vi'
-        i18n.changeLanguage(newLang)
+    const ChangeToVN = () => {
+        i18n.changeLanguage('vi')
+    }
+
+    const ChangeToEN = () => {
+        i18n.changeLanguage('en')
     }
 
     const handleClose = () => {
@@ -31,14 +34,14 @@ const ChangeLanguageBox = ({ showModal, setShowModal }: any) => {
                         <Text style={styles.title1}>{t('chonngongu')}</Text>
                         
                         <View style={styles.view1}>
-                            <TouchableOpacity onPress={handleToggleLanguage}>
+                            <TouchableOpacity onPress={ChangeToVN}>
                                 <Image 
                                     style={styles.image} 
                                     source={imageResource.covietnam} 
                                     resizeMode="contain"/>
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={handleToggleLanguage}>
+                            <TouchableOpacity onPress={ChangeToEN}>
                                 <Image 
                                     style={styles.image} 
                                     source={imageResource.coanh} 
@@ -72,7 +75,7 @@ const styles = StyleSheet.create({
         width:240,
         height:160,
         backgroundColor:colorWhite,
-        borderWidth:1,
+        borderWidth:0,
         borderRadius:10
     },
     insideAlert:{
