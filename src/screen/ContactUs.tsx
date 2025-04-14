@@ -23,7 +23,7 @@ const ContactUs = ({navigation}:ContactUsProps) => {
                         </TouchableOpacity>
 
                         <View style={styles.title}>
-                            <Text style={styles.txt}>Thông tin liên hệ</Text>
+                            <Text style={styles.txt}>{t('tieudethongtinlh')}</Text>
                         </View>
                     </View>
 

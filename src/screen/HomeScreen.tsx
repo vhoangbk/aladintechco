@@ -18,11 +18,11 @@ type HomeScreenProps = NativeStackScreenProps<RootStackParamList,'HomeScreen'>
 
 const HomeScreen = ( {navigation} : HomeScreenProps ) => {
 
-    const heightScreen = useWindowDimensions().height
-    const widthScreen = useWindowDimensions().width
+    const heightScreen = useWindowDimensions().height;
+    const widthScreen = useWindowDimensions().width;
 
-    const { t } = useTranslation()
-    const { i18n } = useTranslation()
+    const { t } = useTranslation();
+    const { i18n } = useTranslation();
 
     const handleChat = () => {
         navigation.navigate('ChatScreen')
@@ -32,7 +32,6 @@ const HomeScreen = ( {navigation} : HomeScreenProps ) => {
 
     const openSelectLanguage = () => {
         setShowChangeLanguageBox(true)
-        console.log("open box")
     }
 
 
