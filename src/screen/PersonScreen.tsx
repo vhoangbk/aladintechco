@@ -74,7 +74,7 @@ const PersonScreen = ({navigation}:PersonScreenProps) => {
                     <ButtonPerson
                         image={imageResource.infoicon}
                         title={t('vechungtoi')}
-                        onPress={() => {}}
+                        onPress={() => {navigation.navigate('AboutUs')}}
                     />
                     <ButtonPerson
                         image={imageResource.loginicon}

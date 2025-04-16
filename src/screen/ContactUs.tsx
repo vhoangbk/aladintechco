@@ -91,7 +91,8 @@ const ContactUs = ({navigation}:ContactUsProps) => {
 
 const styles = StyleSheet.create({
     thongtin:{
-        fontFamily:fontRegular
+        fontFamily:fontRegular,
+        fontSize:15
     },
     image2:{
         width:30,
@@ -147,7 +148,8 @@ const styles = StyleSheet.create({
     },
     txt:{
         fontFamily:fontBold,
-        color:colorWhite
+        color:colorWhite,
+        fontSize:17
     }
 })
 

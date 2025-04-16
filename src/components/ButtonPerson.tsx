@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   text: {
-    fontSize: 13,
+    fontSize: 15,
     color: '#333',
     alignSelf:'center',
     fontFamily:fontRegular

@@ -7,5 +7,6 @@ export type RootStackParamList = {
     PersonScreen:undefined;
     EmployeeScreen:undefined;
     LoginScreen:undefined;
-    ContactUs:undefined
+    ContactUs:undefined;
+    AboutUs:undefined
 }

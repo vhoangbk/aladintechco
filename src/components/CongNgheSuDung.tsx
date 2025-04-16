@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         marginHorizontal:10
     },
     text:{
-        fontFamily: fontBold,
+        fontFamily: fontRegular,
         marginLeft:10
     
     },

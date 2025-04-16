@@ -5,7 +5,7 @@
     "canhan": "Cá nhân",
     "lienhe": "Liên hệ!",
     
-    "tieude1": "Cung cấp hệ thống, giả pháp toàn diện Telecom",
+    "tieude1": "Cung cấp hệ thống, giải pháp toàn diện Telecom",
     "tieude2": "Tìm hiểu thêm về các cơ hội hợp tác cùng phát triển",
     "tieude3" : "Các dịch vụ của chúng tôi",
     "tieude4": "Vì sao nên chọn AladinTech",
@@ -39,7 +39,32 @@
     "thongtinlienhe2" : "VĂN PHÒNG PHÍA NAM: 86/59 Đ. P. Quang, Phường 2, Tân Bình, Thành phố Hồ Chí Minh, Việt Nam",
     "thongtinlienhe3" : "Email: support@aladintech.co",
     "thongtinlienhe4" : "Mobile: 0936 881 298",
-    "tieudethongtinlh" : "Thông tin liên hệ"
+    "tieudethongtinlh" : "Thông tin liên hệ",
+
+    "noidungservice1": "TỔNG QUAN VỀ NỀN TẢNG",
+    "noidungservice2": "Nền tảng là một thuật ngữ thường được sử dụng để mô tả một hệ thống hoặc nền tảng cung cấp các dịch vụ, ứng dụng hoặc công nghệ nhằm tạo ra một môi trường làm việc hoặc giao tiếp chung. Đây có thể là một nền tảng công nghệ nơi các ứng dụng và dịch vụ khác nhau có thể tích hợp và hoạt động cùng nhau. Cũng có thể là một nền tảng kinh doanh, nơi doanh nghiệp và cá nhân có thể tương tác để trao đổi thông tin, sản phẩm hoặc dịch vụ.",
+    "noidungservice3": "Các nền tảng hiện đại thường liên quan đến công nghệ số, bao gồm các trang web, ứng dụng di động, hệ thống điện toán đám mây và các giao thức kết nối. Những nền tảng này thường tạo ra một hạ tầng chung, giúp tối ưu hiệu suất và tăng cường sự tương tác giữa các thành phần khác nhau. Sự phổ biến của nền tảng ngày càng tăng, đóng vai trò quan trọng trong việc hỗ trợ kết nối và tích hợp giữa các hệ thống và ứng dụng khác nhau.",
+    "duancuachungtoi" : "DỰ ÁN CỦA CHÚNG TÔI",
+
+    "whytitle": "Tại sao bạn nên chọn AladinTech?",
+    "why1": "Môi trường làm việc năng động và sáng tạo",
+    "why2": "Cơ hội đào tạo và phát triển nghề nghiệp",
+    "why3": "Quy trình làm việc chuyên nghiệp và hiệu quả",
+    "why4": "Tham gia các hoạt động ngoại khóa",
+
+    "tieudeaboutus" : "Về chúng tôi",
+    "noidungaboutus" : "Aladin là nhà cung cấp các giải pháp và dịch vụ công nghệ thông tin - viễn thông toàn diện cho mọi khách hàng trong và ngoài nước. Từ khi thành lập tới giờ, Aladin luôn mang trong mình khát khao đem đến những giá trị tốt đẹp nhất ,vượt xa cả sự mong đợi của khách hàng. Với đội ngũ nhân viên tài năng, nhiệt huyết và quy trình làm việc rõ ràng, minh bạch, chúng tôi sẽ đồng hành cùng bạn trên mọi chặng đường phát triển.",
+    "chungtoilaai" : "Chúng tôi là ai?",
+
+    "sumenhtamnhin" : "Sứ mệnh và tầm nhìn",
+    "sumenh" : "Sứ mệnh",
+    "tamnhin" : "Tầm nhìn",
+    "giatri" : "Giá trị",
+    "ndsumenh" : "Cung cấp giải pháp dịch vụ công nghệ thông tin - viễn thông hàng đầu cho mọi khách hàng trong nước và khu vực.",
+    "ndtamnhin" : "Lọt top 50 doanh nghiệp VN do Forbes bình chọn",
+    "ndgiatri" : "Tuyệt đối không đánh đổi những giá trị cốt lõi để đổi lấy sự phát triển, luôn ghi nhớ những giá trị tiên quyết đã giúp tạo dựng nên một Aladin như ngày hôm nay."
+
+      
 
 
 }
