@@ -51,12 +51,14 @@ export const imageResource: { [key: string]: ImageSourcePropType } = {
     iconphone: require('../assets/image/iconphone.png'),
     infoicon: require('../assets/image/infoicon.png'),
     loginicon: require('../assets/image/loginicon.png'),
-    logouticon: require('../assets/image/logouticon.png'),
+    logouticon: require('../assets/image/logouticon.jpg'),
 
     positionicon: require('../assets/image/positionicon.png'),
 
     imagehome1: require('../assets/image/imagehome1.png'),
     vechungtoibg : require('../assets/image/vechungtoibg.png'),
 
-    aboutus1: require('../assets/image/aboutus1.jpg')
+    aboutus1: require('../assets/image/aboutus1.jpg'),
+
+    avt: require('../assets/image/avt.jpg')
 }

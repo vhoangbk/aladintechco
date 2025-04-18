@@ -63,7 +63,44 @@
     "giatri" : "Giá trị",
     "ndsumenh" : "Cung cấp giải pháp dịch vụ công nghệ thông tin - viễn thông hàng đầu cho mọi khách hàng trong nước và khu vực.",
     "ndtamnhin" : "Lọt top 50 doanh nghiệp VN do Forbes bình chọn",
-    "ndgiatri" : "Tuyệt đối không đánh đổi những giá trị cốt lõi để đổi lấy sự phát triển, luôn ghi nhớ những giá trị tiên quyết đã giúp tạo dựng nên một Aladin như ngày hôm nay."
+    "ndgiatri" : "Tuyệt đối không đánh đổi những giá trị cốt lõi để đổi lấy sự phát triển, luôn ghi nhớ những giá trị tiên quyết đã giúp tạo dựng nên một Aladin như ngày hôm nay.",
+
+
+    "alert" : "Thông báo!",
+    "alertMessage" : "Vui lòng nhập đầy đủ thông tin!",
+
+    "pleaseLoginTxt" : "Vui lòng \"Đăng nhập\" để sử dụng tính năng!",
+
+    "thongtinnhanvientitle": "Thông tin nhân viên",
+
+
+    "personal_info": "THÔNG TIN CÁ NHÂN",
+    "id": "ID",
+    "start_date": "Ngày vào làm",
+    "full_name": "Họ và tên",
+    "phone_number": "Số điện thoại",
+    "email": "Email cá nhân",
+    "dob": "Ngày sinh",
+    "hometown": "Quê quán",
+    "current_address": "Nơi ở hiện tại",
+    "hobbies": "Sở thích",
+    "marital_status": "Tình trạng hôn nhân",
+    "children": "Số con",
+    "family": "Gia đình",
+    "gender": "Giới tính",
+    "relative": "Người thân",
+    "bank_name": "Tên ngân hàng",
+    "bank_account": "Số tài khoản",
+    "education": "TRÌNH ĐỘ HỌC VẤN",
+    "degree": "Bằng cấp",
+    "education_level": "Trình độ học vấn",
+    "experience": "Kinh nghiệm",
+    "languages": "Trình độ Tiếng Anh",
+    "goal": "MỤC TIÊU",
+    "career_goal": "Mục tiêu công việc",
+    "department": "PHÒNG BAN",
+    "username": "Người dùng",
+    "department_name": "Phòng ban"
 
       
 

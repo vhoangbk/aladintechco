@@ -5,22 +5,21 @@ interface AuthState {
 }
 
 const initialState : AuthState = {
-    auth: true
-}
+    auth: false,
+};
 
 export const AuthSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
         login: (state)=>{
-            state.auth = true
+            state.auth = true;
         },
         logout: (state)=>{
-            state.auth = false
+            state.auth = false;
         },
-    }
-})
+    },
+});
 
-export const { login, logout} = AuthSlice.actions
-
-export default AuthSlice.reducer
+export const { login, logout} = AuthSlice.actions;
+export default AuthSlice.reducer;

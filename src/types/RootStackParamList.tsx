@@ -8,5 +8,6 @@ export type RootStackParamList = {
     EmployeeScreen:undefined;
     LoginScreen:undefined;
     ContactUs:undefined;
-    AboutUs:undefined
+    AboutUs:undefined;
+    PersonalInformation:undefined;
 }

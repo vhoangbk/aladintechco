@@ -1,5 +1,4 @@
 import { Image, StyleSheet, Text, View } from "react-native"
-import { imageResource } from "../assets/imageResource"
 import { fontRegular } from "../types/typeFont"
 
 const ViSao = ({image,text}:any) => {
