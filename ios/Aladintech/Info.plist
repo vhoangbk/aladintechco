@@ -49,6 +49,8 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>BaiJamjuree-Bold.ttf</string>
+		<string>BaiJamjuree-Regular.ttf</string>
 		<string>Poppins-Bold.ttf</string>
 		<string>Poppins-Regular.ttf</string>
 	</array>
