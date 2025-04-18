@@ -2,11 +2,14 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Button, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
+import { useDispatch, useSelector } from "react-redux"
 import { colorGreen, colorWhite } from "src/assets/color"
 import { imageResource } from "src/assets/imageResource"
 import ButtonPerson from "src/components/ButtonPerson"
 import ChangeLanguageBox from "src/components/ChangeLanguageBox"
 import i18n from "src/language/i18n"
+import { login, logout } from "src/redux/slice/AuthSlice"
+import { AppDispatch, RootState } from "src/redux/store"
 import { RootStackParamList } from "src/types/RootStackParamList"
 import { fontRegular } from "src/types/typeFont"
 
@@ -19,22 +22,35 @@ const PersonScreen = ({navigation}:PersonScreenProps) => {
     const windowHeight = useWindowDimensions().height
     const [showChangeLanguageBox, setShowChangeLanguageBox] = useState(false)
 
+    const authLogin = useSelector( (state: RootState) => state.auth.auth )
+    const dispatch = useDispatch<AppDispatch>()
+
     const openSelectLanguage = () => {
         setShowChangeLanguageBox(true)
     }
+
+    const handleLogin = () => {
+        dispatch(login());
+        navigation.navigate('LoginScreen');
+    }
+
+    const handleLogout = () => {
+        dispatch(logout());
+    }
+
 
     return(
         <SafeAreaView style={{flex:1}}>
             
             <View style = {styles.container}>
-
-                {/* btn edit */}
+                <Text>Trạng thái: {authLogin ? 'Đã login' : 'Chưa login' }</Text>
+                {authLogin?
                 <TouchableOpacity>
                     <View style={styles.btnEdit}>
                         <Text style={styles.txt}>{t('sua')}</Text>
                         <Image style={styles.imageEdit} source={imageResource.editicon}/>
                     </View>
-                </TouchableOpacity>
+                </TouchableOpacity>:null}
 
                 <View style={styles.header}>
                     <Image
@@ -42,8 +58,11 @@ const PersonScreen = ({navigation}:PersonScreenProps) => {
                         style={styles.avatar}
                     />
                     <View style={{marginLeft:15,justifyContent:'center'}}>
-                        <Text style={styles.name}>Nguyễn Văn A</Text>
-                        <Text style={styles.email}>abcabc@gmail.com</Text>
+                        {authLogin?
+                        (<><Text style={styles.name}>Nguyễn Văn A</Text>
+                        <Text style={styles.email}>abcabc@gmail.com</Text></>)
+                        :
+                        (<Text style={styles.name}>Vui lòng đăng nhập!</Text>)}
                     </View>
                 </View>
 
@@ -61,11 +80,11 @@ const PersonScreen = ({navigation}:PersonScreenProps) => {
                     </TouchableOpacity>
 
                     {/* Các nút */}
-                    <ButtonPerson
+                    {authLogin?<ButtonPerson
                         image={imageResource.iconuser}
                         title={t('thongtin')}
                         onPress={() => {}}
-                    />
+                    />:null}
                     <ButtonPerson
                         image={imageResource.iconphone}
                         title={t('lienhe')}
@@ -76,11 +95,18 @@ const PersonScreen = ({navigation}:PersonScreenProps) => {
                         title={t('vechungtoi')}
                         onPress={() => {navigation.navigate('AboutUs')}}
                     />
+                    {!authLogin
+                    ?
                     <ButtonPerson
                         image={imageResource.loginicon}
                         title={t('dangnhap')}
-                        onPress={() => {navigation.navigate('LoginScreen')}}
-                    />
+                        onPress={handleLogin}/>
+                    :
+                    <ButtonPerson
+                        image={imageResource.logouticon}
+                        title={t('dangxuat')}
+                        onPress={handleLogout}/>
+                    }
 
                 </View>
 
@@ -146,6 +172,7 @@ const styles = StyleSheet.create({
 
         // Shadow (Android)
         elevation: 5,
+        marginBottom:50
     },
     logo2:{
         width:40,

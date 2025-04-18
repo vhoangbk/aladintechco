@@ -8,6 +8,8 @@ import '../language/i18n';
 import PersonScreen from "../screen/PersonScreen"
 import EmployeeScreen from "../screen/EmployeeScreen"
 import { RootStackParamList } from "../types/RootStackParamList"
+import { Provider } from "react-redux"
+import { store } from "src/redux/store"
 
 const Tab = createBottomTabNavigator<RootStackParamList>()
 
@@ -79,6 +81,7 @@ const TabNavigator = () => {
                         ),
                         }}/>
                 </Tab.Navigator>
+
     )
 }
 
