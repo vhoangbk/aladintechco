@@ -9,14 +9,14 @@ export const imageResource: { [key: string]: ImageSourcePropType } = {
     bgtrangchu: require('./image/bgtrangchu.png'),
 
     covietnam: require('./image/covietnam.png'),
-    coanh: require('./image/coanh.png'),
+    coanh: require('./image/coanh.jpg'),
 
     muitenxuong: require('./image/muitenxuong.png'),
     bgtrangchu2: require('./image/bgtrangchu2.png'),
     
-    dichvu1: require('./image/dichvu1.png'),
-    dichvu2: require('./image/dichvu2.png'),
-    dichvu3: require('./image/dichvu3.png'),
+    dichvu1: require('./image/dichvu1.jpg'),
+    dichvu2: require('./image/dichvu2.jpg'),
+    dichvu3: require('./image/dichvu3.jpg'),
 
     visao1: require('./image/visao1.png'),
     visao2: require('./image/visao2.png'),
@@ -42,8 +42,8 @@ export const imageResource: { [key: string]: ImageSourcePropType } = {
     congnghe3c: require('./image/congnghe3c.png'),
     congnghe3d: require('./image/congnghe3d.png'),
 
-    iconemail: require('../assets/image/iconemail.png'),
-    iconpassword: require('../assets/image/iconpassword.png'),
+    iconemail: require('../assets/image/iconemail.jpg'),
+    iconpassword: require('../assets/image/iconpassword.jpg'),
 
     editicon: require('../assets/image/editicon.png'),
     avatar: require('../assets/image/avatar.png'),
@@ -57,5 +57,5 @@ export const imageResource: { [key: string]: ImageSourcePropType } = {
     imagehome1: require('../assets/image/imagehome1.png'),
     vechungtoibg : require('../assets/image/vechungtoibg.png'),
 
-    aboutus1: require('../assets/image/aboutus1.png')
+    aboutus1: require('../assets/image/aboutus1.jpg')
 }
