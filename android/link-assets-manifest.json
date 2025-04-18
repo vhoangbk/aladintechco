@@ -2,11 +2,19 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "src/fonts/Poppins-Bold.ttf",
+      "path": "src/assets/fonts/BaiJamjuree-Bold.ttf",
+      "sha1": "50088f5f00a63964bc0d98d82924dc5ff4a5645c"
+    },
+    {
+      "path": "src/assets/fonts/BaiJamjuree-Regular.ttf",
+      "sha1": "6665982520c8dafe80ea867de83e1e1cfe93374b"
+    },
+    {
+      "path": "src/assets/fonts/Poppins-Bold.ttf",
       "sha1": "875cf0cecd647bcf22e79d633d868c1b1ec98dfa"
     },
     {
-      "path": "src/fonts/Poppins-Regular.ttf",
+      "path": "src/assets/fonts/Poppins-Regular.ttf",
       "sha1": "fdd3002e7d814ee47c1c1b8487c72c6bbb3a2d00"
     }
   ]
