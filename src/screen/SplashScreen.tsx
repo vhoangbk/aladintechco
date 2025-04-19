@@ -1,15 +1,15 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {imageResource} from '../assets/imageResource';
-import {Image, StyleSheet, useWindowDimensions, View} from 'react-native';
-import {RootStackParamList} from '../types/RootStackParamList';
-import {useEffect} from 'react';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { imageResource } from '../assets/imageResource';
+import { Image, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { RootStackParamList } from '../types/RootStackParamList';
+import { useEffect } from 'react';
 
 type SplashScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'SplashScreen'
 >;
 
-const SplashScreen = ({navigation}: SplashScreenProps) => {
+const SplashScreen = ({ navigation }: SplashScreenProps) => {
   const width = useWindowDimensions().width;
 
   useEffect(() => {

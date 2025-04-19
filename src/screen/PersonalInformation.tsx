@@ -60,7 +60,6 @@ const PersonalInformation = ({navigation, route}: PersonalInformationProps) => {
             <RowInformation title={t('bank_account')} infor={'5902688888'}/>
 
           </View>
-
           <Text style={styles.title1}>{t('education')}</Text>
           <View style={styles.line}></View>
 
@@ -87,6 +86,10 @@ const PersonalInformation = ({navigation, route}: PersonalInformationProps) => {
             <RowInformation title={t('username')} infor={'asdasd'}/>
             <RowInformation title={t('department_name')} infor={'asdasd'}/>
           </View>
+
+          <TouchableOpacity style={styles.btnEdit}>
+              <Text style={styles.txt3}>Sửa thông tin</Text>
+          </TouchableOpacity>
 
 
         </View>
@@ -133,6 +136,21 @@ export const RowInformation = ({title,infor}:any) => {
 }
 
 const styles = StyleSheet.create({
+  txt3:{
+    margin:10,
+    borderWidth:0,
+    color:colorWhite,
+    fontFamily:fontRegular,
+    fontSize:15
+  },
+  btnEdit:{
+      borderWidth:0,
+      alignSelf:'center',
+      marginBottom:30,
+      marginTop:20,
+      backgroundColor:"red",
+      borderRadius:4,
+  },
   container: {
     flex: 1,
   },

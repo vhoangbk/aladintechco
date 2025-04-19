@@ -59,7 +59,9 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
         ) : null}
 
         <View style={styles.header}>
-          <Image source={imageResource.avt} style={styles.avatar} />
+          {authLogin ? (
+            <Image source={imageResource.avt} style={styles.avatar} />
+          ) : null}
           <View style={{marginLeft: 15, justifyContent: 'center'}}>
             {authLogin ? (
               <>
@@ -93,7 +95,9 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
             <ButtonPerson
               image={imageResource.iconuser}
               title={t('thongtin')}
-              onPress={() => {navigation.navigate("PersonalInformation")}}
+              onPress={() => {
+                navigation.navigate('PersonalInformation');
+              }}
             />
           ) : null}
           <ButtonPerson

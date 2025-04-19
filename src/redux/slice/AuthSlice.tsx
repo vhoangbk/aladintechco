@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from '@reduxjs/toolkit';
 
 interface AuthState {
-    auth:boolean
+    auth: boolean;
 }
 
-const initialState : AuthState = {
+const initialState: AuthState = {
     auth: false,
 };
 
@@ -12,14 +12,14 @@ export const AuthSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login: (state)=>{
+        login: state => {
             state.auth = true;
         },
-        logout: (state)=>{
+        logout: state => {
             state.auth = false;
         },
     },
 });
 
-export const { login, logout} = AuthSlice.actions;
+export const { login, logout } = AuthSlice.actions;
 export default AuthSlice.reducer;
