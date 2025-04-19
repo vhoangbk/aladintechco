@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,26 +10,26 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import { fontBold, fontRegular } from '../types/typeFont';
-import { imageResource } from '../assets/imageResource';
+import {fontBold, fontRegular} from '../types/typeFont';
+import {imageResource} from '../assets/imageResource';
 import NutBam from '../components/NutBam';
 import FloatingBtnChat from '../components/FloatingBtnChat';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from 'src/types/RootStackParamList';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from 'src/types/RootStackParamList';
 import '../language/i18n';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import CongNgheSuDung from 'src/components/CongNgheSuDung';
 import ChangeLanguageBox from 'src/components/ChangeLanguageBox';
 import LinearGradient from 'react-native-linear-gradient';
-import { colorBlack, colorGreen, colorWhite } from '../assets/color';
+import {colorBlack, colorGreen, colorWhite} from '../assets/color';
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'HomeScreen'>;
 
-const HomeScreen = ({ navigation }: HomeScreenProps) => {
+const HomeScreen = ({navigation}: HomeScreenProps) => {
   const widthScreen = useWindowDimensions().width;
 
-  const { t } = useTranslation();
-  const { i18n } = useTranslation();
+  const {t} = useTranslation();
+  const {i18n} = useTranslation();
 
   const handleChat = () => {
     navigation.navigate('ChatScreen');
@@ -72,13 +72,13 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
+      <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.container}>
           {/* Frame 1 */}
           <LinearGradient
             colors={['#31B44A', '#238035']}
-            style={[styles.frame1, { width: widthScreen }]}>
+            style={[styles.frame1, {width: widthScreen}]}>
             <View style={styles.view5}>
               <Image source={imageResource.iconAladin} style={styles.logo} />
 
@@ -87,12 +87,12 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
                   {i18n.language === 'vi' ? (
                     <Image
                       source={imageResource.covietnam}
-                      style={{ width: 40, height: 30 }}
+                      style={{width: 40, height: 30}}
                     />
                   ) : (
                     <Image
                       source={imageResource.coanh}
-                      style={{ width: 40, height: 30 }}
+                      style={{width: 40, height: 30}}
                     />
                   )}
                 </View>
@@ -101,7 +101,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
             <Image
               source={imageResource.imagehome1}
-              style={{ width: widthScreen * 0.9, alignSelf: 'center' }}
+              style={{width: widthScreen * 0.9, alignSelf: 'center'}}
               resizeMode="contain"
             />
 
@@ -128,7 +128,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
           <View style={styles.view2}>
             <FlatList
               data={DATA1}
-              renderItem={({ item }) => serviceItem(item)}
+              renderItem={({item}) => serviceItem(item)}
               keyExtractor={(item, index) => index.toString()}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
@@ -183,16 +183,16 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
 const Frame2 = () => {
   const screenwidth = useWindowDimensions().width;
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   return (
-    <View style={{ flex: 1, borderWidth: 0 }}>
+    <View style={{flex: 1, borderWidth: 0}}>
       <Text> </Text>
       <Text style={styles.text1}>{t('whytitle')}</Text>
       <View>
         <Image
           source={imageResource.visao1}
           resizeMode="contain"
-          style={{ width: screenwidth, height: screenwidth * 0.6 }}
+          style={{width: screenwidth, height: screenwidth * 0.6}}
         />
         <View style={styles.container1}>
           <View
@@ -204,7 +204,7 @@ const Frame2 = () => {
                 backgroundColor: '#00BF85',
               },
             ]}>
-            <View style={[styles.line, { alignSelf: 'flex-end' }]} />
+            <View style={[styles.line, {alignSelf: 'flex-end'}]} />
             <Text style={styles.text}>{t('why1')}</Text>
             <View style={styles.line} />
           </View>
@@ -215,7 +215,7 @@ const Frame2 = () => {
         <Image
           source={imageResource.visao2}
           resizeMode="contain"
-          style={{ width: screenwidth, height: screenwidth * 0.6 }}
+          style={{width: screenwidth, height: screenwidth * 0.6}}
         />
         <View style={styles.container1}>
           <View
@@ -227,7 +227,7 @@ const Frame2 = () => {
                 backgroundColor: '#044D3A',
               },
             ]}>
-            <View style={[styles.line, { alignSelf: 'flex-end' }]} />
+            <View style={[styles.line, {alignSelf: 'flex-end'}]} />
             <Text style={styles.text}>{t('why2')}</Text>
             <View style={styles.line} />
           </View>
@@ -238,7 +238,7 @@ const Frame2 = () => {
         <Image
           source={imageResource.visao3}
           resizeMode="contain"
-          style={{ width: screenwidth, height: screenwidth * 0.6 }}
+          style={{width: screenwidth, height: screenwidth * 0.6}}
         />
         <View style={styles.container1}>
           <View
@@ -250,7 +250,7 @@ const Frame2 = () => {
                 backgroundColor: '#001A13',
               },
             ]}>
-            <View style={[styles.line, { alignSelf: 'flex-end' }]} />
+            <View style={[styles.line, {alignSelf: 'flex-end'}]} />
             <Text style={styles.text}>{t('why3')}</Text>
             <View style={styles.line} />
           </View>
@@ -261,7 +261,7 @@ const Frame2 = () => {
         <Image
           source={imageResource.visao4}
           resizeMode="contain"
-          style={{ width: screenwidth, height: screenwidth * 0.6 }}
+          style={{width: screenwidth, height: screenwidth * 0.6}}
         />
         <View style={styles.container1}>
           <View
@@ -273,7 +273,7 @@ const Frame2 = () => {
                 backgroundColor: '#96EA9A',
               },
             ]}>
-            <View style={[styles.line, { alignSelf: 'flex-end' }]} />
+            <View style={[styles.line, {alignSelf: 'flex-end'}]} />
             <Text style={styles.text}>{t('why4')}</Text>
             <View style={styles.line} />
           </View>
@@ -284,9 +284,9 @@ const Frame2 = () => {
 };
 
 const Frame3 = () => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   return (
-    <View style={{ borderWidth: 0 }}>
+    <View style={{borderWidth: 0}}>
       <Text> </Text>
       <Text style={styles.text1}>TECHNOLOGY WE USE</Text>
       <CongNgheSuDung
@@ -316,10 +316,10 @@ const Frame3 = () => {
 };
 
 const Frame4 = () => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   return (
     <LinearGradient colors={['#31B44A', '#238035']}>
-      <View style={{ margin: 15, borderWidth: 0 }}>
+      <View style={{margin: 15, borderWidth: 0}}>
         <Text> </Text>
         <Text style={styles.txt8}>{t('tieudenhanluc')}</Text>
         <Text style={styles.txt9}>{t('noidungnhanluc')}</Text>

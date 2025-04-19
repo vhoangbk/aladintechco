@@ -1,5 +1,5 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useTranslation } from 'react-i18next';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {useTranslation} from 'react-i18next';
 import {
   Image,
   SafeAreaView,
@@ -9,18 +9,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { colorGreen, colorWhite } from '../assets/color';
-import { imageResource } from 'src/assets/imageResource';
-import { RootStackParamList } from 'src/types/RootStackParamList';
-import { fontBold, fontRegular } from 'src/types/typeFont';
+import {colorGreen, colorWhite} from '../assets/color';
+import {imageResource} from 'src/assets/imageResource';
+import {RootStackParamList} from 'src/types/RootStackParamList';
+import {fontBold, fontRegular} from 'src/types/typeFont';
 
 type ContactUsProps = NativeStackScreenProps<RootStackParamList, 'ContactUs'>;
 
-const ContactUs = ({ navigation }: ContactUsProps) => {
-  const { t } = useTranslation();
+const ContactUs = ({navigation}: ContactUsProps) => {
+  const {t} = useTranslation();
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -38,7 +38,7 @@ const ContactUs = ({ navigation }: ContactUsProps) => {
           </View>
         </View>
 
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
           <View style={styles.body}>
             <View style={styles.body1}>
               {/* Row */}

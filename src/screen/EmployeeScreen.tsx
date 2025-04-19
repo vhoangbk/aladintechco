@@ -1,31 +1,29 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useTranslation } from 'react-i18next';
-import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
-import { colorWhite } from '../assets/color';
-import { RootState } from 'src/redux/store';
-import { RootStackParamList } from 'src/types/RootStackParamList';
-import { fontRegular } from 'src/types/typeFont';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {useTranslation} from 'react-i18next';
+import {Button, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {useSelector} from 'react-redux';
+import {colorWhite} from '../assets/color';
+import {RootState} from 'src/redux/store';
+import {RootStackParamList} from 'src/types/RootStackParamList';
+import {fontRegular} from 'src/types/typeFont';
 
 type EmployeeScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'EmployeeScreen'
 >;
 
-const EmployeeScreen = ({ navigation }: EmployeeScreenProps) => {
+const EmployeeScreen = ({navigation}: EmployeeScreenProps) => {
   const authLogin = useSelector((state: RootState) => state.auth.auth);
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   return (
-    <SafeAreaView
-      style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       {authLogin ? (
         <Frame5 />
       ) : (
-        <View
-          style={styles.view1}>
+        <View style={styles.view1}>
           <Text style={styles.txt}>{t('pleaseLoginTxt')}</Text>
-          <View style={{ marginTop: 5 }}>
+          <View style={{marginTop: 5}}>
             <Button
               title={t('dangnhap')}
               onPress={() => {
@@ -41,7 +39,7 @@ const EmployeeScreen = ({ navigation }: EmployeeScreenProps) => {
 
 const Frame5 = () => {
   return (
-    <View style={{ flex: 1, backgroundColor: colorWhite }}>
+    <View style={{flex: 1, backgroundColor: colorWhite}}>
       <Text>Danh sach Nhan vien</Text>
     </View>
   );
