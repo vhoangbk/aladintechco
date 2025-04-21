@@ -10,4 +10,5 @@ export type RootStackParamList = {
   ContactUs: undefined;
   AboutUs: undefined;
   PersonalInformation: undefined;
+  EditPersonalInfor: undefined;
 };

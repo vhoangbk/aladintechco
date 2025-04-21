@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -15,7 +16,7 @@ import {imageResource} from 'src/assets/imageResource';
 import ButtonPerson from 'src/components/ButtonPerson';
 import ChangeLanguageBox from 'src/components/ChangeLanguageBox';
 import i18n from 'src/language/i18n';
-import {login, logout} from 'src/redux/slice/AuthSlice';
+import {logout} from 'src/redux/slice/AuthSlice';
 import {AppDispatch, RootState} from 'src/redux/store';
 import {RootStackParamList} from 'src/types/RootStackParamList';
 import {fontRegular} from 'src/types/typeFont';
@@ -26,6 +27,7 @@ type PersonScreenProps = NativeStackScreenProps<
 >;
 
 const PersonScreen = ({navigation}: PersonScreenProps) => {
+  const screenHeight = useWindowDimensions().height;
   const {t} = useTranslation();
   const [showChangeLanguageBox, setShowChangeLanguageBox] = useState(false);
 
@@ -37,7 +39,6 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
   };
 
   const handleLogin = () => {
-    dispatch(login());
     navigation.navigate('LoginScreen');
   };
 
@@ -69,12 +70,14 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
                 <Text style={styles.email}>abcabc@gmail.com</Text>
               </>
             ) : (
-              <Text style={styles.name}>{t('pleaseLoginTxt')}</Text>
+              <View style={{marginTop:40}}>
+                  <Text style={styles.name}>{t('pleaseLoginTxt')}</Text>
+              </View>
             )}
           </View>
         </View>
 
-        <View style={[styles.body, {flex: 1}]}>
+        <View style={[styles.body, {height:screenHeight * 0.65,position: 'absolute', bottom: 0, left:0,right:0}]}>
           <TouchableOpacity onPress={openSelectLanguage}>
             <View style={styles.viewNgongu}>
               <Text style={styles.text1}> {t('chonngongu')}:</Text>
@@ -160,6 +163,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginTop: 10,
     width: 200,
+    borderWidth:0,
   },
   email: {
     fontSize: 14,

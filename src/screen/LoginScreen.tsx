@@ -15,6 +15,9 @@ import {colorBlack, colorGreen, colorWhite} from '../assets/color';
 import {imageResource} from 'src/assets/imageResource';
 import NutBam from 'src/components/NutBam';
 import {RootStackParamList} from 'src/types/RootStackParamList';
+import { login } from 'src/redux/slice/AuthSlice';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from 'src/redux/store';
 
 type LoginScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -25,6 +28,7 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
   const {t} = useTranslation();
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleLogin = () => {
     if (inputEmail.trim() === '' || inputPassword.trim() === '') {
@@ -33,8 +37,10 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
       ]);
       return;
     }
+    dispatch(login());
     console.log(inputEmail);
     console.log(inputPassword);
+    navigation.goBack();
   };
   return (
     <SafeAreaView style={{flex: 1}}>

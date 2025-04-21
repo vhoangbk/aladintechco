@@ -38,7 +38,7 @@ const PersonalInformation = ({ navigation, route }: PersonalInformationProps) =>
           </View>
           <View style={styles.view3}>
             <Text style={styles.title1}>{t('personal_info')}</Text>
-            <View style={styles.line}></View>
+            <View style={styles.line}> </View>
 
             <View style={styles.informationView}>
 
@@ -61,7 +61,7 @@ const PersonalInformation = ({ navigation, route }: PersonalInformationProps) =>
 
             </View>
             <Text style={styles.title1}>{t('education')}</Text>
-            <View style={styles.line}></View>
+            <View style={styles.line}> </View>
 
             <View style={styles.informationView}>
               <RowInformation title={t('degree')} infor={'asdasd'} />
@@ -72,7 +72,7 @@ const PersonalInformation = ({ navigation, route }: PersonalInformationProps) =>
 
 
             <Text style={styles.title1}>{t('goal')}</Text>
-            <View style={styles.line}></View>
+            <View style={styles.line}> </View>
 
             <View style={styles.informationView}>
               <RowInformation title={t('career_goal')} infor={'asdasd'} />
@@ -80,14 +80,14 @@ const PersonalInformation = ({ navigation, route }: PersonalInformationProps) =>
 
 
             <Text style={styles.title1}>{t('department')}</Text>
-            <View style={styles.line}></View>
+            <View style={styles.line}> </View>
 
             <View style={styles.informationView}>
               <RowInformation title={t('username')} infor={'asdasd'} />
               <RowInformation title={t('department_name')} infor={'asdasd'} />
             </View>
 
-            <TouchableOpacity style={styles.btnEdit}>
+            <TouchableOpacity style={styles.btnEdit} onPress={() => navigation.navigate('EditPersonalInfor')}>
               <Text style={styles.txt3}>Sửa thông tin</Text>
             </TouchableOpacity>
 
@@ -99,11 +99,7 @@ const PersonalInformation = ({ navigation, route }: PersonalInformationProps) =>
   );
 };
 
-type PersonalInformationProps2 = NativeStackScreenProps<
-  RootStackParamList,
-  'PersonalInformation'
->;
-const Header = ({ navigation }: PersonalInformationProps2) => {
+const Header = ({ navigation }: PersonalInformationProps) => {
   return (
     <View style={styles.header}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -148,7 +144,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 30,
     marginTop: 20,
-    backgroundColor: "red",
+    backgroundColor: 'red',
     borderRadius: 4,
   },
   container: {
@@ -191,12 +187,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   image1: {
     width: 100,
     height: 100,
-    borderWidth: 0
+    borderWidth: 0,
   },
   txt1: {
     borderWidth: 0,
@@ -218,9 +214,9 @@ const styles = StyleSheet.create({
   },
   line: {
     borderWidth: 0.5,
-    borderColor: "#d2d4d2",
+    borderColor: '#d2d4d2',
     marginHorizontal: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   informationView: {
   },
@@ -239,7 +235,7 @@ const styles = StyleSheet.create({
   userinfortxt: {
     fontFamily: fontRegular,
     fontSize: 14,
-  }
+  },
 });
 
 export default PersonalInformation;

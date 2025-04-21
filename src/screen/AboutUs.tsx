@@ -51,9 +51,9 @@ const AboutUs = ({navigation}: AboutUsProps) => {
               {/* chung toi la ai */}
               <Text style={styles.txt1}>{t('chungtoilaai')}</Text>
               <Line />
-              <Text></Text>
+              <Text> </Text>
               <Text style={styles.txt2}>{t('noidungaboutus')}</Text>
-              <Text></Text>
+              <Text> </Text>
               <Image
                 source={imageResource.aboutus1}
                 style={{width: screenwidth, height: 200}}
@@ -61,10 +61,10 @@ const AboutUs = ({navigation}: AboutUsProps) => {
               />
 
               {/* Su menh tam nhin */}
-              <Text></Text>
+              <Text> </Text>
               <Text style={styles.txt1}>{t('sumenhtamnhin')}</Text>
               <Line />
-              <Text></Text>
+              <Text>  </Text>
 
               <Image source={require('../assets/image/sumenhtamnhin.png')} />
 

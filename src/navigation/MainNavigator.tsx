@@ -9,6 +9,7 @@ import LoginScreen from 'src/screen/LoginScreen';
 import ContactUs from 'src/screen/ContactUs';
 import AboutUs from 'src/screen/AboutUs';
 import PersonalInformation from 'src/screen/PersonalInformation';
+import EditPersonalInfor from 'src/screen/EditPersonalInfor';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -61,6 +62,14 @@ const MainNavigator = () => {
         <Stack.Screen
           name="PersonalInformation"
           component={PersonalInformation}
+          options={{
+            animation: 'fade',
+          }}
+        />
+
+        <Stack.Screen
+          name="EditPersonalInfor"
+          component={EditPersonalInfor}
           options={{
             animation: 'fade',
           }}
