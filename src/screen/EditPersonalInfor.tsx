@@ -52,7 +52,6 @@ const Header = ({navigation}: EditPersonalInforProps) => {
 };
 
 const styles = StyleSheet.create({
-    container: {},
     header: {
       height: 50,
       backgroundColor: colorGreen,

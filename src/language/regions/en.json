@@ -92,5 +92,11 @@
   "details": "View details",
   "jobTitle": "AladinTech Recruitment",
   "intro": "At Aladin, there are many opportunities that fit you.",
-  "people": "people"
+  "people": "people",
+  "position":"Position",
+  "job_description": "Job Description:",
+  "benefit": "Benefit:",
+  "requirement": "Requirement:",
+  "detail_recruitment": "Recruitment Details",
+  "ungtuyenngay": "Apply now!"
 }

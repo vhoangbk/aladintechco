@@ -1,3 +1,5 @@
+import { NavigationProp } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -5,7 +7,6 @@ import {
   FlatList,
   Image,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -16,10 +17,16 @@ import {getRecruitments} from 'src/api/apiServices';
 import {colorBlack, colorGreen, colorWhite} from 'src/assets/color';
 import {imageResource} from 'src/assets/imageResource';
 import NutBam from 'src/components/NutBam';
+import { RootStackParamList } from 'src/types/RootStackParamList';
 import {fontBold, fontRegular} from 'src/types/typeFont';
 import {RecruitmentModel} from 'src/types/typeModel';
 
-const TuyenDungScreen = () => {
+type TuyenDungScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'TuyenDungScreen'
+>;
+
+const TuyenDungScreen = ({navigation}:TuyenDungScreenProps) => {
   const [recruitmentDATA, setRecruitmentDATA] = useState<RecruitmentModel[]>();
   const [loadingData, setLoadingData] = useState<boolean>(true);
   const {t} = useTranslation();
@@ -31,34 +38,37 @@ const TuyenDungScreen = () => {
       setLoadingData(false);
     };
     fetchData();
-  }, []);
+  }, [recruitmentDATA]);
+
+  if (loadingData) {
+    return (
+      <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <ScrollView
-        contentContainerStyle={{flexGrow: 1, backgroundColor: colorWhite}}>
         <View style={{borderWidth: 0, flex: 1}}>
-          {/* Header */}
-          <Header t={t} />
-          {/* Body */}
-          {loadingData ? (
-            <View
-              style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-              <ActivityIndicator size={'large'} />
-            </View>
-          ) : (
             <View style={styles.container}>
               <FlatList
+                ListHeaderComponent={
+                  <Header t={t} />
+                }
                 data={recruitmentDATA}
                 renderItem={({item}: any) => (
-                  <RecruitmentItem item={item} t={t} />
+                  <RecruitmentItem item={item} t={t} navigation={navigation}/>
                 )}
                 keyExtractor={item => item.id.toString()}
+                ListEmptyComponent={
+                  <View style={{justifyContent:'center', alignItems: 'center', margin:20}}>
+                    <Text>null</Text>
+                  </View>
+                }
               />
             </View>
-          )}
         </View>
-      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -66,9 +76,10 @@ const TuyenDungScreen = () => {
 type RecruitmentItemProps = {
   item: RecruitmentModel;
   t: any;
+  navigation: NavigationProp<RootStackParamList, 'TuyenDungScreen'>;
 };
 
-const RecruitmentItem: React.FC<RecruitmentItemProps> = ({item, t}) => {
+const RecruitmentItem: React.FC<RecruitmentItemProps> = ({item , t , navigation}) => {
   return (
     <View style={styles.recruitmentItem}>
       <View style={{flex: 1, margin: 17}}>
@@ -95,14 +106,14 @@ const RecruitmentItem: React.FC<RecruitmentItemProps> = ({item, t}) => {
             justifyContent: 'space-around',
             marginTop: 10,
           }}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation.navigate('ApplyScreen')}>
             <NutBam
               text={t('apply')}
               colorTxt={colorWhite}
               colorBG={colorGreen}
             />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('DetailRecruitment',{ recruitmentModel:item })}>
             <NutBam
               text={t('details')}
               colorTxt={colorBlack}
@@ -157,7 +168,6 @@ const styles = StyleSheet.create({
   container: {
     borderWidth: 0,
     flex: 1,
-    marginHorizontal: 20,
   },
   recruitmentItem: {
     flexDirection: 'row',

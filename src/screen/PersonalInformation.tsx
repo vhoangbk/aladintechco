@@ -128,8 +128,8 @@ export const RowInformation = ({ title, infor }: any) => {
         <Text style={styles.userinfortxt}>{infor}</Text>
       </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   txt3: {
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     color: colorWhite,
     fontFamily: fontRegular,
-    fontSize: 15
+    fontSize: 15,
   },
   btnEdit: {
     borderWidth: 0,
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
   title1: {
     fontFamily: fontBold,
     color: colorGreen,
-    fontSize: 20
+    fontSize: 20,
   },
   line: {
     borderWidth: 0.5,

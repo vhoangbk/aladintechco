@@ -10,6 +10,8 @@ import ContactUs from 'src/screen/ContactUs';
 import AboutUs from 'src/screen/AboutUs';
 import PersonalInformation from 'src/screen/PersonalInformation';
 import EditPersonalInfor from 'src/screen/EditPersonalInfor';
+import DetailRecruitment from 'src/screen/DetailRecruitment';
+import ApplyScreen from 'src/screen/ApplyScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -70,6 +72,22 @@ const MainNavigator = () => {
         <Stack.Screen
           name="EditPersonalInfor"
           component={EditPersonalInfor}
+          options={{
+            animation: 'fade',
+          }}
+        />
+
+        <Stack.Screen
+          name="DetailRecruitment"
+          component={DetailRecruitment}
+          options={{
+            animation: 'slide_from_right',
+          }}
+        />
+
+        <Stack.Screen
+          name="ApplyScreen"
+          component={ApplyScreen}
           options={{
             animation: 'fade',
           }}

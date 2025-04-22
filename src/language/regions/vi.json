@@ -92,5 +92,11 @@
     "details": "Xem chi tiết",
     "jobTitle": "Tin tuyển dụng AladinTech",
     "intro": "Đến với Aladin, có rất nhiều cơ hội phù hợp với bạn.",
-    "people": "người"
+    "people": "người",
+    "position":"Vị trí",
+    "job_description": "Mô tả công việc:",
+    "benefit": "Lợi ích:",
+    "requirement": "Yêu cầu:",
+    "detail_recruitment": "Chi tiết tuyển dụng",
+    "ungtuyenngay": "Ứng tuyển ngay!"
 }

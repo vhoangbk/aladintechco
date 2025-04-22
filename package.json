@@ -12,6 +12,7 @@
     "build_apk_win": "cd android && .\\gradlew clean && .\\gradlew assembleRelease"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^8.3.0",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^7.3.7",
     "@react-navigation/drawer": "^7.3.2",

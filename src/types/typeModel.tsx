@@ -11,4 +11,4 @@ export interface RecruitmentModel {
   duration: string;
   searchField: string;
   responseField: string;
-};
+}

@@ -108,7 +108,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
             <View style={styles.view}>
               <Text style={styles.txt2}>{t('tieude1')}</Text>
               <Text style={styles.txt3}>{t('tieude2')}</Text>
-              <Text></Text>
+              <Text> </Text>
               <TouchableOpacity
                 onPress={() => navigation.navigate('ContactUs')}>
                 <NutBam

@@ -64,4 +64,6 @@ export const imageResource: {[key: string]: ImageSourcePropType} = {
   bg1: require('../assets/image/bg1.png'),
 
   tuyendung: require('../assets/image/tuyendung.jpg'),
+  jobposition: require('../assets/image/jobposition.png'),
+  quantityperson: require('../assets/image/quantityperson.png'),
 };
