@@ -106,7 +106,7 @@ const RecruitmentItem: React.FC<RecruitmentItemProps> = ({item , t , navigation}
             justifyContent: 'space-around',
             marginTop: 10,
           }}>
-          <TouchableOpacity onPress={()=>navigation.navigate('ApplyScreen')}>
+          <TouchableOpacity onPress={ ()=>navigation.navigate('ApplyScreen',{ recruitment : item }) }>
             <NutBam
               text={t('apply')}
               colorTxt={colorWhite}

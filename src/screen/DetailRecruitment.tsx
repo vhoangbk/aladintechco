@@ -56,7 +56,7 @@ const DetailRecruitment = ({navigation,route}: DetailRecruitmentProps) => {
         </View>
       </ScrollView>
       <View style={{backgroundColor:colorWhite,elevation:10}}>
-        <TouchableOpacity style={{margin:10}} onPress={()=>navigation.navigate('ApplyScreen')}>
+        <TouchableOpacity style={{margin:10}} onPress={()=>navigation.navigate('ApplyScreen',{recruitment : recruitmentModel})}>
           <NutBam text={t('ungtuyenngay')} colorBG={colorGreen} colorTxt={colorWhite}/>
         </TouchableOpacity>
       </View>
