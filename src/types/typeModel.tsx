@@ -31,3 +31,21 @@ export interface CandidateModel {
   dateRegister: string; // ISO date string
   recruitment: RecruitmentModel;
 }
+
+export interface Employee {
+  id: number;
+  fullName: string;
+  email: string;
+  dateOfBirth: string;
+  firstDayWork: string;
+  phoneNumber: string;
+  avatar: string;
+  countryside: string;
+  status: string;
+  employeeStatus: string;
+  level: string;
+  workModel: string;
+  searchField: string;
+  responseField: string;
+}
+

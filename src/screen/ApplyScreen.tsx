@@ -45,7 +45,7 @@ const ApplyScreen = ({navigation, route}: ApplyScreenProps) => {
   const testkeybase64 = 'JVBERi0xLjQKJdPr6eEKMSAwIG9iago8PC9DcmVhdG9yIChDaHJvbWl1bSkKL1Byb2R1Y2VyIChTa2lhL1BERiBtOTkpCi9DcmVhdGlvbkRhdGUgKEQ6MjAyNTA0MjMwNzU5MDYrMDcnMDAnKQovTW9kRGF0ZSAoRDoyMDI1MDQyMzA3NTkwNiswNycwMCcpPj4KZW5kb2JqCjIgMCBvYmoKPDwvVHlwZS9QYWdlCi9QYXJlbnQgMyAwIFIKL1Jlc291cmNlcyA8PC9Gb250IDw8L0YxIDQgMCBSID4+ID4+Ci9NZWRpYUJveCBbMCAwIDU5NSA4NDJdCi9Db250ZW50cyA1IDAgUj4+CmVuZG9iagozIDAgb2JqCjw8L1R5cGUvUGFnZXMKL0tpZHNbMiAwIFJdCi9Db3VudCAxPj4KZW5kb2JqCjQgMCBvYmoKPDwvVHlwZS9Gb250Ci9TdWJ0eXBlL1R5cGUxCi9OYW1lL0YxCi9CYXNlRm9udC9IZWx2ZXRpY2EKL0VuY29kaW5nL1dpbkFuc2lFbmNvZGluZz4+CmVuZG9iago1IDAgb2JqCjw8L0xlbmd0aCAxMDk4Pj4Kc3RyZWFtCkJUClsgL1BERiBdIDAgbgo8PC9MZW5ndGggMTAwID4+CnN0cmVhbQpIZWxsbyBmcm9tIFBERiBjdXJyaWN1bHVtIQplbmRzdHJlYW0KZW5kb2JqCnhyZWYKMCA3CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDExMyAwMDAwMCBuIAowMDAwMDAwMjAzIDAwMDAwIG4gCjAwMDAwMDAzMzAgMDAwMDAgbiAKMDAwMDAwMDU0MCAwMDAwMCBuIAowMDAwMDAwNjYxIDAwMDAwIG4gCnRyYWlsZXIKPDwvU2l6ZSA3Ci9Sb290IDEgMCBSCj4+CnN0YXJ0eHJlZgo3MTY1CiUlRU9G';
 
   const [birthday, setBirthday] = useState<string>(formatDate(new Date()));
-  const [cv, setCv] = useState('');
+  // const [cv, setCv] = useState('');
   const cvContentType = 'application/pdf';
   const dateRegister = formatDate(new Date());
   const [education, setEducation] = useState('');

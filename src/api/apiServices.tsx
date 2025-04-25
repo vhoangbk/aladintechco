@@ -1,6 +1,6 @@
 import axios from 'axios';
-import {API_CANDIDATE, GET_ALL_RECRUITMENTS} from './apiConfig';
-import { CandidateModel, RecruitmentModel } from 'src/types/typeModel';
+import {API_CANDIDATE, API_EMPLOYEES, GET_ALL_RECRUITMENTS} from './apiConfig';
+import { CandidateModel, Employee, RecruitmentModel } from 'src/types/typeModel';
 
 export const getRecruitments = async () => {
   try {
@@ -19,5 +19,15 @@ export const postNewCandidates = async (candidateModel : CandidateModel) => {
   } catch (error) {
     console.error('Post candidate Failed!:', error);
     throw error;
+  }
+};
+
+export const getEmployees = async () => {
+  try {
+    const response = await axios.get(API_EMPLOYEES);
+    return response.data as Employee[];
+  } catch (error) {
+    console.error('Error fetching Employees:', error);
+    return null;
   }
 };
