@@ -31,14 +31,16 @@ const TuyenDungScreen = ({navigation}:TuyenDungScreenProps) => {
   const [loadingData, setLoadingData] = useState<boolean>(true);
   const {t} = useTranslation();
 
+  const fetchData = async () => {
+    const data = await getRecruitments();
+    setRecruitmentDATA(data as RecruitmentModel[]);
+    setLoadingData(false);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getRecruitments();
-      setRecruitmentDATA(data as RecruitmentModel[]);
-      setLoadingData(false);
-    };
+    console.log('load');
     fetchData();
-  }, [recruitmentDATA]);
+  }, []);
 
   if (loadingData) {
     return (
