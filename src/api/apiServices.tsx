@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {API_CANDIDATE, API_EMPLOYEES, GET_ACCESS_TOKEN, GET_ALL_RECRUITMENTS} from './apiConfig';
 import { CandidateModel, RecruitmentModel } from 'src/types/typeModel';
-import { get_AccessKeyStorage } from './AsyncStorage';
+import { get_AccessKeyStorage } from '../commons/AsyncStorage';
+
 
 export const getRecruitments = async () => {
   try {

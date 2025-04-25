@@ -42,8 +42,10 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if(authLogin){
+      fetchData();
+    }
+  }, [authLogin]);
 
   if (loadingData) {
     return (

@@ -1,5 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {useState} from 'react';
+import { useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   Image,
@@ -10,29 +10,27 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
 import {colorGreen, colorWhite} from '../assets/color';
 import {imageResource} from 'src/assets/imageResource';
 import ButtonPerson from 'src/components/ButtonPerson';
 import ChangeLanguageBox from 'src/components/ChangeLanguageBox';
 import i18n from 'src/language/i18n';
-import {logout} from 'src/redux/slice/AuthSlice';
-import {AppDispatch, RootState} from 'src/redux/store';
 import {RootStackParamList} from 'src/types/RootStackParamList';
 import {fontRegular} from 'src/types/typeFont';
-import { get_AccessKeyStorage, save_AccessKeyStorage } from 'src/api/AsyncStorage';
-
+import { get_AccessKeyStorage, save_AccessKeyStorage } from 'src/commons/AsyncStorage';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from 'src/redux/store';
+import { logout } from 'src/redux/slice/AuthSlice';
 type PersonScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'PersonScreen'
 >;
 
 const PersonScreen = ({navigation}: PersonScreenProps) => {
+  const authLogin = useSelector((state: RootState) => state.auth.auth);
   const screenHeight = useWindowDimensions().height;
   const {t} = useTranslation();
   const [showChangeLanguageBox, setShowChangeLanguageBox] = useState(false);
-
-  const authLogin = useSelector((state: RootState) => state.auth.auth);
   const dispatch = useDispatch<AppDispatch>();
 
   const openSelectLanguage = () => {
@@ -47,7 +45,7 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
     try {
       await save_AccessKeyStorage('');
       console.log('Logout success!',await get_AccessKeyStorage());
-      dispatch(logout());
+      dispatch(logout())
     } catch (error:any) {
       console.log('Logout failed',error.response);
     }

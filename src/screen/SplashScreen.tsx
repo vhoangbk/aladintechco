@@ -3,6 +3,10 @@ import {imageResource} from '../assets/imageResource';
 import {Image, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {RootStackParamList} from '../types/RootStackParamList';
 import {useEffect} from 'react';
+import { get_AccessKeyStorage } from 'src/commons/AsyncStorage';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from 'src/redux/store';
+import { login, logout } from 'src/redux/slice/AuthSlice';
 
 type SplashScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -11,6 +15,26 @@ type SplashScreenProps = NativeStackScreenProps<
 
 const SplashScreen = ({navigation}: SplashScreenProps) => {
   const width = useWindowDimensions().width;
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    //get token
+    //truong null, empty ->chua login
+    //dispatch authlogin = false
+    //dispatch true
+
+    const checkAuth = async () => {
+      if(await get_AccessKeyStorage()){
+        dispatch(login());
+      }else{
+        dispatch(logout());
+      }
+    };
+
+    checkAuth();
+
+  });
 
   useEffect(() => {
     const timer = setTimeout(() => {
