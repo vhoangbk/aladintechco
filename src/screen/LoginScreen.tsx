@@ -1,5 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   Alert,
@@ -15,9 +15,11 @@ import {colorBlack, colorGreen, colorWhite} from '../assets/color';
 import {imageResource} from 'src/assets/imageResource';
 import NutBam from 'src/components/NutBam';
 import {RootStackParamList} from 'src/types/RootStackParamList';
-import { login } from 'src/redux/slice/AuthSlice';
+import { getAccessToken } from 'src/api/apiServices';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from 'src/redux/store';
+import { login } from 'src/redux/slice/AuthSlice';
+import { get_AccessKeyStorage, get_Field_Saved, save_AccessKeyStorage, save_Account } from 'src/api/AsyncStorage';
 
 type LoginScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -30,17 +32,46 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
   const [inputPassword, setInputPassword] = useState('');
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleLogin = () => {
-    if (inputEmail.trim() === '' || inputPassword.trim() === '') {
+  useEffect(()=>{
+    const getAccountSaved = async () =>{
+      const username = await get_Field_Saved('username');
+      const password = await get_Field_Saved('password');
+
+      if(username != null || password != null){
+        setInputEmail(username!!);
+        setInputPassword(password!!);
+      }
+
+    };
+    getAccountSaved();
+  },[]);
+
+  const handleLogin = async () => {
+
+    if (inputEmail?.trim() === '' || inputPassword?.trim() === '') {
       Alert.alert(t('alert'), t('alertMessage'), [
         {text: 'OK', onPress: () => {}},
       ]);
       return;
     }
-    dispatch(login());
-    console.log(inputEmail);
-    console.log(inputPassword);
-    navigation.goBack();
+
+    const access_token = await getAccessToken(inputEmail!!,inputPassword!!);
+
+    if(access_token === null){
+      Alert.alert('Lỗi', 'Sai tài khoản hoặc mật khẩu!!', [
+        {text: 'OK', onPress: () => {}},
+      ]);
+      return;
+    }else{
+      await save_Account(inputEmail,inputPassword);
+      await save_AccessKeyStorage(access_token);
+      console.log('Login success!',await get_AccessKeyStorage());
+      console.log('Saved Account',await get_Field_Saved('username'), await get_Field_Saved('password'));
+      dispatch(login());
+      navigation.goBack();
+    }
+
+
   };
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -59,6 +90,7 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
         <View style={styles.inputContainer}>
           <Image source={imageResource.iconemail} style={styles.inputIcon} />
           <TextInput
+            value={inputEmail}
             placeholder="Email"
             style={styles.input}
             keyboardType="email-address"
@@ -70,6 +102,7 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
         <View style={styles.inputContainer}>
           <Image source={imageResource.iconpassword} style={styles.inputIcon} />
           <TextInput
+          value={inputPassword}
             placeholder="Password"
             style={styles.input}
             secureTextEntry

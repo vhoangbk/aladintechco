@@ -61,7 +61,7 @@ const PersonalInformation = ({ navigation, route }: PersonalInformationProps) =>
 
             </View>
             <Text style={styles.title1}>{t('education')}</Text>
-            <View style={styles.line}> </View>
+            <View style={styles.line}></View>
 
             <View style={styles.informationView}>
               <RowInformation title={t('degree')} infor={'asdasd'} />

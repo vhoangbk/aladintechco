@@ -20,6 +20,7 @@ import {logout} from 'src/redux/slice/AuthSlice';
 import {AppDispatch, RootState} from 'src/redux/store';
 import {RootStackParamList} from 'src/types/RootStackParamList';
 import {fontRegular} from 'src/types/typeFont';
+import { get_AccessKeyStorage, save_AccessKeyStorage } from 'src/api/AsyncStorage';
 
 type PersonScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -42,8 +43,15 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
     navigation.navigate('LoginScreen');
   };
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleLogout = async () => {
+    try {
+      await save_AccessKeyStorage('');
+      console.log('Logout success!',await get_AccessKeyStorage());
+      dispatch(logout());
+    } catch (error:any) {
+      console.log('Logout failed',error.response);
+    }
+
   };
 
   return (
