@@ -12,12 +12,12 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from 'src/types/RootStackParamList';
 import {colorWhite} from '../assets/color';
 
+const URL =
+  'https://chatgpt.com/g/g-678dba18480481919884a97072cba654-about-aladin-technology';
+
 type ChatScreenProps = NativeStackScreenProps<RootStackParamList, 'ChatScreen'>;
 
 const ChatScreen = ({navigation}: ChatScreenProps) => {
-  const URL =
-    'https://chatgpt.com/g/g-678dba18480481919884a97072cba654-about-aladin-technology';
-
   const handleBack = () => {
     navigation.navigate('TabNavigator');
   };

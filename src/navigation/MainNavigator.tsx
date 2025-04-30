@@ -12,6 +12,7 @@ import PersonalInformation from 'src/screen/PersonalInformation';
 import EditPersonalInfor from 'src/screen/EditPersonalInfor';
 import DetailRecruitment from 'src/screen/DetailRecruitment';
 import ApplyScreen from 'src/screen/ApplyScreen';
+import AddNewEmployee from 'src/screen/AddNewEmployee';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -88,6 +89,14 @@ const MainNavigator = () => {
         <Stack.Screen
           name="ApplyScreen"
           component={ApplyScreen}
+          options={{
+            animation: 'fade',
+          }}
+        />
+
+        <Stack.Screen
+          name="AddNewEmployee"
+          component={AddNewEmployee}
           options={{
             animation: 'fade',
           }}

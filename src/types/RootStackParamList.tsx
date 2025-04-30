@@ -19,4 +19,5 @@ export type RootStackParamList = {
   ApplyScreen: {
     recruitment: RecruitmentModel;
   };
+  AddNewEmployee:undefined;
 };

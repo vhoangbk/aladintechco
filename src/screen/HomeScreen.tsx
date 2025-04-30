@@ -157,14 +157,12 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
           </View>
         </View>
 
-        {/* Tai sao nen chon aladin */}
         <Frame2 />
 
-        {/* Tech we use */}
         <Frame3 />
 
-        {/* Tong quan nhan su */}
         <Frame4 />
+
       </ScrollView>
 
       <View style={styles.btnChat}>

@@ -18,22 +18,16 @@ const SplashScreen = ({navigation}: SplashScreenProps) => {
 
   const dispatch = useDispatch<AppDispatch>();
 
+  const checkAuth = async () => {
+    if(await get_AccessKeyStorage()){
+      dispatch(login());
+    }else{
+      dispatch(logout());
+    }
+  };
+
   useEffect(() => {
-    //get token
-    //truong null, empty ->chua login
-    //dispatch authlogin = false
-    //dispatch true
-
-    const checkAuth = async () => {
-      if(await get_AccessKeyStorage()){
-        dispatch(login());
-      }else{
-        dispatch(logout());
-      }
-    };
-
     checkAuth();
-
   });
 
   useEffect(() => {

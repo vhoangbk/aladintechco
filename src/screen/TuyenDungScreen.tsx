@@ -44,7 +44,7 @@ const TuyenDungScreen = ({navigation}:TuyenDungScreenProps) => {
 
   if (loadingData) {
     return (
-      <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor:colorWhite}}>
         <ActivityIndicator size="large" />
       </SafeAreaView>
     );

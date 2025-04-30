@@ -4,6 +4,7 @@ import {
   Button,
   FlatList,
   Image,
+  Modal,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -17,10 +18,14 @@ import {RootStackParamList} from 'src/types/RootStackParamList';
 import {fontBold, fontRegular} from 'src/types/typeFont';
 import {t} from 'i18next';
 import Search from 'src/components/Search';
-import {Employee} from 'src/types/typeModel';
-import { imageResource } from 'src/assets/imageResource';
-import { useEffect, useState } from 'react';
-import { getEmployees } from 'src/api/apiServices';
+import {Department, DepartmentMember, Employee} from 'src/types/typeModel';
+import {imageResource} from 'src/assets/imageResource';
+import {useEffect, useState} from 'react';
+import {
+  getDepartmentByName,
+  getEmployees,
+  getListDepartment,
+} from 'src/api/apiServices';
 
 type EmployeeScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -28,11 +33,37 @@ type EmployeeScreenProps = NativeStackScreenProps<
 >;
 
 const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
-
   const authLogin = useSelector((state: RootState) => state.auth.auth);
 
   const [employeesArray, setEmployeesArray] = useState<Employee[]>([]);
   const [loadingData, setLoadingData] = useState<boolean>(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [memberInDepartment,setMemberInDepartment] = useState<DepartmentMember[]>([]);
+  const [nameDepartmentSelected,setNameDepartmentSelected] = useState<string>('');
+
+  const dataDepartment2 = [
+    {
+      id: 152162567,
+      departmentName: 'ALL',
+      isleader: '0',
+      mail: 'All@gmail.com',
+      datetime: null,
+      user: {
+        id: '0528210048690774',
+        login: 'admin',
+        firstName: 'Admin',
+        lastName: 'Admin',
+        email: 'admin@gmail.com',
+        activated: false,
+        langKey: 'en',
+        imageUrl: null,
+      },
+    },
+  ];
+
+  const [dataDepartment3, setDataDepartment3] = useState<Department[]>([]);
+
+  const dataDepartment1 = [...dataDepartment2, ...dataDepartment3];
 
   const fetchData = async () => {
     setLoadingData(true);
@@ -41,15 +72,44 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
     setLoadingData(false);
   };
 
+  const fetchDepartment = async () => {
+    setLoadingData(true);
+    const data = await getListDepartment();
+    setDataDepartment3(data);
+    setLoadingData(false);
+  };
+
   useEffect(() => {
-    if(authLogin){
+    if (authLogin) {
+      fetchDepartment();
       fetchData();
     }
   }, [authLogin]);
 
+  const handleSelectDepartment = async (item: Department) => {
+    if (item.departmentName === 'ALL') {
+      fetchData();
+      return;
+    } else {
+      const member = await getDepartmentByName(
+        item.departmentName.toString(),
+      );
+      setModalVisible(true);
+      setMemberInDepartment(member);
+      setNameDepartmentSelected(item.departmentName);
+      console.log(member);
+    }
+  };
+
   if (loadingData) {
     return (
-      <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: colorWhite,
+        }}>
         <ActivityIndicator size="large" />
       </SafeAreaView>
     );
@@ -62,32 +122,124 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colorWhite}}>
       <Header />
-      <View style={{flex: 1, marginHorizontal: 20}}>
+      <View style={{flex: 1, marginHorizontal: 15}}>
         <View style={{flexDirection: 'row'}}>
           <Search />
-          <TouchableOpacity
-            style={styles.btnADD}>
+          <TouchableOpacity style={styles.btnADD} onPress={() => navigation.navigate('AddNewEmployee')}>
             <Text style={{marginHorizontal: 25, color: colorWhite}}>ADD</Text>
           </TouchableOpacity>
         </View>
+        <View>
+          <FlatList
+            data={dataDepartment1}
+            renderItem={({item}) => (
+              <DepartmentItem item={item} onPress={handleSelectDepartment} />
+            )}
+            horizontal={true}
+            contentContainerStyle={{alignItems: 'center'}}
+          />
+        </View>
         <FlatList
           data={employeesArray}
-          renderItem={ ({item}:{item: Employee}) => <EmployeeItem item={item}/>}/>
+          renderItem={({item}: {item: Employee}) => (
+            <EmployeeItem item={item} />
+          )}
+        />
       </View>
+
+      <ModalDepartmentList
+        modalVisible={modalVisible}
+        setModalVisible = {setModalVisible}
+        memberInDepartment = {memberInDepartment}
+        nameDepartment = {nameDepartmentSelected}/>
+
     </SafeAreaView>
   );
 };
 
-const EmployeeItem = ({item}:{item: Employee}) => {
+const ModalDepartmentList = ({modalVisible,setModalVisible,memberInDepartment,nameDepartment}
+  : {
+    modalVisible:any;
+    setModalVisible:any;
+    memberInDepartment: DepartmentMember[];
+    nameDepartment:string;
+}) => {
   return(
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        setModalVisible(false);
+      }}>
+      <View style={styles.modalBackground}>
+        <View style={styles.modalContainer}>
+          <Text style={styles.modalTitle}>
+            {nameDepartment}
+          </Text>
+
+          <FlatList
+            data={memberInDepartment}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.memberItem}>
+                <Text>ID: {item.id}</Text>
+                <Text style={{ fontFamily: fontBold }}>Name: {item.user.login}</Text>
+                <Text>Email: {item.mail}</Text>
+              </View>
+            )}
+          />
+
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => setModalVisible(false)}>
+            <Text style={{ color: 'white' }}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
+  );
+};
+
+const DepartmentItem = ({item, onPress}: any) => {
+  return (
+    <TouchableOpacity
+      onPress={() => onPress(item)}
+      style={{
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 8,
+        backgroundColor: colorGreen,
+        elevation: 10,
+        margin: 3,
+      }}>
+      <Text
+        style={{fontFamily: fontBold, marginHorizontal: 20, color: colorWhite}}>
+        {item.departmentName}
+      </Text>
+    </TouchableOpacity>
+  );
+};
+
+const EmployeeItem = ({item}: {item: Employee}) => {
+  return (
     <TouchableOpacity>
-      <View style={{borderWidth:1,margin:3,flexDirection:'row',alignItems:'center',borderRadius:10,elevation:10,backgroundColor:colorWhite}}>
+      <View
+        style={{
+          margin: 5,
+          flexDirection: 'row',
+          alignItems: 'center',
+          borderRadius: 10,
+          elevation: 6,
+          backgroundColor: colorWhite,
+        }}>
         <Image
           source={imageResource.noneimage}
-          style={{width:80,height:80,margin:5,borderRadius:10}}
+          style={{width: 80, height: 80, margin: 5, borderRadius: 10}}
         />
-        <View style={{margin:10}}>
-          <Text style={{fontFamily:fontBold}}>{item.fullName}</Text>
+        <View style={{margin: 10}}>
+          <Text style={{fontFamily: fontBold}}>{item.fullName}</Text>
           <Text>Email: {item.email}</Text>
           <Text>Level: {item.level}</Text>
           <Text>First Day Work: {item.firstDayWork}</Text>
@@ -119,7 +271,7 @@ const Header = () => {
   return (
     <View style={styles.header}>
       <View style={styles.title}>
-        <Text style={styles.txt}>DANH SÁCH NHÂN VIÊN</Text>
+        <Text style={styles.txt}>{t('danhsachnhanvien')}</Text>
       </View>
     </View>
   );
@@ -167,12 +319,42 @@ const styles = StyleSheet.create({
     color: colorWhite,
     fontSize: 17,
   },
-  btnADD:{
+  btnADD: {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
     marginVertical: 7,
     backgroundColor: colorGreen,
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalContainer: {
+    width: '85%',
+    maxHeight: '80%',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontFamily: fontBold,
+    marginBottom: 10,
+  },
+  memberItem: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    paddingVertical: 10,
+  },
+  closeButton: {
+    marginTop: 15,
+    backgroundColor: 'tomato',
+    padding: 10,
+    alignItems: 'center',
+    borderRadius: 5,
   },
 });
 
