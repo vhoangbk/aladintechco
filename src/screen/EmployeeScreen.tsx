@@ -36,7 +36,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
   const authLogin = useSelector((state: RootState) => state.auth.auth);
 
   const [employeesArray, setEmployeesArray] = useState<Employee[]>([]);
-  const [loadingData, setLoadingData] = useState<boolean>(false);
+  const [loadingData, setLoadingData] = useState<boolean>(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [memberInDepartment,setMemberInDepartment] = useState<DepartmentMember[]>([]);
   const [nameDepartmentSelected,setNameDepartmentSelected] = useState<string>('');
@@ -101,26 +101,19 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
     }
   };
 
-  if (loadingData) {
-    return (
-      <SafeAreaView
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: colorWhite,
-        }}>
-        <ActivityIndicator size="large" />
-      </SafeAreaView>
-    );
-  }
-
   if (!authLogin) {
     return <Frame5 navigation={navigation} route={route} />;
   }
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colorWhite}}>
+
+      <Modal visible={loadingData} transparent={true}>
+        <View style={styles.viewLoading}>
+          <ActivityIndicator size="large" color={colorGreen} />
+        </View>
+      </Modal>
+
       <Header />
       <View style={{flex: 1, marginHorizontal: 15}}>
         <View style={{flexDirection: 'row'}}>
@@ -355,6 +348,12 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     borderRadius: 5,
+  },
+  viewLoading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
 });
 

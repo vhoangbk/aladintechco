@@ -7,6 +7,7 @@ import {
   API_DEPARTMENT_LIST,
   API_EMPLOYEES,
   API_PERSONAL_INFORMATION,
+  API_UPLOAD_IMAGE,
   GET_ACCESS_TOKEN,
   GET_ALL_RECRUITMENTS,
 } from './apiConfig';
@@ -149,3 +150,29 @@ export const postNewEmployee = async (newEmployee: NewEmployee) => {
     throw error;
   }
 };
+
+export const upLoadImageToServer = async (uri:string) => {
+    const fomData = new FormData();
+    const fileName = uri.split('/').pop() || 'photo.jpg';
+    const file = {
+      uri,
+      type: 'image/jpeg',
+      name:fileName,
+    } as any;
+
+    fomData.append('file', file);
+
+    try {
+      const access_token = await get_AccessKeyStorage();
+      const response = await axios.post (API_UPLOAD_IMAGE,fomData,{
+        headers:{
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${access_token}`,
+        }
+      })
+      console.log('Upload Image success!!!:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Upload image error:', error);
+    }
+}

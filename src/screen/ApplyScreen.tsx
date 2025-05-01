@@ -243,7 +243,7 @@ const ApplyScreen = ({navigation, route}: ApplyScreenProps) => {
 
 export default ApplyScreen;
 
-const PickGender = ({sex, setSex}: any) => {
+export const PickGender = ({sex, setSex}: any) => {
   return (
     <View style={{marginBottom: 16}}>
       <Text style={{marginBottom: 4}}>{t('gender')}</Text>
@@ -272,7 +272,7 @@ const DateRegister = ({dateRegister}: {dateRegister: string}) => {
   );
 };
 
-const BirthdayPicker = ({
+export const BirthdayPicker = ({
   birthday,
   setBirthday,
 }: {

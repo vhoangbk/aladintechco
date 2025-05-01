@@ -9,4 +9,5 @@ export const API_DEPARTMENT = `${BASE_URL}/api/departmentsname`;
 export const API_DEPARTMENT_LIST = `${BASE_URL}/api/departments`;
 export const API_PERSONAL_INFORMATION = `${BASE_URL}/api/employees1`;
 export const API_CREATE_NEW_EMPLOYEE = `${BASE_URL}/api/employees`;
+export const API_UPLOAD_IMAGE = `${BASE_URL}//api/upload/image`;
 

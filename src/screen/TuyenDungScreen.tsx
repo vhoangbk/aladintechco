@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   FlatList,
   Image,
+  Modal,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -42,16 +43,15 @@ const TuyenDungScreen = ({navigation}:TuyenDungScreenProps) => {
     fetchData();
   }, []);
 
-  if (loadingData) {
-    return (
-      <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor:colorWhite}}>
-        <ActivityIndicator size="large" />
-      </SafeAreaView>
-    );
-  }
-
   return (
     <SafeAreaView style={{flex: 1}}>
+
+      <Modal visible={loadingData} transparent={true}>
+        <View style={styles.viewLoading}>
+          <ActivityIndicator size="large" color={colorGreen} />
+        </View>
+      </Modal>
+
         <View style={{borderWidth: 0, flex: 1}}>
             <View style={styles.container}>
               <FlatList
@@ -189,6 +189,12 @@ const styles = StyleSheet.create({
   },
   txt5: {
     fontFamily: fontBold,
+  },
+  viewLoading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
 });
 

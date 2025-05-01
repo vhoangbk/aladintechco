@@ -23,6 +23,7 @@ import { AppDispatch, RootState } from 'src/redux/store';
 import { logout } from 'src/redux/slice/AuthSlice';
 import { getAccount } from 'src/api/apiServices';
 import { Account } from 'src/types/typeModel';
+import { BASE_URL } from 'src/api/apiConfig';
 type PersonScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'PersonScreen'
@@ -110,6 +111,12 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
               />
             </View>
           </TouchableOpacity>
+
+          {/* <Image
+            source={{ uri: 'http://125.212.192.150/services/aladintech/backend/upload/1746021745082.jpg' }}
+            style={{ width: 300, height: 300 ,borderWidth:1}}
+          /> */}
+
 
           {/* Các nút */}
           {authLogin ? (
