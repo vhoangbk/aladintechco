@@ -144,5 +144,6 @@
   "error": "Error",
   "create_success": "Employee created successfully!",
   "create_failed": "Failed to create employee!",
-  "fill_all_required": "Please fill all required fields and select an image."
+  "fill_all_required": "Please fill all required fields and select an image.",
+  "update_failed" : "Failed to update!"
 }

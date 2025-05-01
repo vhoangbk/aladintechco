@@ -7,11 +7,12 @@ import {
   API_DEPARTMENT_LIST,
   API_EMPLOYEES,
   API_PERSONAL_INFORMATION,
+  API_UPDATE_EMPLOYEE,
   API_UPLOAD_IMAGE,
   GET_ACCESS_TOKEN,
   GET_ALL_RECRUITMENTS,
 } from './apiConfig';
-import {CandidateModel, NewEmployee, RecruitmentModel} from 'src/types/typeModel';
+import {CandidateModel, NewEmployee, RecruitmentModel, UpdateEmployee} from 'src/types/typeModel';
 import {get_AccessKeyStorage} from '../commons/AsyncStorage';
 
 export const getRecruitments = async () => {
@@ -175,4 +176,21 @@ export const upLoadImageToServer = async (uri:string) => {
     } catch (error) {
       console.error('Upload image error:', error);
     }
+}
+
+export const putUpdateEmployee = async (idEmpl : any , updatedData: UpdateEmployee) => {
+  try {
+    const access_token = await get_AccessKeyStorage();
+    const response = await axios.put(`${API_UPDATE_EMPLOYEE}/${idEmpl}`, updatedData, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log('Update success:', response.data);
+    return response.data;
+  } catch (error: any) {
+    console.error('Update employee failed:', error.response?.data || error.message);
+    throw error;
+  }
 }

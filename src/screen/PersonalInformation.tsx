@@ -91,21 +91,11 @@ const PersonalInformation = ({navigation, route}: PersonalInformationProps) => {
                 title={t('marital_status')}
                 infor={'Đã kết hôn'}
               />
-              <RowInformation title={t('children')} infor={'Không rõ'} />
               <RowInformation title={t('family')} infor={information?.family} />
               <RowInformation
                 title={t('gender')}
-                infor={information?.gender === 'Male' ? 'Nam' : 'Nữ'}
+                infor={information?.gender === 'Nam' ? 'Nam' : 'Nữ'}
               />
-              <RowInformation
-                title={t('relative')}
-                infor={information?.emergencyContact}
-              />
-              <RowInformation
-                title={t('bank_name')}
-                infor={'null'}
-              />
-              <RowInformation title={t('bank_account')} infor={'null'} />
             </View>
 
             <Text style={styles.title1}>{t('education')}</Text>
@@ -126,7 +116,7 @@ const PersonalInformation = ({navigation, route}: PersonalInformationProps) => {
               />
               <RowInformation
                 title={t('languages')}
-                infor={`${information?.foreignLanguage} - ${information?.english}`}
+                infor={`${information?.foreignLanguage}`}
               />
             </View>
 
@@ -157,7 +147,7 @@ const PersonalInformation = ({navigation, route}: PersonalInformationProps) => {
             <TouchableOpacity
               style={styles.btnEdit}
               onPress={() => navigation.navigate('EditPersonalInfor')}>
-              <Text style={styles.txt3}>Sửa thông tin</Text>
+              <Text style={styles.txt3}>{t('sua')}</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

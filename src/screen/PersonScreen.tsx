@@ -70,7 +70,7 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
       <View style={styles.container}>
         <Text>Trạng thái: {authLogin ? 'Đã login' : 'Chưa login'}</Text>
         {authLogin ? (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation.navigate('EditPersonalInfor')}>
             <View style={styles.btnEdit}>
               <Text style={styles.txt}>{t('sua')}</Text>
               <Image style={styles.imageEdit} source={imageResource.editicon} />

@@ -209,6 +209,126 @@ export interface NewEmployee {
   workModelId: number;
 }
 
+export interface UpdateEmployee {
+  id: number;
+  userId: string;
+  avatar: string;
+  contractInfo: string;
+  countryside: string;
+  currentResidence: string;
+  dateOfBirth: string;
+  departmentId: number;
+  education: string;
+  email: string;
+  emergencyContact: string;
+  employeeDocuments: {
+    documentType: string;
+    documentUrl: string;
+    id: number;
+  }[];
+  employeeStatus: string;
+  english: string;
+  experience: string;
+  facebookLink: string;
+  family: string;
+  favourite: string;
+  firstDayWork: string;
+  foreignLanguage: string;
+  fullName: string;
+  gender: string;
+  identificationNumber: string;
+  jobPositionId: number;
+  jobTitleId: number;
+  level: string;
+  linkedInLink: string;
+  objectiveInCV: string;
+  officialContractEndDate: string;
+  officialContractStartDate: string;
+  phoneNumber: string;
+  probationEndDate: string;
+  probationStartDate: string;
+  skypeLink: string;
+  status: string;
+  telegramLink: string;
+  workModelId: number;
+}
+
+export interface CurrentEmployee {
+  id: number;
+  avatar: string;
+  fullName: string;
+  firstDayWork: string;
+  phoneNumber: string;
+  dateOfBirth: string;
+  gender: string;
+  countryside: string;
+  currentResidence: string;
+  family: string;
+  identificationNumber: string;
+  email: string;
+  emergencyContact: string;
+  favourite: string;
+  foreignLanguage: string;
+  education: string;
+  english: string;
+  experience: string;
+  objectiveInCV: string;
+  employeeStatus: string;
+  status: string;
+  level: string | null;
+  facebookLink: string;
+  telegramLink: string;
+  linkedInLink: string;
+  skypeLink: string;
+  contractInfo: string | null;
+  probationStartDate: string;
+  probationEndDate: string;
+  officialContractStartDate: string;
+  officialContractEndDate: string;
+
+  jobPosition: {
+    id: number;
+    name: string;
+  };
+
+  jobTitle: {
+    id: number;
+    name: string;
+  };
+
+  workModel: {
+    id: number;
+    name: string;
+  };
+
+  employeeDocuments: {
+    documentType: string;
+    documentUrl: string;
+    id: number;
+  }[] | null;
+
+  user: {
+    id: string;
+    login: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    activated: boolean;
+    langKey: string;
+    imageUrl: string | null;
+  };
+
+  department: {
+    id: number;
+    departmentName: string;
+    isleader: string;
+    mail: string;
+    datetime: string | null;
+  };
+}
+
+
+
 
 
 
