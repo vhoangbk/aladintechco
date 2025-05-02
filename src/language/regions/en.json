@@ -145,5 +145,14 @@
   "create_success": "Employee created successfully!",
   "create_failed": "Failed to create employee!",
   "fill_all_required": "Please fill all required fields and select an image.",
-  "update_failed" : "Failed to update!"
+  "update_failed" : "Failed to update!",
+  "detailTitle": "Employee Information",
+  "fullName": "Full Name",
+  "phoneNumber": "Phone Number",
+  "dateOfBirth": "Date of Birth",
+  "firstDayWork": "First Day of Work",
+  "countryside": "Hometown",
+  "status": "Account Status",
+  "employeeStatus": "Employee Status",
+  "workModel": "Work Model"
 }

@@ -205,6 +205,7 @@ const EditPersonalInformation = ({navigation, route}: EditPersonalInformationPro
 
   return (
     <SafeAreaView style={styles.container}>
+
       <Modal visible={loadingCreate} transparent={true}>
         <View style={styles.viewLoading}>
           <ActivityIndicator size="large" color={colorGreen} />

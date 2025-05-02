@@ -135,7 +135,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
         <FlatList
           data={employeesArray}
           renderItem={({item}: {item: Employee}) => (
-            <EmployeeItem item={item} />
+            <EmployeeItem item={item} navigation={navigation}/>
           )}
         />
       </View>
@@ -215,9 +215,9 @@ const DepartmentItem = ({item, onPress}: any) => {
   );
 };
 
-const EmployeeItem = ({item}: {item: Employee}) => {
+const EmployeeItem = ({item,navigation}: {item: Employee; navigation:any}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={()=>navigation.navigate('DetailEmployeeScreen', {employeeDetail : item})}>
       <View
         style={{
           margin: 5,
@@ -228,7 +228,7 @@ const EmployeeItem = ({item}: {item: Employee}) => {
           backgroundColor: colorWhite,
         }}>
         <Image
-          source={imageResource.noneimage}
+          source={imageResource.avt}
           style={{width: 80, height: 80, margin: 5, borderRadius: 10}}
         />
         <View style={{margin: 10}}>

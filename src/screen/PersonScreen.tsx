@@ -68,7 +68,6 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
-        <Text>Trạng thái: {authLogin ? 'Đã login' : 'Chưa login'}</Text>
         {authLogin ? (
           <TouchableOpacity onPress={()=>navigation.navigate('EditPersonalInfor')}>
             <View style={styles.btnEdit}>
@@ -112,13 +111,6 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
             </View>
           </TouchableOpacity>
 
-          {/* <Image
-            source={{ uri: 'http://125.212.192.150/services/aladintech/backend/upload/1746021745082.jpg' }}
-            style={{ width: 300, height: 300 ,borderWidth:1}}
-          /> */}
-
-
-          {/* Các nút */}
           {authLogin ? (
             <ButtonPerson
               image={imageResource.iconuser}
