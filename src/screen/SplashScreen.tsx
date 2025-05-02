@@ -32,7 +32,7 @@ const SplashScreen = ({navigation}: SplashScreenProps) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.replace('TabNavigator');
+      navigation.replace('ChatScreen');
     }, 1000);
 
     return () => clearTimeout(timer);
