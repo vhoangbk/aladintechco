@@ -26,6 +26,7 @@ import {
   getEmployees,
   getListDepartment,
 } from 'src/api/apiServices';
+import { URL_SERVER } from 'src/api/apiConfig';
 
 type EmployeeScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -137,6 +138,11 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
           renderItem={({item}: {item: Employee}) => (
             <EmployeeItem item={item} navigation={navigation}/>
           )}
+          ListEmptyComponent={
+            <View style={{justifyContent:'center', alignItems: 'center', margin:20}}>
+              <Text>{t('data_null')}</Text>
+            </View>
+          }
         />
       </View>
 
@@ -228,7 +234,7 @@ const EmployeeItem = ({item,navigation}: {item: Employee; navigation:any}) => {
           backgroundColor: colorWhite,
         }}>
         <Image
-          source={imageResource.avt}
+          source={{uri : `${URL_SERVER}${item.avatar}`}}
           style={{width: 80, height: 80, margin: 5, borderRadius: 10}}
         />
         <View style={{margin: 10}}>

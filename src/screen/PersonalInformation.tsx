@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import {useSelector} from 'react-redux';
+import { URL_SERVER } from 'src/api/apiConfig';
 import {getPersonalInformation} from 'src/api/apiServices';
 import {colorGreen, colorWhite} from 'src/assets/color';
 import {imageResource} from 'src/assets/imageResource';
@@ -46,7 +47,7 @@ const PersonalInformation = ({navigation, route}: PersonalInformationProps) => {
           {/*body*/}
           <View style={styles.view2}>
             <Image
-              source={imageResource.avt}
+              source={{ uri : `${URL_SERVER}${information?.avatar}`}}
               style={styles.image1}
               resizeMode="contain"
             />

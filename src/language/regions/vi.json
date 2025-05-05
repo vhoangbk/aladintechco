@@ -149,5 +149,7 @@
     "firstDayWork": "Ngày vào làm",
     "status": "Trạng thái tài khoản",
     "employeeStatus": "Tình trạng nhân viên",
-    "workModel": "Mô hình làm việc"
+    "workModel": "Mô hình làm việc",
+    "data_null" : "Không có dữ liệu",
+    "edit_info" : "Chỉnh sửa thông tin cá nhân"
 }

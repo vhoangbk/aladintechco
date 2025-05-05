@@ -27,6 +27,7 @@ import { getPersonalInformation, putUpdateEmployee, upLoadImageToServer } from '
 import { PickGender } from './ApplyScreen';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { CameraOptions, launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { URL_SERVER } from 'src/api/apiConfig';
 
 type EditPersonalInformationProps = NativeStackScreenProps<
   RootStackParamList,
@@ -219,7 +220,7 @@ const EditPersonalInformation = ({navigation, route}: EditPersonalInformationPro
           {imageURI ? (
             <Image source={{uri: imageURI}} style={{width: 150, height: 150, alignSelf: 'center'}} />
           ) : (
-            <Image source={imageResource.avt} style={{width: 150, height: 150, alignSelf: 'center'}} />
+            <Image source={{ uri : `${URL_SERVER}${currentEmployeeInfor?.avatar}`}} style={{width: 150, height: 150, alignSelf: 'center'}} />
           )}
             <View style={{alignItems: 'center'}}>
               <Text></Text>

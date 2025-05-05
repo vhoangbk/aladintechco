@@ -154,5 +154,7 @@
   "countryside": "Hometown",
   "status": "Account Status",
   "employeeStatus": "Employee Status",
-  "workModel": "Work Model"
+  "workModel": "Work Model",
+  "data_null" : "No data",
+  "edit_info" : "Edit Personal Information"
 }
