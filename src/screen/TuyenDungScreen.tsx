@@ -39,7 +39,6 @@ const TuyenDungScreen = ({navigation}:TuyenDungScreenProps) => {
   };
 
   useEffect(() => {
-    console.log('load');
     fetchData();
   }, []);
 

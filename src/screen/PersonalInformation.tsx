@@ -2,7 +2,10 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {t} from 'i18next';
 import {useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
+  Alert,
   Image,
+  Modal,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -28,10 +31,25 @@ type PersonalInformationProps = NativeStackScreenProps<
 const PersonalInformation = ({navigation, route}: PersonalInformationProps) => {
   const authLogin = useSelector((state: RootState) => state.auth.auth);
   const [information, setInformation] = useState<PersonalInformationModel>();
+  const [loadingData,setLoadingData] = useState<boolean>(false)
 
   const fetchPersonalInformation = async () => {
+    if(!authLogin) return
+    setLoadingData(true);
     const data = await getPersonalInformation();
     setInformation(data);
+    if(data === undefined || data === null ){
+      Alert.alert(
+        "Alert",
+        "Please create new employee!",
+        [
+          { text: "OK", onPress: () => navigation.goBack() }
+        ],
+        { cancelable: false }
+      );
+      return
+    }
+    setLoadingData(false);
   };
 
   useEffect(() => {
@@ -40,6 +58,13 @@ const PersonalInformation = ({navigation, route}: PersonalInformationProps) => {
 
   return (
     <SafeAreaView style={styles.container}>
+
+      <Modal visible={loadingData} transparent={true}>
+        <View style={styles.viewLoading}>
+          <ActivityIndicator size="large" color={colorGreen} />
+        </View>
+      </Modal>
+
       <View style={styles.view1}>
         {/* Header */}
         <Header navigation={navigation} route={route} />
@@ -292,6 +317,12 @@ const styles = StyleSheet.create({
   userinfortxt: {
     fontFamily: fontRegular,
     fontSize: 14,
+  },
+  viewLoading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
 });
 

@@ -67,6 +67,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
   const dataDepartment1 = [...dataDepartment2, ...dataDepartment3];
 
   const fetchData = async () => {
+    if (!authLogin) return;
     setLoadingData(true);
     const data = await getEmployees();
     setEmployeesArray(data as Employee[]);
@@ -74,6 +75,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
   };
 
   const fetchDepartment = async () => {
+    if (!authLogin) return;
     setLoadingData(true);
     const data = await getListDepartment();
     setDataDepartment3(data);
@@ -84,6 +86,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
     if (authLogin) {
       fetchDepartment();
       fetchData();
+      return
     }
   }, [authLogin]);
 
