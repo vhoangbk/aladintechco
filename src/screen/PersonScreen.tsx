@@ -1,5 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import { useState} from 'react';
+import { useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   Image,
@@ -21,12 +21,16 @@ import { get_AccessKeyStorage, save_AccessKeyStorage } from 'src/commons/AsyncSt
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from 'src/redux/store';
 import { logout } from 'src/redux/slice/AuthSlice';
+import { getAccount } from 'src/api/apiServices';
+import { Account } from 'src/types/typeModel';
+import { BASE_URL } from 'src/api/apiConfig';
 type PersonScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'PersonScreen'
 >;
 
 const PersonScreen = ({navigation}: PersonScreenProps) => {
+  const [accData,setAccData] = useState<Account>();
   const authLogin = useSelector((state: RootState) => state.auth.auth);
   const screenHeight = useWindowDimensions().height;
   const {t} = useTranslation();
@@ -45,19 +49,27 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
     try {
       await save_AccessKeyStorage('');
       console.log('Logout success!',await get_AccessKeyStorage());
-      dispatch(logout())
+      dispatch(logout());
     } catch (error:any) {
       console.log('Logout failed',error.response);
     }
 
   };
 
+  const getAccountInfor = async () => {
+    const acountData : Account = await getAccount();
+    setAccData(acountData);
+  };
+
+  useEffect(()=>{
+    getAccountInfor();
+  },[authLogin]);
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
-        <Text>Trạng thái: {authLogin ? 'Đã login' : 'Chưa login'}</Text>
         {authLogin ? (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation.navigate('EditPersonalInfor')}>
             <View style={styles.btnEdit}>
               <Text style={styles.txt}>{t('sua')}</Text>
               <Image style={styles.imageEdit} source={imageResource.editicon} />
@@ -72,8 +84,8 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
           <View style={{marginLeft: 15, justifyContent: 'center'}}>
             {authLogin ? (
               <>
-                <Text style={styles.name}>Nguyễn Văn A</Text>
-                <Text style={styles.email}>abcabc@gmail.com</Text>
+                <Text style={styles.name}>{accData?.login}</Text>
+                <Text style={styles.email}>{accData?.email}</Text>
               </>
             ) : (
               <View style={{marginTop:40}}>
@@ -99,7 +111,6 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
             </View>
           </TouchableOpacity>
 
-          {/* Các nút */}
           {authLogin ? (
             <ButtonPerson
               image={imageResource.iconuser}

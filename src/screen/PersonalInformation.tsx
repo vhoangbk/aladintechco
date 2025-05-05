@@ -1,5 +1,6 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { t } from 'i18next';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {t} from 'i18next';
+import {useEffect, useState} from 'react';
 import {
   Image,
   SafeAreaView,
@@ -9,24 +10,39 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { colorGreen, colorWhite } from 'src/assets/color';
-import { imageResource } from 'src/assets/imageResource';
-import { RootStackParamList } from 'src/types/RootStackParamList';
-import { fontBold, fontRegular } from 'src/types/typeFont';
+import {useSelector} from 'react-redux';
+import {getPersonalInformation} from 'src/api/apiServices';
+import {colorGreen, colorWhite} from 'src/assets/color';
+import {imageResource} from 'src/assets/imageResource';
+import {RootState} from 'src/redux/store';
+import {RootStackParamList} from 'src/types/RootStackParamList';
+import {fontBold, fontRegular} from 'src/types/typeFont';
+import {PersonalInformationModel} from 'src/types/typeModel';
 
 type PersonalInformationProps = NativeStackScreenProps<
   RootStackParamList,
   'PersonalInformation'
 >;
 
-const PersonalInformation = ({ navigation, route }: PersonalInformationProps) => {
+const PersonalInformation = ({navigation, route}: PersonalInformationProps) => {
+  const authLogin = useSelector((state: RootState) => state.auth.auth);
+  const [information, setInformation] = useState<PersonalInformationModel>();
+
+  const fetchPersonalInformation = async () => {
+    const data = await getPersonalInformation();
+    setInformation(data);
+  };
+
+  useEffect(() => {
+    fetchPersonalInformation();
+  }, [authLogin]);
+
   return (
     <SafeAreaView style={styles.container}>
-
       <View style={styles.view1}>
         {/* Header */}
         <Header navigation={navigation} route={route} />
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
           {/*body*/}
           <View style={styles.view2}>
             <Image
@@ -34,64 +50,105 @@ const PersonalInformation = ({ navigation, route }: PersonalInformationProps) =>
               style={styles.image1}
               resizeMode="contain"
             />
-            <Text style={styles.txt1}>Nguyễn Tiến Khang Huy</Text>
+            <Text style={styles.txt1}>{information?.fullName}</Text>
           </View>
           <View style={styles.view3}>
             <Text style={styles.title1}>{t('personal_info')}</Text>
-            <View style={styles.line}> </View>
+            <View style={styles.line}></View>
 
             <View style={styles.informationView}>
-
-              <RowInformation title={t('id')} infor={'89105'} />
-              <RowInformation title={t('start_date')} infor={'6 Th01 2025'} />
-              <RowInformation title={t('full_name')} infor={'Nguyễn Tiến Khang Huy'} />
-              <RowInformation title={t('phone_number')} infor={'0943185411'} />
-              <RowInformation title={t('email')} infor={'huyhuy271003@gmail.com'} />
-              <RowInformation title={t('dob')} infor={'27 Th10 2003'} />
-              <RowInformation title={t('hometown')} infor={'Hoài Đức, Hà Nội'} />
-              <RowInformation title={t('current_address')} infor={'Hoài Đức, Hà Nội'} />
-              <RowInformation title={t('hobbies')} infor={'Đọc sách, phim, ăn uống'} />
-              <RowInformation title={t('marital_status')} infor={'Độc thân'} />
-              <RowInformation title={t('children')} infor={'0'} />
-              <RowInformation title={t('family')} infor={'Bố : Nguyễn Tiến Ngọc - Nhân Viên KT Điện , Mẹ : Kiến Thị Thu - Kinh Doanh'} />
-              <RowInformation title={t('gender')} infor={'Nam'} />
-              <RowInformation title={t('relative')} infor={'Mẹ - 0946073379'} />
-              <RowInformation title={t('bank_name')} infor={'(Techcombank) Ngân hàng TMCP Kỹ thương Việt Nam'} />
-              <RowInformation title={t('bank_account')} infor={'5902688888'} />
-
+              <RowInformation title={t('id')} infor={information?.id} />
+              <RowInformation
+                title={t('start_date')}
+                infor={information?.firstDayWork}
+              />
+              <RowInformation
+                title={t('full_name')}
+                infor={information?.fullName}
+              />
+              <RowInformation
+                title={t('phone_number')}
+                infor={information?.phoneNumber}
+              />
+              <RowInformation title={t('email')} infor={information?.email} />
+              <RowInformation
+                title={t('dob')}
+                infor={information?.dateOfBirth}
+              />
+              <RowInformation
+                title={t('hometown')}
+                infor={information?.countryside}
+              />
+              <RowInformation
+                title={t('current_address')}
+                infor={information?.currentResidence}
+              />
+              <RowInformation
+                title={t('hobbies')}
+                infor={information?.favourite}
+              />
+              <RowInformation
+                title={t('marital_status')}
+                infor={'Đã kết hôn'}
+              />
+              <RowInformation title={t('family')} infor={information?.family} />
+              <RowInformation
+                title={t('gender')}
+                infor={information?.gender === 'Nam' ? 'Nam' : 'Nữ'}
+              />
             </View>
+
             <Text style={styles.title1}>{t('education')}</Text>
             <View style={styles.line}></View>
 
             <View style={styles.informationView}>
-              <RowInformation title={t('degree')} infor={'asdasd'} />
-              <RowInformation title={t('education_level')} infor={'asdasd'} />
-              <RowInformation title={t('experience')} infor={'asdasd'} />
-              <RowInformation title={t('languages')} infor={'asdasd'} />
+              <RowInformation
+                title={t('degree')}
+                infor={information?.education}
+              />
+              <RowInformation
+                title={t('education_level')}
+                infor={information?.level}
+              />
+              <RowInformation
+                title={t('experience')}
+                infor={information?.experience}
+              />
+              <RowInformation
+                title={t('languages')}
+                infor={`${information?.foreignLanguage}`}
+              />
             </View>
-
 
             <Text style={styles.title1}>{t('goal')}</Text>
-            <View style={styles.line}> </View>
+            <View style={styles.line}></View>
 
             <View style={styles.informationView}>
-              <RowInformation title={t('career_goal')} infor={'asdasd'} />
+              <RowInformation
+                title={t('career_goal')}
+                infor={information?.objectiveInCV}
+              />
             </View>
-
 
             <Text style={styles.title1}>{t('department')}</Text>
-            <View style={styles.line}> </View>
+            <View style={styles.line}></View>
 
             <View style={styles.informationView}>
-              <RowInformation title={t('username')} infor={'asdasd'} />
-              <RowInformation title={t('department_name')} infor={'asdasd'} />
+              <RowInformation
+                title={t('username')}
+                infor={information?.user?.login}
+              />
+              <RowInformation
+                title={t('department_name')}
+                infor={information?.department?.departmentName}
+              />
             </View>
 
-            <TouchableOpacity style={styles.btnEdit} onPress={() => navigation.navigate('EditPersonalInfor')}>
-              <Text style={styles.txt3}>Sửa thông tin</Text>
+            <TouchableOpacity
+              style={styles.btnEdit}
+              onPress={() => navigation.navigate('EditPersonalInfor')}>
+              <Text style={styles.txt3}>{t('sua')}</Text>
             </TouchableOpacity>
-
-
           </View>
         </ScrollView>
       </View>
@@ -99,7 +156,7 @@ const PersonalInformation = ({ navigation, route }: PersonalInformationProps) =>
   );
 };
 
-const Header = ({ navigation }: PersonalInformationProps) => {
+const Header = ({navigation}: PersonalInformationProps) => {
   return (
     <View style={styles.header}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -118,9 +175,9 @@ const Header = ({ navigation }: PersonalInformationProps) => {
   );
 };
 
-export const RowInformation = ({ title, infor }: any) => {
+export const RowInformation = ({title, infor}: any) => {
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{flexDirection: 'row'}}>
       <View style={styles.titleInformationView}>
         <Text style={styles.titleInforTxt}>{title}</Text>
       </View>
@@ -218,8 +275,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginBottom: 10,
   },
-  informationView: {
-  },
+  informationView: {},
   titleInformationView: {
     borderWidth: 0,
     width: 130,

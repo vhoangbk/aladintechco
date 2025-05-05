@@ -32,17 +32,18 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
   const [inputPassword, setInputPassword] = useState('');
   const dispatch = useDispatch<AppDispatch>();
 
+  const getAccountSaved = async () =>{
+    const username = await get_Field_Saved('username');
+    const password = await get_Field_Saved('password');
+
+    if(username != null || password != null){
+      setInputEmail(username!!);
+      setInputPassword(password!!);
+    }
+
+  };
+
   useEffect(()=>{
-    const getAccountSaved = async () =>{
-      const username = await get_Field_Saved('username');
-      const password = await get_Field_Saved('password');
-
-      if(username != null || password != null){
-        setInputEmail(username!!);
-        setInputPassword(password!!);
-      }
-
-    };
     getAccountSaved();
   },[]);
 

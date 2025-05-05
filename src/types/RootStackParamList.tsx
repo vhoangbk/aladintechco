@@ -1,4 +1,4 @@
-import {RecruitmentModel} from './typeModel';
+import {Employee, RecruitmentModel} from './typeModel';
 
 export type RootStackParamList = {
   HomeScreen: undefined;
@@ -19,4 +19,8 @@ export type RootStackParamList = {
   ApplyScreen: {
     recruitment: RecruitmentModel;
   };
+  AddNewEmployee:undefined;
+  DetailEmployeeScreen: {
+    employeeDetail: Employee
+  }
 };

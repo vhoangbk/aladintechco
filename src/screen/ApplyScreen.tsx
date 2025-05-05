@@ -22,9 +22,12 @@ import InputField from 'src/components/InputField';
 import {RootStackParamList} from 'src/types/RootStackParamList';
 import {fontBold} from 'src/types/typeFont';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Picker } from '@react-native-picker/picker';
-import { CandidateModel } from 'src/types/typeModel';
-import { postNewCandidates } from 'src/api/apiServices';
+import {Picker} from '@react-native-picker/picker';
+import {CandidateModel} from 'src/types/typeModel';
+import {postNewCandidates} from 'src/api/apiServices';
+import {pick} from '@react-native-documents/picker';
+import NutBam from 'src/components/NutBam';
+import RNFS from 'react-native-fs';
 
 type ApplyScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -32,22 +35,18 @@ type ApplyScreenProps = NativeStackScreenProps<
 >;
 
 const ApplyScreen = ({navigation, route}: ApplyScreenProps) => {
-
   const {recruitment} = route.params;
 
   const formatDate = (dateInput: Date | string | undefined | null): string => {
-    if (!dateInput) {return '1990-01-01';}
+    if (!dateInput) return '1990-01-01';
     const date = new Date(dateInput);
-    if (isNaN(date.getTime())) {return '1990-01-01';}
+    if (isNaN(date.getTime())) return '1990-01-01';
     return date.toISOString().split('T')[0];
   };
 
-  const testkeybase64 = 'JVBERi0xLjQKJdPr6eEKMSAwIG9iago8PC9DcmVhdG9yIChDaHJvbWl1bSkKL1Byb2R1Y2VyIChTa2lhL1BERiBtOTkpCi9DcmVhdGlvbkRhdGUgKEQ6MjAyNTA0MjMwNzU5MDYrMDcnMDAnKQovTW9kRGF0ZSAoRDoyMDI1MDQyMzA3NTkwNiswNycwMCcpPj4KZW5kb2JqCjIgMCBvYmoKPDwvVHlwZS9QYWdlCi9QYXJlbnQgMyAwIFIKL1Jlc291cmNlcyA8PC9Gb250IDw8L0YxIDQgMCBSID4+ID4+Ci9NZWRpYUJveCBbMCAwIDU5NSA4NDJdCi9Db250ZW50cyA1IDAgUj4+CmVuZG9iagozIDAgb2JqCjw8L1R5cGUvUGFnZXMKL0tpZHNbMiAwIFJdCi9Db3VudCAxPj4KZW5kb2JqCjQgMCBvYmoKPDwvVHlwZS9Gb250Ci9TdWJ0eXBlL1R5cGUxCi9OYW1lL0YxCi9CYXNlRm9udC9IZWx2ZXRpY2EKL0VuY29kaW5nL1dpbkFuc2lFbmNvZGluZz4+CmVuZG9iago1IDAgb2JqCjw8L0xlbmd0aCAxMDk4Pj4Kc3RyZWFtCkJUClsgL1BERiBdIDAgbgo8PC9MZW5ndGggMTAwID4+CnN0cmVhbQpIZWxsbyBmcm9tIFBERiBjdXJyaWN1bHVtIQplbmRzdHJlYW0KZW5kb2JqCnhyZWYKMCA3CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDExMyAwMDAwMCBuIAowMDAwMDAwMjAzIDAwMDAwIG4gCjAwMDAwMDAzMzAgMDAwMDAgbiAKMDAwMDAwMDU0MCAwMDAwMCBuIAowMDAwMDAwNjYxIDAwMDAwIG4gCnRyYWlsZXIKPDwvU2l6ZSA3Ci9Sb290IDEgMCBSCj4+CnN0YXJ0eHJlZgo3MTY1CiUlRU9G';
-
+  const [nameFilePicked, setNameFilePicked] = useState('');
   const [birthday, setBirthday] = useState<string>(formatDate(new Date()));
-  // const [cv, setCv] = useState('');
-  const cvContentType = 'application/pdf';
-  const dateRegister = formatDate(new Date());
+  const [cv, setCv] = useState('');
   const [education, setEducation] = useState('');
   const [email, setEmail] = useState('');
   const [experience, setExperience] = useState('');
@@ -59,217 +58,245 @@ const ApplyScreen = ({navigation, route}: ApplyScreenProps) => {
   const [relationship, setRelationship] = useState('');
   const [sex, setSex] = useState('');
   const [target, setTarget] = useState('');
-
-  const [loadingSendCandidate,setLoadingSendCandidate] = useState(false);
+  const [loadingSendCandidate, setLoadingSendCandidate] = useState(false);
 
   const handleSendCandidate = async () => {
+    if (
+      !fullname ||
+      !email ||
+      !phone ||
+      !position ||
+      !location ||
+      !education ||
+      !experience ||
+      !relationship ||
+      !target ||
+      !cv
+    ) {
+      Alert.alert(t('notification'), t('please_fill_all_fields'));
+      return;
+    }
     setLoadingSendCandidate(true);
-    const candidateModel : CandidateModel = {
-      phone: phone,
-      email: email,
-      position: position,
-      location: location,
-      preference: preference,
-      education: education,
-      experience: experience,
-      target: target,
-      fullname: fullname,
-      sex: sex,
-      cv: testkeybase64,
-      cvContentType: cvContentType,
-      birthday: birthday,
-      relationship: relationship,
-      dateRegister: dateRegister,
-      recruitment: recruitment,
+    const candidateModel: CandidateModel = {
+      phone,
+      email,
+      position,
+      location,
+      preference,
+      education,
+      experience,
+      target,
+      fullname,
+      sex,
+      cv,
+      cvContentType: 'application/pdf',
+      birthday,
+      relationship,
+      dateRegister: formatDate(new Date()),
+      recruitment,
     };
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 500));
       await postNewCandidates(candidateModel);
       setLoadingSendCandidate(false);
-      Alert.alert('Thông báo!', 'Gửi thành công!!', [
-        {
-          text: 'OK',
-          onPress: () => {},
-          style: 'cancel',
-        },
+      Alert.alert(t('notification'), t('send_success'), [
+        {text: t('ok'), onPress: () => clearInput(), style: 'cancel'},
       ]);
     } catch (error) {
       setLoadingSendCandidate(false);
-      Alert.alert('Thông báo!', 'Gửi thất bại', [
-        {
-          text: 'OK',
-          onPress: () => {},
-          style: 'cancel',
-        },
+      Alert.alert(t('notification'), t('send_fail'), [
+        {text: t('ok'), style: 'cancel'},
       ]);
     }
+  };
 
+  const clearInput = () => {
+    setFullname('');
+    setSex('');
+    setEmail('');
+    setBirthday(formatDate(new Date()));
+    setEducation('');
+    setExperience('');
+    setLocation('');
+    setPhone('');
+    setPosition('');
+    setPreference('');
+    setRelationship('');
+    setTarget('');
+    setCv('');
+    setNameFilePicked('');
+  };
+
+  const handlePickFile = async () => {
+    try {
+      const [pickResult] = await pick({mode: 'import'});
+      setNameFilePicked(pickResult.name!!);
+      if (pickResult) {
+        const fileUri = pickResult.uri;
+        const base64Data = await RNFS.readFile(fileUri, 'base64');
+        setCv(base64Data);
+      }
+    } catch (err) {
+      Alert.alert('Error', t('error_picking_file'));
+    }
   };
 
   return (
     <SafeAreaView style={{flex: 1}}>
-
       <View style={{flex: 1}}>
-
         <Header navigation={navigation} />
-
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
           <View style={{marginHorizontal: 20, flex: 1, marginTop: 20}}>
-            <Text>Ứng tuyển vị trí: {recruitment.job}</Text>
+            <Text>
+              {t('applying_for_position')} {recruitment.job}
+            </Text>
 
             <InputField
-              label= "Họ và tên:"
-              placeholder="Vui lòng nhập họ và tên của bạn"
+              label={t('full_name')}
+              placeholder={t('enter_full_name')}
               value={fullname}
               onChangeText={setFullname}
             />
-
-            <PickGender sex={sex} setSex={setSex}/>
-
+            <PickGender sex={sex} setSex={setSex} />
             <InputField
-              label= "Thư điện tử:"
-              placeholder="Vui lòng nhập thư điện tử của bạn"
+              label={t('email')}
+              placeholder={t('enter_email')}
               value={email}
               onChangeText={setEmail}
             />
-
             <BirthdayPicker birthday={birthday} setBirthday={setBirthday} />
-
-            <DateRegister dateRegister = {dateRegister}/>
-
+            <DateRegister dateRegister={formatDate(new Date())} />
             <InputField
-              label="Học vấn:"
-              placeholder="Ví dụ: Cử nhân CNTT, Đại học X"
+              label={t('education')}
+              placeholder={t('enter_education')}
               value={education}
               onChangeText={setEducation}
             />
-
             <InputField
-              label="Kinh nghiệm:"
-              placeholder="Ví dụ: 2 năm Java tại công ty Y"
+              label={t('experience')}
+              placeholder={t('enter_experience')}
               value={experience}
               onChangeText={setExperience}
             />
-
             <InputField
-              label="Địa chỉ:"
-              placeholder="Ví dụ: Nam Từ Liêm, Hà Nội"
+              label={t('address')}
+              placeholder={t('enter_address')}
               value={location}
               onChangeText={setLocation}
             />
-
             <InputField
-              label="Số điện thoại:"
-              placeholder="Ví dụ: 0392289601"
+              label={t('phone_number')}
+              placeholder={t('enter_phone')}
               value={phone}
               onChangeText={setPhone}
             />
-
             <InputField
-              label="Vị trí ứng tuyển:"
-              placeholder="Ví dụ: Mobile Developer Intern"
+              label={t('position_applied')}
+              placeholder={t('enter_position')}
               value={position}
               onChangeText={setPosition}
             />
-
             <InputField
-              label="Sở thích:"
-              placeholder="Ví dụ: Môi trường học hỏi, hybrid"
+              label={t('preference')}
+              placeholder={t('enter_preference')}
               value={preference}
               onChangeText={setPreference}
             />
-
             <InputField
-              label="Tình trạng hôn nhân:"
-              placeholder="Ví dụ: Độc thân"
+              label={t('relationship_status')}
+              placeholder={t('enter_relationship')}
               value={relationship}
               onChangeText={setRelationship}
             />
-
             <InputField
-              label="Mục tiêu nghề nghiệp:"
-              placeholder="Ví dụ: Thăng tiến trong công việc"
+              label={t('career_target')}
+              placeholder={t('enter_target')}
               value={target}
               onChangeText={setTarget}
             />
 
-            <Button title={'send'} onPress={handleSendCandidate}/>
+            <Text>
+              {nameFilePicked === '' ? t('please_select_cv') : nameFilePicked}
+            </Text>
+            <Button title={t('choose_cv_pdf')} onPress={handlePickFile} />
+
+            <TouchableOpacity onPress={handleSendCandidate} style={{marginVertical:20}}>
+              <NutBam
+                text={t('send')}
+                colorBG={colorGreen}
+                colorTxt={colorWhite}
+              />
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </View>
 
       <Modal visible={loadingSendCandidate} transparent={true}>
         <View style={styles.viewLoading}>
-          <ActivityIndicator size={'large'} color={colorGreen}/>
+          <ActivityIndicator size="large" color={colorGreen} />
         </View>
       </Modal>
-
     </SafeAreaView>
   );
 };
 
 export default ApplyScreen;
 
-const PickGender = ({sex,setSex}:any) => {
-  return(
-    <View style={{marginBottom:16}}>
-      <Text style={{marginBottom:4}}>Chọn giới tính:</Text>
+export const PickGender = ({sex, setSex}: any) => {
+  return (
+    <View style={{marginBottom: 16}}>
+      <Text style={{marginBottom: 4}}>{t('gender')}</Text>
       <View style={styles.pickgender}>
         <Picker
-            selectedValue={sex}
-            onValueChange={
-              (itemValue) => {
-                setSex(itemValue);
-              }}
-              style={{marginLeft:20}}
-            >
-            <Picker.Item label="Choose Gender" value="" />
-            <Picker.Item label="Nam" value="Nam" />
-            <Picker.Item label="Nữ" value="Nữ" />
+          selectedValue={sex}
+          onValueChange={setSex}
+          style={{marginLeft: 20}}>
+          <Picker.Item label={t('choose_gender')} value="" />
+          <Picker.Item label={t('male')} value="Nam" />
+          <Picker.Item label={t('female')} value="Nữ" />
         </Picker>
       </View>
     </View>
   );
 };
 
-const DateRegister = ({dateRegister}:{dateRegister :string}) => {
-  return(
-    <View style={{marginBottom:16}}>
-      <Text style={{marginBottom:4}}>Ngày đăng ký:</Text>
-      <View
-        style={styles.dateRegister}>
+const DateRegister = ({dateRegister}: {dateRegister: string}) => {
+  return (
+    <View style={{marginBottom: 16}}>
+      <Text style={{marginBottom: 4}}>{t('register_date')}</Text>
+      <View style={styles.dateRegister}>
         <Text>{dateRegister}</Text>
       </View>
     </View>
   );
 };
 
-interface BirthdayPickerProps {
+export const BirthdayPicker = ({
+  birthday,
+  setBirthday,
+}: {
   birthday: string;
   setBirthday: any;
-}
-
-  const BirthdayPicker = ({birthday, setBirthday} : BirthdayPickerProps) => {
-    const formatDate = (dateInput: Date | string | undefined | null): string => {
-      if (!dateInput) {return '1990-01-01';}
-      const date = new Date(dateInput);
-      if (isNaN(date.getTime())) {return '1990-01-01';}
-      return date.toISOString().split('T')[0];
-    };
-
-    const onChange = (event: any, selectedDate?: Date) => {
-      setShowPicker(Platform.OS === 'ios');
-      if (selectedDate) {
-        setBirthday(selectedDate);
-      }
+}) => {
+  const [showPicker, setShowPicker] = useState(false);
+  const formatDate = (dateInput: Date | string | undefined | null): string => {
+    if (!dateInput) return '1990-01-01';
+    const date = new Date(dateInput);
+    if (isNaN(date.getTime())) return '1990-01-01';
+    return date.toISOString().split('T')[0];
   };
 
-  const [showPicker, setShowPicker] = useState(false);
+  const onChange = (event: any, selectedDate?: Date) => {
+    setShowPicker(Platform.OS === 'ios');
+    if (selectedDate) {
+      setBirthday(selectedDate);
+    }
+  };
 
   return (
-    <View style={{marginBottom:16}}>
-      <Text style={{marginBottom:4}}>Ngày sinh:</Text>
+    <View style={{marginBottom: 16}}>
+      <Text style={{marginBottom: 4}}>{t('birthday')}</Text>
       <TouchableOpacity
         style={styles.dateRegister}
         onPress={() => setShowPicker(true)}>
@@ -288,11 +315,11 @@ interface BirthdayPickerProps {
   );
 };
 
-type HeaderProps = {
+const Header = ({
+  navigation,
+}: {
   navigation: NavigationProp<RootStackParamList>;
-};
-
-const Header = ({navigation}: HeaderProps) => {
+}) => {
   return (
     <View style={styles.header}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -326,7 +353,6 @@ const styles = StyleSheet.create({
   containBack: {
     width: 50,
     height: 50,
-    borderWidth: 0,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -337,7 +363,6 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 1,
-    borderWidth: 0,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 45,
@@ -347,15 +372,14 @@ const styles = StyleSheet.create({
     color: colorWhite,
     fontSize: 17,
   },
-  pickgender:{
+  pickgender: {
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 6,
-    fontSize: 14,
     backgroundColor: '#fff',
-    width:200,
+    width: 200,
   },
-  viewLoading:{
+  viewLoading: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
