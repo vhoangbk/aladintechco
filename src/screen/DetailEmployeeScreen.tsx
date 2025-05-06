@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { URL_SERVER } from 'src/api/apiConfig';
 import {colorGreen, colorWhite} from 'src/assets/color';
 import {imageResource} from 'src/assets/imageResource';
 import {RootStackParamList} from 'src/types/RootStackParamList';
@@ -32,7 +33,7 @@ const DetailEmployeeScreen = ({
       <Header navigation={navigation} />
       <ScrollView style={{flex: 1, backgroundColor: '#fff', padding: 16}}>
         <Image
-          source={imageResource.avt}
+          source={{ uri : `${URL_SERVER}${employeeDetail?.avatar}`}}
           style={{
             width: 120,
             height: 120,

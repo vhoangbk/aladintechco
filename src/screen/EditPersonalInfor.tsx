@@ -27,6 +27,7 @@ import { getPersonalInformation, putUpdateEmployee, upLoadImageToServer } from '
 import { PickGender } from './ApplyScreen';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { CameraOptions, launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { URL_SERVER } from 'src/api/apiConfig';
 
 type EditPersonalInformationProps = NativeStackScreenProps<
   RootStackParamList,
@@ -80,10 +81,22 @@ const EditPersonalInformation = ({navigation, route}: EditPersonalInformationPro
   });
 
   const getCurrentEmployInfor = async () => {
+    if(!authLogin) return
     try {
       const currentData = await getPersonalInformation();
       setCurrentEmployeeInfor(currentData);
       console.log('Current Employee:', currentData);
+      if(currentData === undefined || currentData === null ){
+        Alert.alert(
+          "Alert",
+          "Please create new employee!",
+          [
+            { text: "OK", onPress: () => navigation.goBack() }
+          ],
+          { cancelable: false }
+        );
+        return
+      }
     } catch (error) {
       console.error('Failed to fetch employee info:', error);
     }
@@ -124,46 +137,46 @@ const EditPersonalInformation = ({navigation, route}: EditPersonalInformationPro
   useEffect(() => {
     if (currentEmployeeInfor) {
       setFormUpdateEmployee({
-        avatar: currentEmployeeInfor.avatar,
-        contractInfo: currentEmployeeInfor.contractInfo ?? "null",
-        countryside: currentEmployeeInfor.countryside,
-        currentResidence: currentEmployeeInfor.currentResidence,
-        dateOfBirth: currentEmployeeInfor.dateOfBirth,
-        departmentId: currentEmployeeInfor.department.id,
-        education: currentEmployeeInfor.education,
-        email: currentEmployeeInfor.email,
-        emergencyContact: currentEmployeeInfor.emergencyContact,
+        avatar: currentEmployeeInfor.avatar ?? '',
+        contractInfo: currentEmployeeInfor.contractInfo ?? 'null',
+        countryside: currentEmployeeInfor.countryside ?? '',
+        currentResidence: currentEmployeeInfor.currentResidence ?? '',
+        dateOfBirth: currentEmployeeInfor.dateOfBirth ?? '',
+        departmentId: currentEmployeeInfor.department?.id ?? 0,
+        education: currentEmployeeInfor.education ?? '',
+        email: currentEmployeeInfor.email ?? '',
+        emergencyContact: currentEmployeeInfor.emergencyContact ?? 'null',
         employeeDocuments: currentEmployeeInfor.employeeDocuments ?? [],
-        employeeStatus: currentEmployeeInfor.employeeStatus,
-        english: currentEmployeeInfor.english,
-        experience: currentEmployeeInfor.experience,
-        facebookLink: currentEmployeeInfor.facebookLink,
-        family: currentEmployeeInfor.family,
-        favourite: currentEmployeeInfor.favourite,
-        firstDayWork: currentEmployeeInfor.firstDayWork,
-        foreignLanguage: currentEmployeeInfor.foreignLanguage,
-        fullName: currentEmployeeInfor.fullName,
-        gender: currentEmployeeInfor.gender,
-        id: currentEmployeeInfor.id,
-        identificationNumber: currentEmployeeInfor.identificationNumber,
-        jobPositionId: currentEmployeeInfor.jobPosition.id,
-        jobTitleId: currentEmployeeInfor.jobTitle.id,
-        level: currentEmployeeInfor.level ?? "null",
-        linkedInLink: currentEmployeeInfor.linkedInLink,
-        objectiveInCV: currentEmployeeInfor.objectiveInCV,
-        officialContractEndDate: currentEmployeeInfor.officialContractEndDate,
-        officialContractStartDate: currentEmployeeInfor.officialContractStartDate,
-        phoneNumber: currentEmployeeInfor.phoneNumber,
-        probationEndDate: currentEmployeeInfor.probationEndDate,
-        probationStartDate: currentEmployeeInfor.probationStartDate,
-        skypeLink: currentEmployeeInfor.skypeLink,
-        status: currentEmployeeInfor.status,
-        telegramLink: currentEmployeeInfor.telegramLink,
-        userId: currentEmployeeInfor.user.id,
-        workModelId: currentEmployeeInfor.workModel.id
+        employeeStatus: currentEmployeeInfor.employeeStatus ?? '',
+        english: currentEmployeeInfor.english ?? 'null',
+        experience: currentEmployeeInfor.experience ?? 'null',
+        facebookLink: currentEmployeeInfor.facebookLink ?? 'null',
+        family: currentEmployeeInfor.family ?? 'null',
+        favourite: currentEmployeeInfor.favourite ?? 'null',
+        firstDayWork: currentEmployeeInfor.firstDayWork ?? '',
+        foreignLanguage: currentEmployeeInfor.foreignLanguage ?? 'null',
+        fullName: currentEmployeeInfor.fullName ?? '',
+        gender: currentEmployeeInfor.gender ?? '',
+        id: currentEmployeeInfor.id ?? 0,
+        identificationNumber: currentEmployeeInfor.identificationNumber ?? 'null',
+        jobPositionId: currentEmployeeInfor.jobPosition?.id ?? 97551,
+        jobTitleId: currentEmployeeInfor.jobTitle?.id ?? 97601,
+        level: currentEmployeeInfor.level ?? 'null',
+        linkedInLink: currentEmployeeInfor.linkedInLink ?? 'null',
+        objectiveInCV: currentEmployeeInfor.objectiveInCV ?? '',
+        officialContractEndDate: currentEmployeeInfor.officialContractEndDate ?? '',
+        officialContractStartDate: currentEmployeeInfor.officialContractStartDate ?? '',
+        phoneNumber: currentEmployeeInfor.phoneNumber ?? '',
+        probationEndDate: currentEmployeeInfor.probationEndDate ?? '',
+        probationStartDate: currentEmployeeInfor.probationStartDate ?? '',
+        skypeLink: currentEmployeeInfor.skypeLink ?? 'null',
+        status: currentEmployeeInfor.status ?? '',
+        telegramLink: currentEmployeeInfor.telegramLink ?? 'null',
+        userId: currentEmployeeInfor.user?.id ?? '',
+        workModelId: currentEmployeeInfor.workModel?.id ?? 97502
       });
     }
-  }, [currentEmployeeInfor]);
+  }, [currentEmployeeInfor]);  
 
   const camOptions: CameraOptions = {
       mediaType: 'photo',
@@ -219,7 +232,7 @@ const EditPersonalInformation = ({navigation, route}: EditPersonalInformationPro
           {imageURI ? (
             <Image source={{uri: imageURI}} style={{width: 150, height: 150, alignSelf: 'center'}} />
           ) : (
-            <Image source={imageResource.avt} style={{width: 150, height: 150, alignSelf: 'center'}} />
+            <Image source={{ uri : `${URL_SERVER}${currentEmployeeInfor?.avatar}`}} style={{width: 150, height: 150, alignSelf: 'center'}} />
           )}
             <View style={{alignItems: 'center'}}>
               <Text></Text>

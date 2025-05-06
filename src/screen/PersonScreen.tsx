@@ -21,9 +21,9 @@ import { get_AccessKeyStorage, save_AccessKeyStorage } from 'src/commons/AsyncSt
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from 'src/redux/store';
 import { logout } from 'src/redux/slice/AuthSlice';
-import { getAccount } from 'src/api/apiServices';
-import { Account } from 'src/types/typeModel';
-import { BASE_URL } from 'src/api/apiConfig';
+import { getAccount, getPersonalInformation } from 'src/api/apiServices';
+import { Account, PersonalInformationModel } from 'src/types/typeModel';
+import { BASE_URL, URL_SERVER } from 'src/api/apiConfig';
 type PersonScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'PersonScreen'
@@ -36,6 +36,8 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
   const {t} = useTranslation();
   const [showChangeLanguageBox, setShowChangeLanguageBox] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
+
+  const [information, setInformation] = useState<PersonalInformationModel>();
 
   const openSelectLanguage = () => {
     setShowChangeLanguageBox(true);
@@ -61,9 +63,17 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
     setAccData(acountData);
   };
 
-  useEffect(()=>{
-    getAccountInfor();
-  },[authLogin]);
+  const fetchPersonalInformation = async () => {
+    const data = await getPersonalInformation();
+    setInformation(data);
+  };
+
+  useEffect(() => {
+    if(authLogin===true){
+      fetchPersonalInformation();
+      getAccountInfor();
+    }
+  }, [authLogin]);
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -79,13 +89,13 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
 
         <View style={styles.header}>
           {authLogin ? (
-            <Image source={imageResource.avt} style={styles.avatar} />
+            <Image source={{ uri : `${URL_SERVER}${information?.avatar}`}} style={styles.avatar} />
           ) : null}
           <View style={{marginLeft: 15, justifyContent: 'center'}}>
             {authLogin ? (
               <>
-                <Text style={styles.name}>{accData?.login}</Text>
-                <Text style={styles.email}>{accData?.email}</Text>
+                <Text style={styles.name}>{information?.fullName}</Text>
+                <Text style={styles.email}>{information?.email}</Text>
               </>
             ) : (
               <View style={{marginTop:40}}>

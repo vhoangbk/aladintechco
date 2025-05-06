@@ -26,6 +26,7 @@ import {
   getEmployees,
   getListDepartment,
 } from 'src/api/apiServices';
+import { URL_SERVER } from 'src/api/apiConfig';
 
 type EmployeeScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -66,6 +67,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
   const dataDepartment1 = [...dataDepartment2, ...dataDepartment3];
 
   const fetchData = async () => {
+    if (!authLogin) return;
     setLoadingData(true);
     const data = await getEmployees();
     setEmployeesArray(data as Employee[]);
@@ -73,6 +75,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
   };
 
   const fetchDepartment = async () => {
+    if (!authLogin) return;
     setLoadingData(true);
     const data = await getListDepartment();
     setDataDepartment3(data);
@@ -83,6 +86,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
     if (authLogin) {
       fetchDepartment();
       fetchData();
+      return
     }
   }, [authLogin]);
 
@@ -137,6 +141,11 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
           renderItem={({item}: {item: Employee}) => (
             <EmployeeItem item={item} navigation={navigation}/>
           )}
+          ListEmptyComponent={
+            <View style={{justifyContent:'center', alignItems: 'center', margin:20}}>
+              <Text>{t('data_null')}</Text>
+            </View>
+          }
         />
       </View>
 
@@ -228,7 +237,7 @@ const EmployeeItem = ({item,navigation}: {item: Employee; navigation:any}) => {
           backgroundColor: colorWhite,
         }}>
         <Image
-          source={imageResource.avt}
+          source={{uri : `${URL_SERVER}${item.avatar}`}}
           style={{width: 80, height: 80, margin: 5, borderRadius: 10}}
         />
         <View style={{margin: 10}}>

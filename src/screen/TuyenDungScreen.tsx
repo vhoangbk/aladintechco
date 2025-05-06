@@ -39,7 +39,6 @@ const TuyenDungScreen = ({navigation}:TuyenDungScreenProps) => {
   };
 
   useEffect(() => {
-    console.log('load');
     fetchData();
   }, []);
 
@@ -65,7 +64,7 @@ const TuyenDungScreen = ({navigation}:TuyenDungScreenProps) => {
                 keyExtractor={item => item.id.toString()}
                 ListEmptyComponent={
                   <View style={{justifyContent:'center', alignItems: 'center', margin:20}}>
-                    <Text>null</Text>
+                    <Text>{t('data_null')}</Text>
                   </View>
                 }
               />

@@ -16,6 +16,7 @@ import {
 import {useSelector} from 'react-redux';
 import {
   getListDepartment,
+  getPersonalInformation,
   postNewEmployee,
   upLoadImageToServer,
 } from 'src/api/apiServices';
@@ -72,8 +73,8 @@ const AddNewEmployee = ({navigation}: AddNewEmployeeProps) => {
     fullName: '',
     gender: '',
     identificationNumber: 'null',
-    jobPositionId: 0,
-    jobTitleId: 0,
+    jobPositionId: 97551,
+    jobTitleId: 97602,
     level: 'null',
     linkedInLink: 'null',
     objectiveInCV: '',
@@ -86,16 +87,18 @@ const AddNewEmployee = ({navigation}: AddNewEmployeeProps) => {
     status: 'null',
     telegramLink: 'null',
     userId: 'string',
-    workModelId: 0,
+    workModelId: 97502,
   });
 
   const getUserID = async () => {
+    if(!authLogin) return
     const data = await getListDepartment();
     const userid = data[0].user.id.toString();
     setFormNewEmployee(oldData => ({...oldData, userId: userid}));
   };
 
   const getDepartmentID = async () => {
+    if(!authLogin) return
     const data = await getListDepartment();
     const departmentid = data[0].id;
     setFormNewEmployee(oldData => ({
@@ -105,11 +108,15 @@ const AddNewEmployee = ({navigation}: AddNewEmployeeProps) => {
   };
 
   useEffect(() => {
-    getUserID();
-    getDepartmentID();
+    if(authLogin){
+      getUserID();
+      getDepartmentID();
+      return
+    }
   }, [authLogin]);
 
   const handleCreateNewEmployee = async () => {
+    console.log("formNewEmployee",formNewEmployee)
     setLoadingCreate(true);
     if (
       !imageURI ||
@@ -127,15 +134,34 @@ const AddNewEmployee = ({navigation}: AddNewEmployeeProps) => {
       return;
     }
     try {
+      const checkdatauser = await getPersonalInformation();
+      if(checkdatauser) {
+        Alert.alert(
+          t('create'), 
+          "Tài khoản này đã tạo thông tin người dùng rồi!",
+          [
+            { text: "OK", onPress: () => navigation.goBack() }
+          ],
+          { cancelable: false }
+        );
+        return
+      }
       const urlAvatar = await upToServer(imageURI);
       console.log(urlAvatar);
       const updateFormNewEmployee: NewEmployee = {
         ...formNewEmployee,
         avatar: urlAvatar,
       };
-      console.log(updateFormNewEmployee);
+      console.log("new employee",updateFormNewEmployee);
       await postNewEmployee(updateFormNewEmployee);
-      Alert.alert(t('create'), t('create_success'));
+      Alert.alert(
+        t('create'), 
+        t('create_success'),
+        [
+          { text: "OK", onPress: () => navigation.navigate('TabNavigator') }
+        ],
+        { cancelable: false }
+      );
       clearData();
     } catch (error) {
       Alert.alert(t('create'), t('create_failed'));
@@ -244,6 +270,7 @@ const AddNewEmployee = ({navigation}: AddNewEmployeeProps) => {
 
   return (
     <SafeAreaView>
+
       <Modal visible={loadingCreate} transparent={true}>
         <View style={styles.viewLoading}>
           <ActivityIndicator size="large" color={colorGreen} />
