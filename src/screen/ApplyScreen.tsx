@@ -98,11 +98,14 @@ const ApplyScreen = ({navigation, route}: ApplyScreenProps) => {
 
     try {
       await new Promise(resolve => setTimeout(resolve, 500));
-      await postNewCandidates(candidateModel);
+      let response = await postNewCandidates(candidateModel);
       setLoadingSendCandidate(false);
-      Alert.alert(t('notification'), t('send_success'), [
-        {text: t('ok'), onPress: () => clearInput(), style: 'cancel'},
-      ]);
+      if (response) {
+        Alert.alert(t('notification'), t('send_success'), [
+          {text: t('ok'), onPress: () => clearInput(), style: 'cancel'},
+        ]);
+      }
+      
     } catch (error) {
       setLoadingSendCandidate(false);
       Alert.alert(t('notification'), t('send_fail'), [

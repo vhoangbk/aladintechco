@@ -14,40 +14,22 @@ import {
 } from './apiConfig';
 import {CandidateModel, NewEmployee, RecruitmentModel, UpdateEmployee} from 'src/types/typeModel';
 import {get_AccessKeyStorage} from '../commons/AsyncStorage';
+import {getRequest, postRequest} from './apiRequest';
 
 export const getRecruitments = async () => {
-  try {
-    const response = await axios.get(GET_ALL_RECRUITMENTS);
-    return response.data as RecruitmentModel[];
-  } catch (error) {
-    console.error('Error fetching recruitments:', error);
-    return null;
-  }
+    const response = await getRequest(GET_ALL_RECRUITMENTS);
+    return response as RecruitmentModel[];
 };
 
 export const postNewCandidates = async (candidateModel: CandidateModel) => {
-  try {
-    const response = await axios.post(API_CANDIDATE, candidateModel);
-    console.log('Post candidate success!', response.data);
-  } catch (error) {
-    console.error('Post candidate Failed!:', error);
-    throw error;
-  }
+  const response = await postRequest(API_CANDIDATE, candidateModel);
+  return response;
+
 };
 
 export const getEmployees = async () => {
-  try {
-    const token = await get_AccessKeyStorage();
-    const response = await axios.get(API_EMPLOYEES, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data.data;
-  } catch (error) {
-    console.error('Error fetching Employees:', error);
-    return null;
-  }
+  const response = await getRequest(API_EMPLOYEES);
+  return response?.data ?? null;
 };
 
 export const getAccessToken = async (username: string, password: string) => {
