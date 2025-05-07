@@ -33,9 +33,7 @@ const TuyenDungScreen = ({navigation}:TuyenDungScreenProps) => {
   const {t} = useTranslation();
 
   const fetchData = async () => {
-    console.log(1)
     const data = await getRecruitments();
-    console.log(2, data)
     setRecruitmentDATA(data as RecruitmentModel[]);
     setLoadingData(false);
   };
