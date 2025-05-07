@@ -130,13 +130,22 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
     );
   };
 
-  useEffect(() => {
-    const searchResult = getEmployeeByName(inputSearch);
-    setEmployeesArray(searchResult);
-  }, [inputSearch]);
+  // useEffect(() => {
+  //   const searchResult = getEmployeeByName(inputSearch);
+  //   setEmployeesArray(searchResult);
+  // }, [inputSearch]);
 
   if (!authLogin) {
     return <Frame5 navigation={navigation} route={route} />;
+  }
+
+  console.log('rendering...')
+
+  const fillterData = () => {
+    console.log('fillterData', memberInDepartment)
+    return memberInDepartment.filter((e) => {
+      return e.user.login.includes(inputSearch ?? '')
+    })
   }
 
   return (
@@ -190,7 +199,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
           />
         ) : (
           <FlatList
-            data={memberInDepartment}
+            data={fillterData()}
             renderItem={({item}: {item: DepartmentMember}) => (
               <EmployeeInDepartmentItem item={item} navigation={navigation} />
             )}
