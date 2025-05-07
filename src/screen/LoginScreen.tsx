@@ -66,8 +66,8 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
     }else{
       await save_Account(inputEmail,inputPassword);
       await save_AccessKeyStorage(access_token);
-      console.log('Login success!',await get_AccessKeyStorage());
-      console.log('Saved Account',await get_Field_Saved('username'), await get_Field_Saved('password'));
+      console.log('Login success!');
+      console.log('Saved Account');
       dispatch(login());
       navigation.goBack();
     }

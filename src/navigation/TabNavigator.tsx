@@ -1,7 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screen/HomeScreen';
 import TuyenDungScreen from '../screen/TuyenDungScreen';
-import {Image} from 'react-native';
+import {Image, TouchableOpacity} from 'react-native';
 import {imageResource} from '../assets/imageResource';
 import {useTranslation} from 'react-i18next';
 import '../language/i18n';
@@ -17,20 +17,23 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator screenOptions={{headerShown: false}}>
       <Tab.Screen
-        name="HomeScreen"
-        component={HomeScreen}
-        options={{
-          tabBarActiveTintColor: '#0096d6',
-          tabBarInactiveTintColor: '#000',
-          tabBarLabel: t('trangchu'),
-          tabBarIcon: ({focused}) => (
-            <Image
-              source={imageResource.tabtrangchu}
-              style={{width: 20, height: 20, tintColor: focused ? '#0096d6' :'#00000'}}
-            />
-          ),
-        }}
-      />
+      name="HomeScreen"
+      component={HomeScreen}
+      options={{
+        tabBarLabel: t('trangchu'),
+        tabBarIcon: ({ focused }) => (
+          <Image
+            source={imageResource.tabtrangchu}
+            style={{
+              width: 20,
+              height: 20,
+              tintColor: focused ? '#0096d6' : '#00000',
+            }}
+          />
+        ),
+      }}
+    />
+
 
       <Tab.Screen
         name="TuyenDungScreen"

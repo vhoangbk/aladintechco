@@ -1,6 +1,6 @@
-import { NavigationProp } from '@react-navigation/native';
+import { NavigationProp, useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   ActivityIndicator,
@@ -33,16 +33,16 @@ const TuyenDungScreen = ({navigation}:TuyenDungScreenProps) => {
   const {t} = useTranslation();
 
   const fetchData = async () => {
-    console.log(1)
     const data = await getRecruitments();
-    console.log(2, data)
     setRecruitmentDATA(data as RecruitmentModel[]);
     setLoadingData(false);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [])
+  );
 
   return (
     <SafeAreaView style={{flex: 1}}>

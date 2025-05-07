@@ -1,5 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import { useEffect, useState} from 'react';
+import { useCallback, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   Image,
@@ -24,6 +24,7 @@ import { logout } from 'src/redux/slice/AuthSlice';
 import { getAccount, getPersonalInformation } from 'src/api/apiServices';
 import { Account, PersonalInformationModel } from 'src/types/typeModel';
 import { BASE_URL, URL_SERVER } from 'src/api/apiConfig';
+import { useFocusEffect } from '@react-navigation/native';
 type PersonScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'PersonScreen'
@@ -68,12 +69,14 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
     setInformation(data);
   };
 
-  useEffect(() => {
-    if(authLogin===true){
-      fetchPersonalInformation();
-      getAccountInfor();
-    }
-  }, [authLogin]);
+  useFocusEffect(
+    useCallback(() => {
+      if(authLogin===true){
+        fetchPersonalInformation();
+        getAccountInfor();
+      }
+    }, [authLogin])
+  );
 
   return (
     <SafeAreaView style={{flex: 1}}>

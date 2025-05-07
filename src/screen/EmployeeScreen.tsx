@@ -20,13 +20,14 @@ import {t} from 'i18next';
 import Search from 'src/components/Search';
 import {Department, DepartmentMember, Employee} from 'src/types/typeModel';
 import {imageResource} from 'src/assets/imageResource';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
   getDepartmentByName,
   getEmployees,
   getListDepartment,
 } from 'src/api/apiServices';
-import { URL_SERVER } from 'src/api/apiConfig';
+import {URL_SERVER} from 'src/api/apiConfig';
+import {useFocusEffect} from '@react-navigation/native';
 
 type EmployeeScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -35,12 +36,20 @@ type EmployeeScreenProps = NativeStackScreenProps<
 
 const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
   const authLogin = useSelector((state: RootState) => state.auth.auth);
+  const [inputSearch, setInputSearch] = useState<string>();
 
   const [employeesArray, setEmployeesArray] = useState<Employee[]>([]);
+  const [allEmployees, setAllEmployees] = useState<Employee[]>([]);
+
+  const [isSelectAllEmp, setIsSelectAllEmp] = useState<boolean>(true);
+
   const [loadingData, setLoadingData] = useState<boolean>(true);
   const [modalVisible, setModalVisible] = useState(false);
-  const [memberInDepartment,setMemberInDepartment] = useState<DepartmentMember[]>([]);
-  const [nameDepartmentSelected,setNameDepartmentSelected] = useState<string>('');
+  const [memberInDepartment, setMemberInDepartment] = useState<
+    DepartmentMember[]
+  >([]);
+  const [nameDepartmentSelected, setNameDepartmentSelected] =
+    useState<string>('');
 
   const dataDepartment2 = [
     {
@@ -71,6 +80,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
     setLoadingData(true);
     const data = await getEmployees();
     setEmployeesArray(data as Employee[]);
+    setAllEmployees(data as Employee[]);
     setLoadingData(false);
   };
 
@@ -79,31 +89,48 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
     setLoadingData(true);
     const data = await getListDepartment();
     setDataDepartment3(data);
+    console.log(dataDepartment3);
     setLoadingData(false);
   };
 
-  useEffect(() => {
-    if (authLogin) {
-      fetchDepartment();
-      fetchData();
-      return
-    }
-  }, [authLogin]);
+  useFocusEffect(
+    useCallback(() => {
+      if (authLogin) {
+        fetchDepartment();
+        fetchData();
+      }
+    }, [authLogin]),
+  );
 
   const handleSelectDepartment = async (item: Department) => {
     if (item.departmentName === 'ALL') {
+      setIsSelectAllEmp(true);
       fetchData();
       return;
     } else {
-      const member = await getDepartmentByName(
-        item.departmentName.toString(),
-      );
-      setModalVisible(true);
+      setLoadingData(true);
+      const member = await getDepartmentByName(item.departmentName.toString());
+      setIsSelectAllEmp(false);
       setMemberInDepartment(member);
       setNameDepartmentSelected(item.departmentName);
       console.log(member);
+      setLoadingData(false);
     }
   };
+
+  const getEmployeeByName = (keyword: string | undefined) => {
+    if (!keyword) return allEmployees;
+    return allEmployees.filter(
+      emp =>
+        emp.fullName &&
+        emp.fullName.toLowerCase().includes(keyword.toLowerCase()),
+    );
+  };
+
+  useEffect(() => {
+    const searchResult = getEmployeeByName(inputSearch);
+    setEmployeesArray(searchResult);
+  }, [inputSearch]);
 
   if (!authLogin) {
     return <Frame5 navigation={navigation} route={route} />;
@@ -111,7 +138,6 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colorWhite}}>
-
       <Modal visible={loadingData} transparent={true}>
         <View style={styles.viewLoading}>
           <ActivityIndicator size="large" color={colorGreen} />
@@ -121,8 +147,13 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
       <Header />
       <View style={{flex: 1, marginHorizontal: 15}}>
         <View style={{flexDirection: 'row'}}>
-          <Search />
-          <TouchableOpacity style={styles.btnADD} onPress={() => navigation.navigate('AddNewEmployee')}>
+          <Search
+            setValue={(v: any) => setInputSearch(v)}
+            value={inputSearch}
+          />
+          <TouchableOpacity
+            style={styles.btnADD}
+            onPress={() => navigation.navigate('AddNewEmployee')}>
             <Text style={{marginHorizontal: 25, color: colorWhite}}>ADD</Text>
           </TouchableOpacity>
         </View>
@@ -136,37 +167,59 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
             contentContainerStyle={{alignItems: 'center'}}
           />
         </View>
-        <FlatList
-          data={employeesArray}
-          renderItem={({item}: {item: Employee}) => (
-            <EmployeeItem item={item} navigation={navigation}/>
-          )}
-          ListEmptyComponent={
-            <View style={{justifyContent:'center', alignItems: 'center', margin:20}}>
-              <Text>{t('data_null')}</Text>
-            </View>
-          }
-        />
+
+        {isSelectAllEmp ? (
+          <FlatList
+            data={employeesArray}
+            renderItem={({item}: {item: Employee}) => (
+              <EmployeeItem item={item} navigation={navigation} />
+            )}
+            ListEmptyComponent={
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  margin: 20,
+                }}>
+                <Text>{t('data_null')}</Text>
+              </View>
+            }
+          />
+        ) : (
+          <FlatList
+            data={memberInDepartment}
+            renderItem={({item}: {item: DepartmentMember}) => (
+              <EmployeeInDepartmentItem item={item} navigation={navigation} />
+            )}
+            ListEmptyComponent={
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  margin: 20,
+                }}>
+                <Text>{t('data_null')}</Text>
+              </View>
+            }
+          />
+        )}
       </View>
-
-      <ModalDepartmentList
-        modalVisible={modalVisible}
-        setModalVisible = {setModalVisible}
-        memberInDepartment = {memberInDepartment}
-        nameDepartment = {nameDepartmentSelected}/>
-
     </SafeAreaView>
   );
 };
 
-const ModalDepartmentList = ({modalVisible,setModalVisible,memberInDepartment,nameDepartment}
-  : {
-    modalVisible:any;
-    setModalVisible:any;
-    memberInDepartment: DepartmentMember[];
-    nameDepartment:string;
+const ModalDepartmentList = ({
+  modalVisible,
+  setModalVisible,
+  memberInDepartment,
+  nameDepartment,
+}: {
+  modalVisible: any;
+  setModalVisible: any;
+  memberInDepartment: DepartmentMember[];
+  nameDepartment: string;
 }) => {
-  return(
+  return (
     <Modal
       animationType="slide"
       transparent={true}
@@ -176,17 +229,17 @@ const ModalDepartmentList = ({modalVisible,setModalVisible,memberInDepartment,na
       }}>
       <View style={styles.modalBackground}>
         <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>
-            {nameDepartment}
-          </Text>
+          <Text style={styles.modalTitle}>{nameDepartment}</Text>
 
           <FlatList
             data={memberInDepartment}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
+            keyExtractor={item => item.id.toString()}
+            renderItem={({item}) => (
               <View style={styles.memberItem}>
                 <Text>ID: {item.id}</Text>
-                <Text style={{ fontFamily: fontBold }}>Name: {item.user.login}</Text>
+                <Text style={{fontFamily: fontBold}}>
+                  Name: {item.user.login}
+                </Text>
                 <Text>Email: {item.mail}</Text>
               </View>
             )}
@@ -195,7 +248,7 @@ const ModalDepartmentList = ({modalVisible,setModalVisible,memberInDepartment,na
           <TouchableOpacity
             style={styles.closeButton}
             onPress={() => setModalVisible(false)}>
-            <Text style={{ color: 'white' }}>Close</Text>
+            <Text style={{color: 'white'}}>Close</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -224,9 +277,18 @@ const DepartmentItem = ({item, onPress}: any) => {
   );
 };
 
-const EmployeeItem = ({item,navigation}: {item: Employee; navigation:any}) => {
+const EmployeeItem = ({
+  item,
+  navigation,
+}: {
+  item: Employee;
+  navigation: any;
+}) => {
   return (
-    <TouchableOpacity onPress={()=>navigation.navigate('DetailEmployeeScreen', {employeeDetail : item})}>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('DetailEmployeeScreen', {employeeDetail: item})
+      }>
       <View
         style={{
           margin: 5,
@@ -237,9 +299,10 @@ const EmployeeItem = ({item,navigation}: {item: Employee; navigation:any}) => {
           backgroundColor: colorWhite,
         }}>
         <Image
-          source={{uri : `${URL_SERVER}${item.avatar}`}}
+          source={{uri: `${URL_SERVER}${item.avatar}`}}
           style={{width: 80, height: 80, margin: 5, borderRadius: 10}}
         />
+
         <View style={{margin: 10}}>
           <Text style={{fontFamily: fontBold}}>{item.fullName}</Text>
           <Text>Email: {item.email}</Text>
@@ -248,6 +311,52 @@ const EmployeeItem = ({item,navigation}: {item: Employee; navigation:any}) => {
         </View>
       </View>
     </TouchableOpacity>
+  );
+};
+
+const EmployeeInDepartmentItem = ({
+  item,
+  navigation,
+}: {
+  item: DepartmentMember;
+  navigation: any;
+}) => {
+  return (
+    <TouchableOpacity>
+      <View
+        style={{
+          margin: 5,
+          flexDirection: 'row',
+          alignItems: 'center',
+          borderRadius: 10,
+          elevation: 6,
+          backgroundColor: colorWhite,
+        }}>
+        <Image
+          source={imageResource.default}
+          style={{width: 80, height: 80, margin: 5, borderRadius: 10}}
+        />
+
+        <View style={{margin: 10}}>
+          <Text style={{fontFamily: fontBold}}>{item.user.login}</Text>
+          <Text>Email: {item.mail}</Text>
+          <Text>Level: {item.isleader}</Text>
+          <Text>First Day Work: {item.datetime}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const AvatarImage = ({uri}: {uri: string}) => {
+  const [error, setError] = useState(false);
+
+  return (
+    <Image
+      source={error ? imageResource.default : {uri}}
+      style={{width: 80, height: 80, margin: 5, borderRadius: 10}}
+      onError={() => setError(true)}
+    />
   );
 };
 

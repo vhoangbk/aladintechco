@@ -81,6 +81,7 @@ const EditPersonalInformation = ({navigation, route}: EditPersonalInformationPro
   });
 
   const getCurrentEmployInfor = async () => {
+    setLoadingCreate(true)
     if(!authLogin) return
     try {
       const currentData = await getPersonalInformation();
@@ -100,11 +101,12 @@ const EditPersonalInformation = ({navigation, route}: EditPersonalInformationPro
     } catch (error) {
       console.error('Failed to fetch employee info:', error);
     }
+    setLoadingCreate(false)
   }
 
   const handleUpdateEmployee = async () => {
     setLoadingCreate(true)
-    try {
+      var resUpdate
       if(imageURI){
         const urlAvatar = await upToServer(imageURI);
         console.log("new urlAvatar",urlAvatar);
@@ -112,15 +114,13 @@ const EditPersonalInformation = ({navigation, route}: EditPersonalInformationPro
           ...formUpdateEmployee,
           avatar: urlAvatar,
         };
-        await putUpdateEmployee(currentEmployeeInfor?.id, updateFormUpdateEmployee);
+        resUpdate = await putUpdateEmployee(currentEmployeeInfor?.id, updateFormUpdateEmployee);
       }else{
-        await putUpdateEmployee(currentEmployeeInfor?.id, formUpdateEmployee);
+        resUpdate = await putUpdateEmployee(currentEmployeeInfor?.id, formUpdateEmployee);
       }
-      
-      navigation.navigate("TabNavigator");
-    } catch (error) {
-      Alert.alert(t('create'), t('update_failed'));
-    }
+      if (resUpdate){
+        navigation.goBack();
+      }
 
     setLoadingCreate(false)
   }

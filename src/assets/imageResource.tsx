@@ -70,4 +70,6 @@ export const imageResource: {[key: string]: ImageSourcePropType} = {
   searchicon: require('../assets/image/searchicon.png'),
 
   noneimage: require('../assets/image/noneimgae.png'),
+
+  default: require('../assets/image/default.jpg')
 };
