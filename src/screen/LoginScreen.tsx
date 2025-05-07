@@ -77,17 +77,15 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
-        {/* Nút Back */}
+
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.goBack()}>
           <Image source={imageResource.backbtn} style={styles.iconBack} />
         </TouchableOpacity>
 
-        {/* Tiêu đề */}
         <Text style={styles.title}>{t('dangnhap')}</Text>
 
-        {/* Ô nhập Email */}
         <View style={styles.inputContainer}>
           <Image source={imageResource.iconemail} style={styles.inputIcon} />
           <TextInput
@@ -99,7 +97,6 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
           />
         </View>
 
-        {/* Ô nhập Password */}
         <View style={styles.inputContainer}>
           <Image source={imageResource.iconpassword} style={styles.inputIcon} />
           <TextInput
@@ -111,7 +108,6 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
           />
         </View>
 
-        {/* Nút đăng nhập */}
         <TouchableOpacity onPress={handleLogin}>
           <View style={{alignItems: 'center'}}>
             <NutBam
@@ -123,7 +119,6 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
           </View>
         </TouchableOpacity>
 
-        {/* Nút Google */}
         <TouchableOpacity>
           <View style={{alignItems: 'center', marginTop: 20}}>
             <NutBam

@@ -121,30 +121,19 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
     }
   };
 
-  const getEmployeeByName = (keyword: string | undefined) => {
-    if (!keyword) return allEmployees;
-    return allEmployees.filter(
-      emp =>
-        emp.fullName &&
-        emp.fullName.toLowerCase().includes(keyword.toLowerCase()),
-    );
-  };
-
-  // useEffect(() => {
-  //   const searchResult = getEmployeeByName(inputSearch);
-  //   setEmployeesArray(searchResult);
-  // }, [inputSearch]);
-
   if (!authLogin) {
     return <Frame5 navigation={navigation} route={route} />;
   }
 
-  console.log('rendering...')
-
-  const fillterData = () => {
-    console.log('fillterData', memberInDepartment)
+  const fillterDataInDepartment = () => {
     return memberInDepartment.filter((e) => {
       return e.user.login.includes(inputSearch ?? '')
+    })
+  }
+
+  const fillterDataAll = () => {
+    return employeesArray.filter((e) => {
+      return e.fullName.includes(inputSearch ?? '')
     })
   }
 
@@ -182,7 +171,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
 
         {isSelectAllEmp ? (
           <FlatList
-            data={employeesArray}
+            data={fillterDataAll()}
             renderItem={({item}: {item: Employee}) => (
               <EmployeeItem item={item} navigation={navigation} />
             )}
@@ -199,7 +188,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
           />
         ) : (
           <FlatList
-            data={fillterData()}
+            data={fillterDataInDepartment()}
             renderItem={({item}: {item: DepartmentMember}) => (
               <EmployeeInDepartmentItem item={item} navigation={navigation} />
             )}

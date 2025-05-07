@@ -119,7 +119,9 @@ const EditPersonalInformation = ({navigation, route}: EditPersonalInformationPro
         resUpdate = await putUpdateEmployee(currentEmployeeInfor?.id, formUpdateEmployee);
       }
       if (resUpdate){
-        navigation.goBack();
+        navigation.navigate('TabNavigator', {
+          screen: 'PersonScreen'
+        });
       }
 
     setLoadingCreate(false)

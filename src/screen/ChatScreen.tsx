@@ -21,7 +21,9 @@ type ChatScreenProps = NativeStackScreenProps<RootStackParamList, 'ChatScreen'>;
 const ChatScreen = ({navigation, route}: ChatScreenProps) => {
   const handleBack = () => {
     if (route.params?.isFromSplash ?? false) {
-      navigation.replace('TabNavigator');
+      navigation.replace('TabNavigator', {
+        screen:'HomeScreen'
+      });
     } else {
       navigation.goBack();
     }

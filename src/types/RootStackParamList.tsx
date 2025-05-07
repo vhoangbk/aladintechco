@@ -1,10 +1,13 @@
+import { NavigatorScreenParams } from '@react-navigation/native';
 import {Employee, RecruitmentModel} from './typeModel';
 
 export type RootStackParamList = {
   HomeScreen: undefined;
   SplashScreen: undefined;
-  TabNavigator: undefined;
-  ChatScreen: undefined;
+  TabNavigator: NavigatorScreenParams<RootTabParamList>;
+  ChatScreen: {
+    isFromSplash: boolean;
+  };
   TuyenDungScreen: undefined;
   PersonScreen: undefined;
   EmployeeScreen: undefined;
@@ -23,4 +26,11 @@ export type RootStackParamList = {
   DetailEmployeeScreen: {
     employeeDetail: Employee
   }
+};
+
+export type RootTabParamList = {
+  HomeScreen: undefined;
+  PersonScreen: undefined;
+  TuyenDungScreen: undefined;
+  EmployeeScreen: undefined;
 };
