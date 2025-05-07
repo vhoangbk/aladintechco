@@ -1,9 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
 import { Alert } from 'react-native';
-import {get_AccessKeyStorage} from '../commons/AsyncStorage';
+import {get_AccessKeyStorage, save_AccessKeyStorage} from '../commons/AsyncStorage';
 
 const handleRequestError = (error: ApiError) => {
     showMessage(error.message);
+    if (error.status === 401) {
+        save_AccessKeyStorage('');
+    }
 };
 
 const getHeader = async () => {
@@ -88,3 +91,5 @@ const MessgeError = {
     500: 'Server error',
     404: 'Not found',
 };
+
+
