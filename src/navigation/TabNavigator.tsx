@@ -20,13 +20,13 @@ const TabNavigator = () => {
         name="HomeScreen"
         component={HomeScreen}
         options={{
-          tabBarActiveTintColor: '#000',
+          tabBarActiveTintColor: '#0096d6',
           tabBarInactiveTintColor: '#000',
           tabBarLabel: t('trangchu'),
-          tabBarIcon: () => (
+          tabBarIcon: ({focused}) => (
             <Image
               source={imageResource.tabtrangchu}
-              style={{width: 20, height: 20, tintColor: '#000'}}
+              style={{width: 20, height: 20, tintColor: focused ? '#0096d6' :'#00000'}}
             />
           ),
         }}
@@ -36,13 +36,13 @@ const TabNavigator = () => {
         name="TuyenDungScreen"
         component={TuyenDungScreen}
         options={{
-          tabBarActiveTintColor: '#000000',
+          tabBarActiveTintColor: '#0096d6',
           tabBarInactiveTintColor: '#000000',
           tabBarLabel: t('tuyendung'),
-          tabBarIcon: () => (
+          tabBarIcon: ({focused}) => (
             <Image
               source={imageResource.tabtuyendung}
-              style={{width: 20, height: 20, tintColor: '#000'}}
+              style={{width: 20, height: 20, tintColor: focused ? '#0096d6' :'#00000'}}
             />
           ),
         }}
@@ -52,13 +52,13 @@ const TabNavigator = () => {
         name="EmployeeScreen"
         component={EmployeeScreen}
         options={{
-          tabBarActiveTintColor: '#000000',
+          tabBarActiveTintColor: '#0096d6',
           tabBarInactiveTintColor: '#000000',
           tabBarLabel: t('nhanvien'),
-          tabBarIcon: () => (
+          tabBarIcon: ({focused}) => (
             <Image
               source={imageResource.tabnhanvien}
-              style={{width: 20, height: 20, tintColor: '#000'}}
+              style={{width: 20, height: 20, tintColor: focused ? '#0096d6' :'#00000'}}
             />
           ),
         }}
@@ -68,13 +68,13 @@ const TabNavigator = () => {
         name="PersonScreen"
         component={PersonScreen}
         options={{
-          tabBarActiveTintColor: '#000000',
+          tabBarActiveTintColor: '#0096d6',
           tabBarInactiveTintColor: '#000000',
           tabBarLabel: t('canhan'),
-          tabBarIcon: () => (
+          tabBarIcon: ({focused}) => (
             <Image
               source={imageResource.tabcanhan}
-              style={{width: 20, height: 20, tintColor: '#000'}}
+              style={{width: 20, height: 20, tintColor: focused ? '#0096d6' :'#00000'}}
             />
           ),
         }}

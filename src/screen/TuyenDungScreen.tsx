@@ -33,7 +33,9 @@ const TuyenDungScreen = ({navigation}:TuyenDungScreenProps) => {
   const {t} = useTranslation();
 
   const fetchData = async () => {
+    console.log(1)
     const data = await getRecruitments();
+    console.log(2, data)
     setRecruitmentDATA(data as RecruitmentModel[]);
     setLoadingData(false);
   };
@@ -90,7 +92,7 @@ const RecruitmentItem: React.FC<RecruitmentItemProps> = ({item , t , navigation}
           {item.level}
         </Text>
         <Text style={styles.txt3}>
-          <Text style={styles.txt5}>{t('address')}: </Text>
+          <Text style={styles.txt5}>{t('address')} </Text>
           {item.location}
         </Text>
         <Text style={styles.txt3}>
