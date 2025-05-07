@@ -12,7 +12,7 @@ import {
   View,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-import {colorGreen, colorWhite} from '../assets/color';
+import {colorBlack, colorGreen, colorWhite} from '../assets/color';
 import {RootState} from 'src/redux/store';
 import {RootStackParamList} from 'src/types/RootStackParamList';
 import {fontBold, fontRegular} from 'src/types/typeFont';
@@ -42,6 +42,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
   const [allEmployees, setAllEmployees] = useState<Employee[]>([]);
 
   const [isSelectAllEmp, setIsSelectAllEmp] = useState<boolean>(true);
+  const [selectedDepartmentId, setSelectedDepartmentId] = useState<number | null>(152162567);
 
   const [loadingData, setLoadingData] = useState<boolean>(true);
   const [modalVisible, setModalVisible] = useState(false);
@@ -103,6 +104,8 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
   );
 
   const handleSelectDepartment = async (item: Department) => {
+    setSelectedDepartmentId(item.id)
+
     if (item.departmentName === 'ALL') {
       setIsSelectAllEmp(true);
       fetchData();
@@ -161,7 +164,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
           <FlatList
             data={dataDepartment1}
             renderItem={({item}) => (
-              <DepartmentItem item={item} onPress={handleSelectDepartment} />
+              <DepartmentItem item={item} onPress={handleSelectDepartment} isSelected={item.id === selectedDepartmentId}/>
             )}
             horizontal={true}
             contentContainerStyle={{alignItems: 'center'}}
@@ -208,55 +211,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
   );
 };
 
-const ModalDepartmentList = ({
-  modalVisible,
-  setModalVisible,
-  memberInDepartment,
-  nameDepartment,
-}: {
-  modalVisible: any;
-  setModalVisible: any;
-  memberInDepartment: DepartmentMember[];
-  nameDepartment: string;
-}) => {
-  return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => {
-        setModalVisible(false);
-      }}>
-      <View style={styles.modalBackground}>
-        <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>{nameDepartment}</Text>
-
-          <FlatList
-            data={memberInDepartment}
-            keyExtractor={item => item.id.toString()}
-            renderItem={({item}) => (
-              <View style={styles.memberItem}>
-                <Text>ID: {item.id}</Text>
-                <Text style={{fontFamily: fontBold}}>
-                  Name: {item.user.login}
-                </Text>
-                <Text>Email: {item.mail}</Text>
-              </View>
-            )}
-          />
-
-          <TouchableOpacity
-            style={styles.closeButton}
-            onPress={() => setModalVisible(false)}>
-            <Text style={{color: 'white'}}>Close</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </Modal>
-  );
-};
-
-const DepartmentItem = ({item, onPress}: any) => {
+const DepartmentItem = ({item, onPress, isSelected}: any) => {
   return (
     <TouchableOpacity
       onPress={() => onPress(item)}
@@ -265,12 +220,12 @@ const DepartmentItem = ({item, onPress}: any) => {
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 8,
-        backgroundColor: colorGreen,
+        backgroundColor: isSelected ? colorGreen : colorWhite,
         elevation: 10,
         margin: 3,
       }}>
       <Text
-        style={{fontFamily: fontBold, marginHorizontal: 20, color: colorWhite}}>
+        style={{fontFamily: fontBold, marginHorizontal: 20, color: isSelected ? colorWhite : colorBlack}}>
         {item.departmentName}
       </Text>
     </TouchableOpacity>
