@@ -14,7 +14,7 @@ import {
 } from './apiConfig';
 import {CandidateModel, NewEmployee, RecruitmentModel, UpdateEmployee} from 'src/types/typeModel';
 import {get_AccessKeyStorage} from '../commons/AsyncStorage';
-import {getRequest, postRequest} from './apiRequest';
+import {getRequest, postRequest, putRequest} from './apiRequest';
 
 export const getRecruitments = async () => {
     const response = await getRequest(GET_ALL_RECRUITMENTS);
@@ -24,7 +24,6 @@ export const getRecruitments = async () => {
 export const postNewCandidates = async (candidateModel: CandidateModel) => {
   const response = await postRequest(API_CANDIDATE, candidateModel);
   return response;
-
 };
 
 export const getEmployees = async () => {
@@ -57,81 +56,28 @@ export const getAccessToken = async (username: string, password: string) => {
 };
 
 export const getAccount = async () => {
-  try {
-    const access_token = await get_AccessKeyStorage();
-    const response = await axios.get(API_ACCOUNT, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching Account:', error);
-    return null;
-  }
+  const response = await getRequest(API_ACCOUNT);
+    return response;
 };
 
 export const getDepartmentByName = async (nameDepartment: string) => {
-  try {
-    const access_token = await get_AccessKeyStorage();
-    const response = await axios.get(`${API_DEPARTMENT}/${nameDepartment}`, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching DepartmentByName:', error);
-    return null;
-  }
+  const response = await getRequest(`${API_DEPARTMENT}/${nameDepartment}`);
+    return response;
 };
 
 export const getListDepartment = async () => {
-  try {
-    const access_token = await get_AccessKeyStorage();
-    const response = await axios.get(API_DEPARTMENT_LIST, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching ListDepartment:', error);
-    return null;
-  }
+  const response = await getRequest(API_DEPARTMENT_LIST);
+  return response;
 };
 
 export const getPersonalInformation = async () => {
-  try {
-    const access_token = await get_AccessKeyStorage();
-    const response = await axios.get(API_PERSONAL_INFORMATION, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
-    const data = response.data;
-    return data[0];
-  } catch (error) {
-    console.error('Error fetching PersonalInformation:', error);
-    return null;
-  }
+  const response = await getRequest(API_PERSONAL_INFORMATION);
+  return response[0];
 };
 
 export const postNewEmployee = async (newEmployee: NewEmployee) => {
-  try {
-    const access_token = await get_AccessKeyStorage();
-    const response = await axios.post(API_CREATE_NEW_EMPLOYEE, newEmployee,
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
-    console.log('Post new employee success!', response.data);
-  } catch (error) {
-    console.error('Post new employee Failed!:', error);
-    throw error;
-  }
+  const response = await postRequest(API_CREATE_NEW_EMPLOYEE, newEmployee);
+  return response;
 };
 
 export const upLoadImageToServer = async (uri:string) => {
@@ -161,18 +107,6 @@ export const upLoadImageToServer = async (uri:string) => {
 }
 
 export const putUpdateEmployee = async (idEmpl : any , updatedData: UpdateEmployee) => {
-  try {
-    const access_token = await get_AccessKeyStorage();
-    const response = await axios.put(`${API_UPDATE_EMPLOYEE}/${idEmpl}`, updatedData, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-        'Content-Type': 'application/json',
-      },
-    });
-    console.log('Update success:', response.data);
-    return response.data;
-  } catch (error: any) {
-    console.error('Update employee failed:', error.response?.data || error.message);
-    throw error;
-  }
+  const response = await putRequest(`${API_UPDATE_EMPLOYEE}/${idEmpl}`, updatedData);
+  return response;
 }

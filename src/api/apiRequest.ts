@@ -11,6 +11,7 @@ const getHeader = async () => {
     if (token) {
         return {
             Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
         };
     } return {};
 }
@@ -19,13 +20,17 @@ export const getRequest = async (url: string) => {
     return await request(url, 'get');
 };
 
-const request = async (url: string, method: 'get' | 'post', params: Object = {}) => {
+const request = async (url: string, method: 'get' | 'post' | 'put', params: Object = {}) => {
     console.log('[request]', url, 'params', params);
     try {
         let headers = await getHeader();
         var response: AxiosResponse | undefined;
         if (method === 'post') {
             response = await axios.post(url, params, {
+                headers: headers,
+            });
+        } else if(method === 'put'){
+            response = await axios.put(url, params, {
                 headers: headers,
             });
         } else if (method === 'get') {
@@ -43,6 +48,10 @@ const request = async (url: string, method: 'get' | 'post', params: Object = {})
 
 export const postRequest = async (url: string, params: Object = {}) => {
     return await request(url, 'post', params);
+};
+
+export const putRequest = async (url: string, params: Object = {}) => {
+    return await request(url, 'put', params);
 };
 
 const handleApiException = (error: unknown) => {
