@@ -97,7 +97,6 @@ const ApplyScreen = ({navigation, route}: ApplyScreenProps) => {
     };
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 500));
       let response = await postNewCandidates(candidateModel);
       setLoadingSendCandidate(false);
       if (response) {

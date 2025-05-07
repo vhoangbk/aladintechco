@@ -1,13 +1,6 @@
-import axios, { AxiosError } from "axios";
-import { Alert } from "react-native";
+import axios, { AxiosResponse } from 'axios';
+import { Alert } from 'react-native';
 import {get_AccessKeyStorage} from '../commons/AsyncStorage';
-
-const preRequest = (url: string) => {
-}
-
-const handleRequestSuccess = (data: JSON) => {
-   
-}
 
 const handleRequestError = (error: ApiError) => {
     showMessage(error.message);
@@ -23,40 +16,37 @@ const getHeader = async () => {
 }
 
 export const getRequest = async (url: string) => {
-    console.log('[request]', url);
-    preRequest(url);
-    try {
-        let headers = await getHeader();
-        const response = await axios.get(url, {
-            headers: headers,
-        });
-        console.log('[response]', response.data);
-        handleRequestSuccess(response.data);
-        return response.data;
-      } catch (error: AxiosError) {
-        console.log('api error', error.message);
-        let apiError:  ApiError = {
-            status: error.response?.status || 500,
-            message: error.message || MessgeError[500],
-        };
-        handleRequestError(apiError);
-        return null;
-      }
+    return await request(url, 'get');
 };
 
-export const postRequest = async (url: string, params: Object = {}) => {
+const request = async (url: string, method: 'get' | 'post', params: Object = {}) => {
     console.log('[request]', url, 'params', params);
-    preRequest(url);
     try {
         let headers = await getHeader();
-        const response = await axios.post(url, {
-            params: params,
-            headers: headers,
-        });
-        console.log('[response]', response.data);
-        handleRequestSuccess(response.data);
-        return response.data;
-      } catch (error: AxiosError) {
+        var response: AxiosResponse | undefined;
+        if (method === 'post') {
+            response = await axios.post(url, params, {
+                headers: headers,
+            });
+        } else if (method === 'get') {
+            response = await axios.get(url, {
+                headers: headers,
+            });
+        }
+        console.log('[response]', response?.status, response?.data);
+        return response?.data;
+      } catch (error: unknown) {
+        handleApiException(error);
+        return null;
+      }
+}
+
+export const postRequest = async (url: string, params: Object = {}) => {
+    return await request(url, 'post', params);
+};
+
+const handleApiException = (error: unknown) => {
+    if (axios.isAxiosError(error)) {
         console.log('api error', error.message);
         let apiError:  ApiError = {
             status: error.response?.status || 500,
@@ -64,7 +54,13 @@ export const postRequest = async (url: string, params: Object = {}) => {
         };
         handleRequestError(apiError);
         return null;
-      }
+    } else {
+        console.log('Unexpected error', error);
+        handleRequestError({
+            status: 500,
+            message: MessgeError[500],
+        });
+    }
 };
 
 const showMessage = (message: string) => {

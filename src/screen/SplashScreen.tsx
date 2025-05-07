@@ -32,7 +32,9 @@ const SplashScreen = ({navigation}: SplashScreenProps) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.replace('ChatScreen');
+      navigation.replace('ChatScreen', {
+        isFromSplash: true,
+      });
     }, 1000);
 
     return () => clearTimeout(timer);

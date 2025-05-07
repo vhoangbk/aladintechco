@@ -18,9 +18,13 @@ const URL =
 
 type ChatScreenProps = NativeStackScreenProps<RootStackParamList, 'ChatScreen'>;
 
-const ChatScreen = ({navigation}: ChatScreenProps) => {
+const ChatScreen = ({navigation, route}: ChatScreenProps) => {
   const handleBack = () => {
-    navigation.navigate('TabNavigator');
+    if (route.params?.isFromSplash ?? false) {
+      navigation.replace('TabNavigator');
+    } else {
+      navigation.goBack();
+    }
   };
   return (
     <SafeAreaView style={{flex: 1}}>
