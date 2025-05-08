@@ -2,8 +2,10 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
+  ActivityIndicator,
   Alert,
   Image,
+  Modal,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -31,6 +33,7 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
   const dispatch = useDispatch<AppDispatch>();
+  const [loading,setLoading] = useState<boolean>(false)
 
   const getAccountSaved = async () =>{
     const username = await get_Field_Saved('username');
@@ -48,6 +51,8 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
   },[]);
 
   const handleLogin = async () => {
+
+    setLoading(true)
 
     if (inputEmail?.trim() === '' || inputPassword?.trim() === '') {
       Alert.alert(t('alert'), t('alertMessage'), [
@@ -72,10 +77,18 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
       navigation.goBack();
     }
 
+    setLoading(false)
 
   };
   return (
     <SafeAreaView style={{flex: 1}}>
+
+      <Modal visible={loading} transparent={true}>
+        <View style={styles.viewLoading}>
+          <ActivityIndicator size="large" color={colorGreen} />
+        </View>
+      </Modal>
+
       <View style={styles.container}>
 
         <TouchableOpacity
@@ -201,6 +214,12 @@ const styles = StyleSheet.create({
   },
   googleText: {
     fontSize: 15,
+  },
+  viewLoading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
 });
 

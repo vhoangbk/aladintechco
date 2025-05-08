@@ -2,7 +2,9 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
+  ActivityIndicator,
   Image,
+  Modal,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -37,6 +39,7 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
   const {t} = useTranslation();
   const [showChangeLanguageBox, setShowChangeLanguageBox] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
+  const [loading,setLoading] = useState<boolean>(false);
 
   const [information, setInformation] = useState<PersonalInformationModel>();
 
@@ -49,6 +52,7 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
   };
 
   const handleLogout = async () => {
+    setLoading(true)
     try {
       await save_AccessKeyStorage('');
       console.log('Logout success!',await get_AccessKeyStorage());
@@ -56,6 +60,7 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
     } catch (error:any) {
       console.log('Logout failed',error.response);
     }
+    setLoading(false)
 
   };
 
@@ -80,6 +85,13 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
+
+      <Modal visible={loading} transparent={true}>
+        <View style={styles.viewLoading}>
+          <ActivityIndicator size="large" color={colorGreen} />
+        </View>
+      </Modal>
+
       <View style={styles.container}>
         {authLogin ? (
           <TouchableOpacity onPress={()=>navigation.navigate('EditPersonalInfor')}>
@@ -261,6 +273,12 @@ const styles = StyleSheet.create({
   },
   text1: {
     fontFamily: fontRegular,
+  },
+  viewLoading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
 });
 
