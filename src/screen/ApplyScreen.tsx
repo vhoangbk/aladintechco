@@ -24,7 +24,7 @@ import {fontBold} from 'src/types/typeFont';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Picker} from '@react-native-picker/picker';
 import {CandidateModel} from 'src/types/typeModel';
-import {postNewCandidates} from 'src/api/apiServices';
+import {postNewCandidates, upLoadCVToServer} from 'src/api/apiServices';
 import {pick} from '@react-native-documents/picker';
 import NutBam from 'src/components/NutBam';
 import RNFS from 'react-native-fs';
@@ -136,8 +136,11 @@ const ApplyScreen = ({navigation, route}: ApplyScreenProps) => {
       setNameFilePicked(pickResult.name!!);
       if (pickResult) {
         const fileUri = pickResult.uri;
-        const base64Data = await RNFS.readFile(fileUri, 'base64');
-        setCv(base64Data);
+        // const base64Data = await RNFS.readFile(fileUri, 'base64');
+        // setCv(base64Data);
+        const urlCV = await upLoadCVToServer(fileUri)
+        setCv(urlCV)
+        console.log(urlCV);
       }
     } catch (err) {
       Alert.alert('Error', t('error_picking_file'));

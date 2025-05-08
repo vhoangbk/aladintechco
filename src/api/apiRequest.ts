@@ -1,11 +1,14 @@
 import axios, { AxiosResponse } from 'axios';
 import { Alert } from 'react-native';
 import {get_AccessKeyStorage, save_AccessKeyStorage} from '../commons/AsyncStorage';
+import {store} from '../redux/store';
+import { logout } from 'src/redux/slice/AuthSlice';
 
 const handleRequestError = (error: ApiError) => {
     showMessage(error.message);
     if (error.status === 401) {
         save_AccessKeyStorage('');
+        store.dispatch(logout())
     }
 };
 

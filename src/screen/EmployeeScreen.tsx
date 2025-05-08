@@ -80,8 +80,10 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
     if (!authLogin) return;
     setLoadingData(true);
     const data = await getEmployees();
-    setEmployeesArray(data as Employee[]);
-    setAllEmployees(data as Employee[]);
+    if(data){
+      setEmployeesArray(data as Employee[]);
+      setAllEmployees(data as Employee[]);
+    }
     setLoadingData(false);
   };
 
@@ -89,8 +91,10 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
     if (!authLogin) return;
     setLoadingData(true);
     const data = await getListDepartment();
-    setDataDepartment3(data);
-    console.log(dataDepartment3);
+    if(data){
+      setDataDepartment3(data);
+    }
+    console.log(dataDepartment3)
     setLoadingData(false);
   };
 

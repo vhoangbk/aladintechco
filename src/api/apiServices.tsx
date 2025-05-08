@@ -8,6 +8,7 @@ import {
   API_EMPLOYEES,
   API_PERSONAL_INFORMATION,
   API_UPDATE_EMPLOYEE,
+  API_UPLOAD_CV,
   API_UPLOAD_IMAGE,
   GET_ACCESS_TOKEN,
   GET_ALL_RECRUITMENTS,
@@ -104,6 +105,32 @@ export const upLoadImageToServer = async (uri:string) => {
     } catch (error) {
       console.error('Upload image error:', error);
     }
+}
+
+export const upLoadCVToServer = async (uri:string) => {
+  const fomData = new FormData();
+  const fileName = uri.split('/').pop() || 'cv.pdf';
+  const file = {
+    uri,
+    type: 'file/pdf',
+    name:fileName,
+  } as any;
+
+  fomData.append('file', file);
+
+  try {
+    const access_token = await get_AccessKeyStorage();
+    const response = await axios.post (API_UPLOAD_CV,fomData,{
+      headers:{
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${access_token}`,
+      }
+    })
+    console.log('Upload CV success!!!:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Upload CV error:', error);
+  }
 }
 
 export const putUpdateEmployee = async (idEmpl : any , updatedData: UpdateEmployee) => {
