@@ -136,11 +136,8 @@ const ApplyScreen = ({navigation, route}: ApplyScreenProps) => {
       setNameFilePicked(pickResult.name!!);
       if (pickResult) {
         const fileUri = pickResult.uri;
-        // const base64Data = await RNFS.readFile(fileUri, 'base64');
-        // setCv(base64Data);
-        const urlCV = await upLoadCVToServer(fileUri)
-        setCv(urlCV)
-        console.log(urlCV);
+        const base64Data = await RNFS.readFile(fileUri, 'base64');
+        setCv(base64Data);
       }
     } catch (err) {
       Alert.alert('Error', t('error_picking_file'));

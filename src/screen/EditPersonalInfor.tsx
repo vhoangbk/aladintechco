@@ -238,7 +238,7 @@ const EditPersonalInformation = ({navigation, route}: EditPersonalInformationPro
           )}
             <View style={{alignItems: 'center'}}>
               <Text></Text>
-              <Button title={t('library')} onPress={selectImageLibrary} />
+              <Button title={t('photo_library')} onPress={selectImageLibrary} />
               <Text></Text>
               <Button title={t('take_photo')} onPress={takePhoto} />
               <Text></Text>

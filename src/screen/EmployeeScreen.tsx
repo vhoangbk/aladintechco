@@ -159,7 +159,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
           <TouchableOpacity
             style={styles.btnADD}
             onPress={() => navigation.navigate('AddNewEmployee')}>
-            <Text style={{marginHorizontal: 25, color: colorWhite}}>ADD</Text>
+            <Text style={{marginHorizontal: 25, color: colorWhite, fontFamily:fontBold}}>{t('add')}</Text>
           </TouchableOpacity>
         </View>
         <View>
@@ -262,9 +262,9 @@ const EmployeeItem = ({
 
         <View style={{margin: 10}}>
           <Text style={{fontFamily: fontBold}}>{item.fullName}</Text>
-          <Text>Email: {item.email}</Text>
-          <Text>Level: {item.level}</Text>
-          <Text>First Day Work: {item.firstDayWork}</Text>
+          <Text>{t('email')}: {item.email}</Text>
+          <Text>{t('level')}: {item.level}</Text>
+          <Text>{t('first_daywork')}: {item.firstDayWork}</Text>
         </View>
       </View>
     </TouchableOpacity>

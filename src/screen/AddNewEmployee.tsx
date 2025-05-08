@@ -158,7 +158,7 @@ const AddNewEmployee = ({navigation}: AddNewEmployeeProps) => {
         t('create'), 
         t('create_success'),
         [
-          { text: "OK", onPress: () => navigation.navigate('TabNavigator') }
+          { text: "OK", onPress: () => navigation.navigate('TabNavigator',{screen:"EmployeeScreen"}) }
         ],
         { cancelable: false }
       );
@@ -287,7 +287,7 @@ const AddNewEmployee = ({navigation}: AddNewEmployeeProps) => {
           )}
           <View style={{alignItems: 'center'}}>
             <Text></Text>
-            <Button title={t('library')} onPress={selectImageLibrary} />
+            <Button title={t('photo_library')} onPress={selectImageLibrary} />
             <Text></Text>
             <Button title={t('take_photo')} onPress={takePhoto} />
             <Text></Text>

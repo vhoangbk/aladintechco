@@ -156,5 +156,7 @@
   "employeeStatus": "Employee Status",
   "workModel": "Work Model",
   "data_null" : "No data",
-  "edit_info" : "Edit Personal Information"
+  "edit_info" : "Edit Personal Information",
+  "add":"Add",
+  "first_daywork":"First day work"
 }
