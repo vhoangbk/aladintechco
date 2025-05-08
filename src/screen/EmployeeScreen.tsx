@@ -1,4 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import ImageLoad from 'react-native-image-placeholder';
 import {
   ActivityIndicator,
   Button,
@@ -18,7 +19,7 @@ import {RootStackParamList} from 'src/types/RootStackParamList';
 import {fontBold, fontRegular} from 'src/types/typeFont';
 import {t} from 'i18next';
 import Search from 'src/components/Search';
-import {Department, DepartmentMember, Employee} from 'src/types/typeModel';
+import {Department, Employee} from 'src/types/typeModel';
 import {imageResource} from 'src/assets/imageResource';
 import {useCallback, useEffect, useState} from 'react';
 import {
@@ -39,42 +40,36 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
   const [inputSearch, setInputSearch] = useState<string>();
 
   const [employeesArray, setEmployeesArray] = useState<Employee[]>([]);
-  const [allEmployees, setAllEmployees] = useState<Employee[]>([]);
 
   const [isSelectAllEmp, setIsSelectAllEmp] = useState<boolean>(true);
-  const [selectedDepartmentId, setSelectedDepartmentId] = useState<number | null>(152162567);
+  const [selectedDepartmentId, setSelectedDepartmentId] = useState<number | null>(11111);
 
   const [loadingData, setLoadingData] = useState<boolean>(true);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [memberInDepartment, setMemberInDepartment] = useState<
-    DepartmentMember[]
-  >([]);
-  const [nameDepartmentSelected, setNameDepartmentSelected] =
-    useState<string>('');
+  const [memberInDepartment, setMemberInDepartment] = useState<Department[]>([]);
 
-  const dataDepartment2 = [
+  const [dataDepartment2, setDataDepartment2] = useState<Department[]>([]);
+
+  const dataDepartment1: Department[] = [
     {
-      id: 152162567,
+      id: 11111,
       departmentName: 'ALL',
-      isleader: '0',
-      mail: 'All@gmail.com',
-      datetime: null,
+      isleader: '',
+      mail: '',
+      datetime: '',
       user: {
-        id: '0528210048690774',
-        login: 'admin',
-        firstName: 'Admin',
-        lastName: 'Admin',
-        email: 'admin@gmail.com',
-        activated: false,
-        langKey: 'en',
-        imageUrl: null,
+        id: '',
+        login: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        activated: true,
+        langKey: '',
+        imageUrl: '',
       },
     },
+    ...dataDepartment2,
   ];
-
-  const [dataDepartment3, setDataDepartment3] = useState<Department[]>([]);
-
-  const dataDepartment1 = [...dataDepartment2, ...dataDepartment3];
+  
 
   const fetchData = async () => {
     if (!authLogin) return;
@@ -82,7 +77,6 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
     const data = await getEmployees();
     if(data){
       setEmployeesArray(data as Employee[]);
-      setAllEmployees(data as Employee[]);
     }
     setLoadingData(false);
   };
@@ -92,9 +86,9 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
     setLoadingData(true);
     const data = await getListDepartment();
     if(data){
-      setDataDepartment3(data);
+      setDataDepartment2(data);
     }
-    console.log(dataDepartment3)
+    console.log(dataDepartment2)
     setLoadingData(false);
   };
 
@@ -119,7 +113,6 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
       const member = await getDepartmentByName(item.departmentName.toString());
       setIsSelectAllEmp(false);
       setMemberInDepartment(member);
-      setNameDepartmentSelected(item.departmentName);
       console.log(member);
       setLoadingData(false);
     }
@@ -143,6 +136,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colorWhite}}>
+
       <Modal visible={loadingData} transparent={true}>
         <View style={styles.viewLoading}>
           <ActivityIndicator size="large" color={colorGreen} />
@@ -150,6 +144,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
       </Modal>
 
       <Header />
+
       <View style={{flex: 1, marginHorizontal: 15}}>
         <View style={{flexDirection: 'row'}}>
           <Search
@@ -170,6 +165,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
             )}
             horizontal={true}
             contentContainerStyle={{alignItems: 'center'}}
+            showsHorizontalScrollIndicator={false}
           />
         </View>
 
@@ -177,7 +173,14 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
           <FlatList
             data={fillterDataAll()}
             renderItem={({item}: {item: Employee}) => (
-              <EmployeeItem item={item} navigation={navigation} />
+              <EmployeeItem 
+                  item={item} 
+                  navigation={navigation} 
+                  name={item.fullName} 
+                  image={item.avatar}
+                  email={item.email}
+                  level={item.level}
+                  first_daywork={item.firstDayWork} />
             )}
             ListEmptyComponent={
               <View
@@ -193,8 +196,15 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
         ) : (
           <FlatList
             data={fillterDataInDepartment()}
-            renderItem={({item}: {item: DepartmentMember}) => (
-              <EmployeeInDepartmentItem item={item} navigation={navigation} />
+            renderItem={({item}: {item: Department}) => (
+              <EmployeeItem 
+                  item={item} 
+                  navigation={navigation} 
+                  name={item.user.login} 
+                  image={item.user.imageUrl}
+                  email={item.mail}
+                  level={''}
+                  first_daywork={item.datetime ?? ''} />
             )}
             ListEmptyComponent={
               <View
@@ -237,9 +247,19 @@ const DepartmentItem = ({item, onPress, isSelected}: any) => {
 const EmployeeItem = ({
   item,
   navigation,
+  name,
+  email,
+  level,
+  first_daywork,
+  image
 }: {
-  item: Employee;
+  item: any;
   navigation: any;
+  name: string,
+  email: string,
+  level: string,
+  first_daywork: string,
+  image: any
 }) => {
   return (
     <TouchableOpacity
@@ -255,65 +275,23 @@ const EmployeeItem = ({
           elevation: 6,
           backgroundColor: colorWhite,
         }}>
-        <Image
-          source={{uri: `${URL_SERVER}${item.avatar}`}}
-          style={{width: 80, height: 80, margin: 5, borderRadius: 10}}
+
+        <ImageLoad
+          source={{uri: `${URL_SERVER}${image}`}}
+          style={{width: 80, height: 80, margin: 10}}
+          isShowActivity = {false}
+          placeholderSource = {imageResource.default}
+          placeholderStyle = {{width: 80, height: 80}}
         />
 
         <View style={{margin: 10}}>
-          <Text style={{fontFamily: fontBold}}>{item.fullName}</Text>
-          <Text>{t('email')}: {item.email}</Text>
-          <Text>{t('level')}: {item.level}</Text>
-          <Text>{t('first_daywork')}: {item.firstDayWork}</Text>
+          <Text style={{fontFamily: fontBold}}>{name}</Text>
+          <Text>{t('email')}: {email}</Text>
+          <Text>{t('level')}: {level}</Text>
+          <Text>{t('first_daywork')}: {first_daywork}</Text>
         </View>
       </View>
     </TouchableOpacity>
-  );
-};
-
-const EmployeeInDepartmentItem = ({
-  item,
-  navigation,
-}: {
-  item: DepartmentMember;
-  navigation: any;
-}) => {
-  return (
-    <TouchableOpacity>
-      <View
-        style={{
-          margin: 5,
-          flexDirection: 'row',
-          alignItems: 'center',
-          borderRadius: 10,
-          elevation: 6,
-          backgroundColor: colorWhite,
-        }}>
-        <Image
-          source={imageResource.default}
-          style={{width: 80, height: 80, margin: 5, borderRadius: 10}}
-        />
-
-        <View style={{margin: 10}}>
-          <Text style={{fontFamily: fontBold}}>{item.user.login}</Text>
-          <Text>Email: {item.mail}</Text>
-          <Text>Level: {item.isleader}</Text>
-          <Text>First Day Work: {item.datetime}</Text>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-};
-
-const AvatarImage = ({uri}: {uri: string}) => {
-  const [error, setError] = useState(false);
-
-  return (
-    <Image
-      source={error ? imageResource.default : {uri}}
-      style={{width: 80, height: 80, margin: 5, borderRadius: 10}}
-      onError={() => setError(true)}
-    />
   );
 };
 

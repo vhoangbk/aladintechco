@@ -155,5 +155,10 @@
     "add":"Thêm",
     "photo_library": "Thư viện ảnh",
     "take_photo": "Chụp ảnh",
-    "first_daywork":"Ngày vào làm"
+    "first_daywork":"Ngày vào làm",
+    "service_platform": "Nền tảng",
+    "service_system_integration": "Dịch vụ tích hợp hệ thống",
+    "service_outsource": "Thuê ngoài",
+    "service_automotive": "Ô tô"
+      
 }

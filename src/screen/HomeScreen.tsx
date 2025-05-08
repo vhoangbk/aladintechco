@@ -32,7 +32,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   const {i18n} = useTranslation();
 
   const handleChat = () => {
-    navigation.navigate('ChatScreen');
+    navigation.navigate('ChatScreen',{isFromSplash:false});
   };
 
   const [showChangeLanguageBox, setShowChangeLanguageBox] = useState(false);
@@ -75,7 +75,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     <SafeAreaView style={{flex: 1}}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.container}>
-          {/* Frame 1 */}
+
           <LinearGradient
             colors={['#31B44A', '#238035']}
             style={[styles.frame1, {width: widthScreen}]}>

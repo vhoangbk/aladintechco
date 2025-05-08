@@ -57,6 +57,7 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
       await save_AccessKeyStorage('');
       console.log('Logout success!',await get_AccessKeyStorage());
       dispatch(logout());
+      setLoading(false)
     } catch (error:any) {
       console.log('Logout failed',error.response);
     }

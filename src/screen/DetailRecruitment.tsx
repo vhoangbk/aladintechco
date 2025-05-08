@@ -25,15 +25,15 @@ const DetailRecruitment = ({navigation,route}: DetailRecruitmentProps) => {
   const {recruitmentModel} = route.params;
   return (
     <SafeAreaView style={styles.container}>
-    {/* Header */}
+
         <Header navigation={navigation}/>
-    {/* Body */}
+
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View style={{flex: 1,margin:15}}>
 
-          {/* Title */}
+
           <Text style={styles.title1}>{recruitmentModel.job}</Text>
-          {/* 3 cai icon */}
+
           <View style={{flexDirection:'row'}}>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
               <IconHeader icon={imageResource.tabnhanvien} title={t('quantity')} data={`${recruitmentModel.amount} ${t('people')}`}/>
@@ -41,7 +41,7 @@ const DetailRecruitment = ({navigation,route}: DetailRecruitmentProps) => {
               <IconHeader icon={imageResource.positionicon} title={t('address')} data={recruitmentModel.location}/>
             </ScrollView>
           </View>
-          {/* Noi dung */}
+
           <View style={{flex:1,marginTop:10}}>
             <Text style={styles.title2}>{t('job_description')}</Text>
             <Text>{recruitmentModel.description}</Text>

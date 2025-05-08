@@ -20,7 +20,7 @@ import {imageResource} from 'src/assets/imageResource';
 import {fontBold, fontRegular} from 'src/types/typeFont';
 import {RootStackParamList} from 'src/types/RootStackParamList';
 import { useEffect, useState } from 'react';
-import { CurrentEmployee, UpdateEmployee } from 'src/types/typeModel';
+import { PersonalInformationModel, UpdateEmployee } from 'src/types/typeModel';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { getPersonalInformation, putUpdateEmployee, upLoadImageToServer } from 'src/api/apiServices';
@@ -39,7 +39,7 @@ const EditPersonalInformation = ({navigation, route}: EditPersonalInformationPro
   const [imageURI, setImageUri] = useState<string>();
   const [loadingCreate, setLoadingCreate] = useState(false);
 
-  const [currentEmployeeInfor,setCurrentEmployeeInfor] = useState<CurrentEmployee>();
+  const [currentEmployeeInfor,setCurrentEmployeeInfor] = useState<PersonalInformationModel>();
   const [formUpdateEmployee , setFormUpdateEmployee] = useState<UpdateEmployee>({
     "avatar": "string",  
     "contractInfo": "string",
@@ -109,7 +109,6 @@ const EditPersonalInformation = ({navigation, route}: EditPersonalInformationPro
       var resUpdate
       if(imageURI){
         const urlAvatar = await upToServer(imageURI);
-        console.log("new urlAvatar",urlAvatar);
         const updateFormUpdateEmployee: UpdateEmployee = {
           ...formUpdateEmployee,
           avatar: urlAvatar,

@@ -158,5 +158,9 @@
   "data_null" : "No data",
   "edit_info" : "Edit Personal Information",
   "add":"Add",
-  "first_daywork":"First day work"
+  "first_daywork":"First day work",
+  "service_platform": "Platform",
+  "service_system_integration": "System Integration Service",
+  "service_outsource": "Outsource",
+  "service_automotive": "Automotive"
 }

@@ -41,7 +41,7 @@ const ContactUs = ({navigation}: ContactUsProps) => {
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
           <View style={styles.body}>
             <View style={styles.body1}>
-              {/* Row */}
+
               <View style={styles.row}>
                 <View style={styles.imagerow}>
                   <View>
@@ -57,7 +57,6 @@ const ContactUs = ({navigation}: ContactUsProps) => {
                 </View>
               </View>
 
-              {/* Row */}
               <View style={styles.row}>
                 <View style={styles.imagerow}>
                   <View>
@@ -73,7 +72,6 @@ const ContactUs = ({navigation}: ContactUsProps) => {
                 </View>
               </View>
 
-              {/* Row */}
               <View style={styles.row}>
                 <View style={styles.imagerow}>
                   <View>
@@ -89,7 +87,6 @@ const ContactUs = ({navigation}: ContactUsProps) => {
                 </View>
               </View>
 
-              {/* Row */}
               <View style={styles.row}>
                 <View style={styles.imagerow}>
                   <View>
