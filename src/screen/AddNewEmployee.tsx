@@ -55,13 +55,7 @@ const AddNewEmployee = ({navigation}: AddNewEmployeeProps) => {
     education: '',
     email: '',
     emergencyContact: 'null',
-    employeeDocuments: [
-      {
-        documentType: 'CERTIFICATE',
-        documentUrl: 'null',
-        id: 0,
-      },
-    ],
+    employeeDocuments: null,
     employeeStatus: 'null',
     english: 'null',
     experience: 'null',
@@ -116,7 +110,6 @@ const AddNewEmployee = ({navigation}: AddNewEmployeeProps) => {
   }, [authLogin]);
 
   const handleCreateNewEmployee = async () => {
-    console.log("formNewEmployee",formNewEmployee)
     setLoadingCreate(true);
     if (
       !imageURI ||
@@ -133,7 +126,7 @@ const AddNewEmployee = ({navigation}: AddNewEmployeeProps) => {
       Alert.alert(t('error'), t('fill_all_required'));
       return;
     }
-    try {
+
       const checkdatauser = await getPersonalInformation();
       if(checkdatauser) {
         Alert.alert(
@@ -152,21 +145,8 @@ const AddNewEmployee = ({navigation}: AddNewEmployeeProps) => {
         ...formNewEmployee,
         avatar: urlAvatar,
       };
-      console.log("new employee",updateFormNewEmployee);
       await postNewEmployee(updateFormNewEmployee);
-      Alert.alert(
-        t('create'), 
-        t('create_success'),
-        [
-          { text: "OK", onPress: () => navigation.navigate('TabNavigator',{screen:"EmployeeScreen"}) }
-        ],
-        { cancelable: false }
-      );
       clearData();
-    } catch (error) {
-      Alert.alert(t('create'), t('create_failed'));
-      console.log('Error Create New Employee: ', error);
-    }
     setLoadingCreate(false);
   };
 

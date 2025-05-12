@@ -1,4 +1,4 @@
-import { NavigatorScreenParams } from '@react-navigation/native';
+import {NavigatorScreenParams} from '@react-navigation/native';
 import {Employee, RecruitmentModel} from './typeModel';
 
 export type RootStackParamList = {
@@ -22,10 +22,13 @@ export type RootStackParamList = {
   ApplyScreen: {
     recruitment: RecruitmentModel;
   };
-  AddNewEmployee:undefined;
+  AddNewEmployee: undefined;
   DetailEmployeeScreen: {
-    employeeDetail: Employee
-  }
+    employeeDetail: Employee;
+  };
+  KIEmployeeScreen: undefined;
+  CreateKIScreen: undefined;
+  DetailKIScreen: {idKI: number};
 };
 
 export type RootTabParamList = {

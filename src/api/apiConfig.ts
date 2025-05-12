@@ -14,4 +14,5 @@ export const API_CREATE_NEW_EMPLOYEE = `${BASE_URL}/api/employees`;
 export const API_UPLOAD_IMAGE = `${BASE_URL}/api/upload/image`;
 export const API_UPDATE_EMPLOYEE = `${BASE_URL}/api/employees`;
 export const API_UPLOAD_CV = `${BASE_URL}/api/upload/document`;
+export const API_KI = `${BASE_URL}/api/ki-employees`;
 

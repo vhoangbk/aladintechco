@@ -139,22 +139,30 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
 
           {authLogin ? (
             <ButtonPerson
-              image={imageResource.iconuser}
+              image={imageResource.iconuser1}
               title={t('thongtin')}
               onPress={() => {
                 navigation.navigate('PersonalInformation');
               }}
             />
           ) : null}
+
+          {authLogin ? (
+            <ButtonPerson
+              image={imageResource.iconkiempl}
+              title={t('ki_employee')}
+              onPress={() => navigation.navigate('KIEmployeeScreen')}
+            />
+          ) : null}
           <ButtonPerson
-            image={imageResource.iconphone}
+            image={imageResource.iconphone1}
             title={t('lienhe')}
             onPress={() => {
               navigation.navigate('ContactUs');
             }}
           />
           <ButtonPerson
-            image={imageResource.infoicon}
+            image={imageResource.iconabout1}
             title={t('vechungtoi')}
             onPress={() => {
               navigation.navigate('AboutUs');
@@ -266,6 +274,7 @@ const styles = StyleSheet.create({
   imageEdit: {
     width: 20,
     height: 20,
+    marginRight:5
   },
   txt: {
     fontFamily: fontRegular,
@@ -274,6 +283,7 @@ const styles = StyleSheet.create({
   },
   text1: {
     fontFamily: fontRegular,
+    marginLeft:7
   },
   viewLoading: {
     flex: 1,

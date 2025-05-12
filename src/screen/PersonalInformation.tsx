@@ -304,7 +304,8 @@ const styles = StyleSheet.create({
   informationView: {},
   titleInformationView: {
     borderWidth: 0,
-    width: 130,
+    width: 150,
+    marginRight:10
   },
   userInformationView: {
     borderWidth: 0,

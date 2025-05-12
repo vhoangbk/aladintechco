@@ -8,8 +8,8 @@ export const imageResource: {[key: string]: ImageSourcePropType} = {
   tabcanhan: require('./image/tabcanhan.png'),
   bgtrangchu: require('./image/bgtrangchu.png'),
 
-  covietnam: require('./image/covietnam.png'),
-  coanh: require('./image/coanh.jpg'),
+  covietnam: require('./image/icons8-vietnam-96.png'),
+  coanh: require('./image/icons8-uk-48.png'),
 
   muitenxuong: require('./image/muitenxuong.png'),
   bgtrangchu2: require('./image/bgtrangchu2.png'),
@@ -45,7 +45,7 @@ export const imageResource: {[key: string]: ImageSourcePropType} = {
   iconemail: require('../assets/image/iconemail.jpg'),
   iconpassword: require('../assets/image/iconpassword.jpg'),
 
-  editicon: require('../assets/image/editicon.png'),
+  editicon: require('../assets/image/icons8-edit-50.png'),
   avatar: require('../assets/image/avatar.png'),
   iconuser: require('../assets/image/iconuser.png'),
   iconphone: require('../assets/image/iconphone.png'),
@@ -71,5 +71,11 @@ export const imageResource: {[key: string]: ImageSourcePropType} = {
 
   noneimage: require('../assets/image/noneimgae.png'),
 
-  default: require('../assets/image/default.jpg')
+  default: require('../assets/image/default.jpg'),
+  iconkiempl : require('../assets/image/iconkiempl.png'),
+  iconuser1: require('../assets/image/icons8-older-person-48.png'),
+  iconphone1: require('../assets/image/icons8-phone-50.png'),
+  iconabout1: require('../assets/image/icons8-about-us-100.png'),
+
+  plus: require('../assets/image/icons8-plus-50.png')
 };

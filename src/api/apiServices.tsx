@@ -6,6 +6,7 @@ import {
   API_DEPARTMENT,
   API_DEPARTMENT_LIST,
   API_EMPLOYEES,
+  API_KI,
   API_PERSONAL_INFORMATION,
   API_UPDATE_EMPLOYEE,
   API_UPLOAD_CV,
@@ -13,7 +14,7 @@ import {
   GET_ACCESS_TOKEN,
   GET_ALL_RECRUITMENTS,
 } from './apiConfig';
-import {CandidateModel, NewEmployee, RecruitmentModel, UpdateEmployee} from 'src/types/typeModel';
+import {CandidateModel, NewEmployee, NewKI, RecruitmentModel, UpdateEmployee} from 'src/types/typeModel';
 import {get_AccessKeyStorage} from '../commons/AsyncStorage';
 import {getRequest, postRequest, putRequest} from './apiRequest';
 
@@ -81,6 +82,11 @@ export const postNewEmployee = async (newEmployee: NewEmployee) => {
   return response;
 };
 
+export const postNewKI = async (newKI: NewKI) => {
+  const response = await postRequest(API_KI, newKI);
+  return response;
+};
+
 export const upLoadImageToServer = async (uri:string) => {
     const fomData = new FormData();
     const fileName = uri.split('/').pop() || 'photo.jpg';
@@ -137,3 +143,13 @@ export const putUpdateEmployee = async (idEmpl : any , updatedData: UpdateEmploy
   const response = await putRequest(`${API_UPDATE_EMPLOYEE}/${idEmpl}`, updatedData);
   return response;
 }
+
+export const getKIInfor = async (id:string) => {
+  const response = await getRequest(`${API_KI}/${id}`);
+  return response;
+};
+
+export const getKIAll = async () => {
+  const response = await getRequest(API_KI);
+  return response;
+};

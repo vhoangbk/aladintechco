@@ -14,6 +14,9 @@ import DetailRecruitment from 'src/screen/DetailRecruitment';
 import ApplyScreen from 'src/screen/ApplyScreen';
 import AddNewEmployee from 'src/screen/AddNewEmployee';
 import DetailEmployeeScreen from 'src/screen/DetailEmployeeScreen';
+import KIEmployeeScreen from 'src/screen/KIEmployeeScreen';
+import CreateKIScreen from 'src/screen/CreateKIScreen';
+import DetailKIScreen from 'src/screen/DetailKIScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -108,6 +111,30 @@ const MainNavigator = () => {
           component={DetailEmployeeScreen}
           options={{
             animation: 'fade',
+          }}
+        />
+
+        <Stack.Screen
+          name="KIEmployeeScreen"
+          component={KIEmployeeScreen}
+          options={{
+            animation: 'fade_from_bottom',
+          }}
+        />
+
+        <Stack.Screen
+          name="CreateKIScreen"
+          component={CreateKIScreen}
+          options={{
+            animation: 'fade_from_bottom',
+          }}
+        />
+
+        <Stack.Screen
+          name="DetailKIScreen"
+          component = {DetailKIScreen}
+          options={{
+            animation: 'fade_from_bottom',
           }}
         />
       </Stack.Navigator>

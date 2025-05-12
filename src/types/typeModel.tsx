@@ -117,12 +117,18 @@ export interface PersonalInformationModel {
   probationEndDate: string | null;
   officialContractStartDate: string | null;
   officialContractEndDate: string | null;
-  jobPosition: JobPosition;
-  jobTitle: JobTitle;
-  workModel: WorkModel;
+  jobPosition: JobPosition | null;
+  jobTitle: JobTitle | null;
+  workModel: WorkModel | null;
   employeeDocuments: any | null;
   user: User
-  department: Department
+  department: {
+    id: number,
+    departmentName: string,
+    isleader: string,
+    mail: string,
+    datetime: string | null,
+  }
 }
 
 export interface NewEmployee {
@@ -135,7 +141,7 @@ export interface NewEmployee {
   education: string;
   email: string;
   emergencyContact: string;
-  employeeDocuments: EmployeeDocuments[];
+  employeeDocuments: EmployeeDocuments[] | null;
   employeeStatus: string;
   english: string;
   experience: string;
@@ -188,6 +194,122 @@ export interface EmployeeDocuments {
   documentUrl: string;
   id: number;
 }[]
+
+export interface NewKI {
+  assigned_work: string;
+  boss_comment: string;
+  boss_ki_point: number;
+  completed_work: string;
+  date_time: string;
+  employee: {
+    id: number;
+    avatar: string;
+    fullName: string;
+    firstDayWork: string;
+    phoneNumber: string;
+    dateOfBirth: string;
+    gender: string;
+    countryside: string;
+    currentResidence: string;
+    family: string | null;
+    identificationNumber: string | null;
+    email: string;
+    emergencyContact: string | null;
+    favourite: string | null;
+    foreignLanguage: string | null;
+    education: string;
+    english: string | null;
+    experience: string | null;
+    objectiveInCV: string;
+    employeeStatus: string;
+    status: string;
+    level: string | null;
+    facebookLink: string | null;
+    telegramLink: string | null;
+    linkedInLink: string | null;
+    skypeLink: string | null;
+    contractInfo: any;
+    probationStartDate: string;
+    probationEndDate: string;
+    officialContractStartDate: string;
+    officialContractEndDate: string;
+    jobPosition: any;
+    jobTitle: any;
+    workModel: any;
+    employeeDocuments: any;
+    user: {
+      id: string;
+      login: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+      activated: boolean;
+      langKey: string;
+      imageUrl: string | null;
+    };
+    department: {
+      id: number;
+      departmentName: string;
+      isleader: string;
+      mail: string;
+      datetime: string | null;
+    };
+  };
+  employee_ki_point: number;
+  favourite_work: string;
+  leader_comment: string;
+  leader_ki_point: number;
+  mm_acceptanced: number;
+  mm_description: string;
+  other_work: string;
+  status: string;
+  uncompleted_work: string;
+  unfavourite_work: string;
+  work_attitude: number;
+  work_attitude_comment: string;
+  work_discipline: number;
+  work_discipline_comment: string;
+  work_progress: number;
+  work_progress_comment: string;
+  work_quality: number;
+  work_quality_comment: string;
+  work_quantity: number;
+  work_quantity_comment: string;
+}
+
+export interface DetailKI {
+  id: number;
+  date_time: string;
+  work_quantity: number;
+  work_quantity_comment: string;
+  work_quality: number;
+  work_quality_comment: string;
+  work_progress: number;
+  work_progress_comment: string;
+  work_attitude: number;
+  work_attitude_comment: string;
+  work_discipline: number;
+  work_discipline_comment: string;
+  assigned_work: string;
+  other_work: string;
+  completed_work: string;
+  uncompleted_work: string;
+  favourite_work: string;
+  unfavourite_work: string;
+  mm_acceptanced: number;
+  mm_description: string;
+  employee_ki_point: number;
+  leader_ki_point: number;
+  leader_comment: string;
+  boss_ki_point: number;
+  boss_comment: string;
+  status: string;
+  employee: Employee;
+  searchField: string;
+  responseField: string;
+}
+
+
 
 
 
