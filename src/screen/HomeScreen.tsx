@@ -22,6 +22,7 @@ import CongNgheSuDung from 'src/components/CongNgheSuDung';
 import ChangeLanguageBox from 'src/components/ChangeLanguageBox';
 import LinearGradient from 'react-native-linear-gradient';
 import {colorBlack, colorGreen, colorWhite} from '../assets/color';
+import Draggable from 'react-native-draggable';
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'HomeScreen'>;
 
@@ -32,7 +33,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   const {i18n} = useTranslation();
 
   const handleChat = () => {
-    navigation.navigate('ChatScreen',{isFromSplash:false});
+    navigation.navigate('ChatScreen', {isFromSplash: false});
   };
 
   const [showChangeLanguageBox, setShowChangeLanguageBox] = useState(false);
@@ -75,7 +76,6 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     <SafeAreaView style={{flex: 1}}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.container}>
-
           <LinearGradient
             colors={['#31B44A', '#238035']}
             style={[styles.frame1, {width: widthScreen}]}>
@@ -162,14 +162,13 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
         <Frame3 />
 
         <Frame4 />
-
       </ScrollView>
 
-      <View style={styles.btnChat}>
+      <Draggable x={290} y={600} onDrag={() => {}} minX={50} minY={50}>
         <TouchableOpacity onPress={handleChat}>
           <FloatingBtnChat />
         </TouchableOpacity>
-      </View>
+      </Draggable>
 
       <ChangeLanguageBox
         showModal={showChangeLanguageBox}

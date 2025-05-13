@@ -12,8 +12,8 @@ const FloatingBtnChat = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 60,
-    height: 60,
+    width: 70,
+    height: 70,
     backgroundColor: colorGreen,
     borderRadius: 30,
     justifyContent: 'center',
