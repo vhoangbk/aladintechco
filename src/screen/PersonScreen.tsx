@@ -33,7 +33,6 @@ type PersonScreenProps = NativeStackScreenProps<
 >;
 
 const PersonScreen = ({navigation}: PersonScreenProps) => {
-  const [accData,setAccData] = useState<Account>();
   const authLogin = useSelector((state: RootState) => state.auth.auth);
   const screenHeight = useWindowDimensions().height;
   const {t} = useTranslation();
@@ -53,33 +52,24 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
 
   const handleLogout = async () => {
     setLoading(true)
-    try {
-      await save_AccessKeyStorage('');
-      console.log('Logout success!',await get_AccessKeyStorage());
-      dispatch(logout());
-      setLoading(false)
-    } catch (error:any) {
-      console.log('Logout failed',error.response);
-    }
+    await save_AccessKeyStorage('');
+    console.log('Logout success!',await get_AccessKeyStorage());
+    dispatch(logout());
     setLoading(false)
 
   };
 
-  const getAccountInfor = async () => {
-    const acountData : Account = await getAccount();
-    setAccData(acountData);
-  };
-
   const fetchPersonalInformation = async () => {
+    setLoading(true)
     const data = await getPersonalInformation();
     setInformation(data);
+    setLoading(false)
   };
 
   useFocusEffect(
     useCallback(() => {
       if(authLogin===true){
         fetchPersonalInformation();
-        getAccountInfor();
       }
     }, [authLogin])
   );
@@ -110,8 +100,8 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
           <View style={{marginLeft: 15, justifyContent: 'center'}}>
             {authLogin ? (
               <>
-                <Text style={styles.name}>{information?.fullName}</Text>
-                <Text style={styles.email}>{information?.email}</Text>
+                <Text style={styles.name}>{information?.fullName ?? 'null'}</Text>
+                <Text style={styles.email}>{information?.email ?? 'null'}</Text>
               </>
             ) : (
               <View style={{marginTop:40}}>

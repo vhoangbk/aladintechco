@@ -36,6 +36,8 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
   const [loading,setLoading] = useState<boolean>(false)
 
   const getAccountSaved = async () =>{
+    setLoading(true)
+
     const username = await get_Field_Saved('username');
     const password = await get_Field_Saved('password');
 
@@ -43,6 +45,8 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
       setInputEmail(username!!);
       setInputPassword(password!!);
     }
+
+    setLoading(false)
 
   };
 

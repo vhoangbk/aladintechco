@@ -1,7 +1,9 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {t} from 'i18next';
 import {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Button,
   Modal,
   SafeAreaView,
@@ -22,13 +24,6 @@ type CreateKIScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'CreateKIScreen'
 >;
-
-const formatDate = (dateInput: Date | string | undefined | null): string => {
-  if (!dateInput) return '1990-01-01';
-  const date = new Date(dateInput);
-  if (isNaN(date.getTime())) return '1990-01-01';
-  return date.toISOString().split('T')[0];
-};
 
 const CreateKIScreen = ({navigation}: CreateKIScreenProps) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -126,6 +121,51 @@ const CreateKIScreen = ({navigation}: CreateKIScreenProps) => {
     work_quantity_comment: '',
   });
 
+  const validateForm = () => {
+    const {
+      assigned_work,
+      completed_work,
+      uncompleted_work,
+      other_work,
+      favourite_work,
+      unfavourite_work,
+      work_quantity_comment,
+      work_quality_comment,
+      work_progress_comment,
+      work_attitude_comment,
+      work_discipline_comment,
+      leader_comment,
+    } = formCreateKI;
+
+    const requiredFields = [
+      {label: t('ki.assigned_work'), value: assigned_work},
+      {label: t('ki.completed_work'), value: completed_work},
+      {label: t('ki.uncompleted_work'), value: uncompleted_work},
+      {label: t('ki.other_work'), value: other_work},
+      {label: t('ki.favourite_work'), value: favourite_work},
+      {label: t('ki.unfavourite_work'), value: unfavourite_work},
+      {label: t('ki.work_quantity_comment'), value: work_quantity_comment},
+      {label: t('ki.work_quality_comment'), value: work_quality_comment},
+      {label: t('ki.work_progress_comment'), value: work_progress_comment},
+      {label: t('ki.work_attitude_comment'), value: work_attitude_comment},
+      {label: t('ki.work_discipline_comment'), value: work_discipline_comment},
+      {label: t('ki.leader_comment'), value: leader_comment},
+    ];
+
+    for (let field of requiredFields) {
+      if (!field.value || field.value.trim().length < 20) {
+        Alert.alert(
+          t('common.input_error_title'),
+          t('common.input_error_message', {
+            field: field.label,
+          }),
+        );
+        return false;
+      }
+    }
+    return true;
+  };
+
   const fetchDataPersonal = async () => {
     setLoading(true);
     const data = await getPersonalInformation();
@@ -136,9 +176,17 @@ const CreateKIScreen = ({navigation}: CreateKIScreenProps) => {
   };
 
   const handleSubmit = async () => {
+    if (!validateForm()) return;
     setLoading(true);
-    await postNewKI(formCreateKI);
-    setLoading(false);
+    try {
+      await postNewKI(formCreateKI);
+      Alert.alert('Thành công', 'Biểu mẫu đã được gửi đi!');
+      navigation.goBack();
+    } catch (error) {
+      Alert.alert('Lỗi', 'Không thể gửi biểu mẫu.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -148,7 +196,7 @@ const CreateKIScreen = ({navigation}: CreateKIScreenProps) => {
   return (
     <SafeAreaView style={styles.container}>
       <HeaderBar
-        text="BIỂU MẪU ĐÁNH GIÁ KI"
+        text={t('evaluation_form_title')}
         onPress={() => navigation.goBack()}
       />
 
@@ -166,210 +214,217 @@ const CreateKIScreen = ({navigation}: CreateKIScreenProps) => {
 
       <View style={styles.contentWrapper}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
-          <Text style={styles.sectionTitle}>1. Thông tin chung</Text>
+          <Text style={styles.sectionTitle}>{t('section_1_title')}</Text>
           <Text style={styles.infoText}>
-            • Họ tên nhân viên: {CurrentEmployeeInfor?.fullName ?? 'null'}
+            • {t('employee_name')}: {CurrentEmployeeInfor?.fullName ?? 'null'}
           </Text>
           <Text style={styles.infoText}>
-            • Bộ phận:{' '}
+            • {t('department')}:{' '}
             {CurrentEmployeeInfor?.department.departmentName ?? 'null'}
           </Text>
           <Text style={styles.infoText}>
-            • Ngày đánh giá: {formCreateKI.date_time}
+            • {t('evaluation_date')}: {formCreateKI.date_time}
           </Text>
           <Text style={styles.infoText}>
-            • Trạng thái bản đánh giá: {formCreateKI.status}
+            • {t('evaluation_status')}: {formCreateKI.status}
           </Text>
 
-          <Text style={styles.sectionTitle}>2. Công việc và hiệu suất</Text>
-          <Text style={styles.subTitle}>2.1 Tổng hợp công việc:</Text>
+          <Text style={styles.sectionTitle}>{t('section_2_title')}</Text>
+          <Text style={styles.subTitle}>{t('section_2_1')}</Text>
+
           <FormInputBig
-            label="Công việc đã giao:"
+            label={t('assigned_work')}
             value={formCreateKI?.assigned_work}
             onChangeText={change =>
               setFormCreateKI({...formCreateKI, assigned_work: change})
             }
-            placeholder="Nhập nội dung..."
+            placeholder={t('enter_content')}
           />
           <FormInputBig
-            label="Công việc đã hoàn thành:"
+            label={t('completed_work')}
             value={formCreateKI.completed_work}
             onChangeText={change =>
               setFormCreateKI({...formCreateKI, completed_work: change})
             }
-            placeholder="Nhập nội dung..."
+            placeholder={t('enter_content')}
           />
           <FormInputBig
-            label="Công việc chưa hoàn thành:"
+            label={t('uncompleted_work')}
             value={formCreateKI.uncompleted_work}
             onChangeText={change =>
               setFormCreateKI({...formCreateKI, uncompleted_work: change})
             }
-            placeholder="Nhập nội dung..."
+            placeholder={t('enter_content')}
           />
           <FormInputBig
-            label="Công việc phát sinh khác:"
+            label={t('other_work')}
             value={formCreateKI.other_work}
             onChangeText={change =>
               setFormCreateKI({...formCreateKI, other_work: change})
             }
-            placeholder="Nhập nội dung..."
+            placeholder={t('enter_content')}
           />
 
-          <Text style={styles.subTitle}>2.2 Sở thích công việc:</Text>
+          <Text style={styles.subTitle}>{t('section_2_2')}</Text>
           <FormInputBig
-            label="Công việc yêu thích:"
+            label={t('favourite_work')}
             value={formCreateKI.favourite_work}
             onChangeText={change =>
               setFormCreateKI({...formCreateKI, favourite_work: change})
             }
-            placeholder="Nhập nội dung..."
+            placeholder={t('enter_content')}
           />
           <FormInputBig
-            label="Công việc không yêu thích:"
+            label={t('unfavourite_work')}
             value={formCreateKI.unfavourite_work}
             onChangeText={change =>
               setFormCreateKI({...formCreateKI, unfavourite_work: change})
             }
-            placeholder="Nhập nội dung..."
+            placeholder={t('enter_content')}
           />
 
-          <Text style={styles.sectionTitle}>3. Đánh giá hiệu suất</Text>
-          <Text style={styles.subTitle}>3.1 Khối lượng công việc:</Text>
+          <Text style={styles.sectionTitle}>{t('section_3_title')}</Text>
+
+          {/* Repeat for all subsections: quantity, quality, progress, attitude, discipline */}
+          <Text style={styles.subTitle}>{t('section_3_1')}</Text>
           <QuantitySelect
-            label="Điểm:"
+            label={t('score')}
             value={formCreateKI.work_quantity}
             onChange={val =>
               setFormCreateKI({...formCreateKI, work_quantity: val})
             }
           />
           <FormInputBig
-            label="Nhận xét:"
+            label={t('comment')}
             value={formCreateKI.work_quantity_comment}
             onChangeText={text =>
               setFormCreateKI({...formCreateKI, work_quantity_comment: text})
             }
-            placeholder="Nhận xét..."
+            placeholder={t('comment_placeholder')}
           />
 
-          <Text style={styles.subTitle}>3.2 Chất lượng công việc:</Text>
+          {/* Quality */}
+          <Text style={styles.subTitle}>{t('section_3_2')}</Text>
           <QuantitySelect
-            label="Điểm:"
+            label={t('score')}
             value={formCreateKI.work_quality}
             onChange={val =>
               setFormCreateKI({...formCreateKI, work_quality: val})
             }
           />
           <FormInputBig
-            label="Nhận xét:"
+            label={t('comment')}
             value={formCreateKI.work_quality_comment}
             onChangeText={text =>
               setFormCreateKI({...formCreateKI, work_quality_comment: text})
             }
-            placeholder="Nhận xét..."
+            placeholder={t('comment_placeholder')}
           />
 
-          <Text style={styles.subTitle}>3.3 Tiến độ công việc:</Text>
+          {/* Progress */}
+          <Text style={styles.subTitle}>{t('section_3_3')}</Text>
           <QuantitySelect
-            label="Điểm:"
+            label={t('score')}
             value={formCreateKI.work_progress}
             onChange={val =>
               setFormCreateKI({...formCreateKI, work_progress: val})
             }
           />
           <FormInputBig
-            label="Nhận xét:"
+            label={t('comment')}
             value={formCreateKI.work_progress_comment}
             onChangeText={text =>
               setFormCreateKI({...formCreateKI, work_progress_comment: text})
             }
-            placeholder="Nhận xét..."
+            placeholder={t('comment_placeholder')}
           />
 
-          <Text style={styles.subTitle}>3.4 Thái độ làm việc:</Text>
+          {/* Attitude */}
+          <Text style={styles.subTitle}>{t('section_3_4')}</Text>
           <QuantitySelect
-            label="Điểm:"
+            label={t('score')}
             value={formCreateKI.work_attitude}
             onChange={val =>
               setFormCreateKI({...formCreateKI, work_attitude: val})
             }
           />
           <FormInputBig
-            label="Nhận xét:"
+            label={t('comment')}
             value={formCreateKI.work_attitude_comment}
             onChangeText={text =>
               setFormCreateKI({...formCreateKI, work_attitude_comment: text})
             }
-            placeholder="Nhận xét..."
+            placeholder={t('comment_placeholder')}
           />
 
-          <Text style={styles.subTitle}>3.5 Tính kỷ luật:</Text>
+          {/* Discipline */}
+          <Text style={styles.subTitle}>{t('section_3_5')}</Text>
           <QuantitySelect
-            label="Điểm:"
+            label={t('score')}
             value={formCreateKI.work_discipline}
             onChange={val =>
               setFormCreateKI({...formCreateKI, work_discipline: val})
             }
           />
           <FormInputBig
-            label="Nhận xét:"
+            label={t('comment')}
             value={formCreateKI.work_discipline_comment}
             onChangeText={text =>
               setFormCreateKI({...formCreateKI, work_discipline_comment: text})
             }
-            placeholder="Nhận xét..."
+            placeholder={t('comment_placeholder')}
           />
 
-          <Text style={styles.sectionTitle}>4. Đánh giá tổng thể</Text>
+          <Text style={styles.sectionTitle}>{t('section_4_title')}</Text>
           <QuantitySelect
-            label="Tự đánh giá:"
+            label={t('self_evaluation')}
             value={formCreateKI.employee_ki_point}
             onChange={val =>
               setFormCreateKI({...formCreateKI, employee_ki_point: val})
             }
           />
           <QuantitySelect
-            label="Trưởng phòng:"
+            label={t('leader_evaluation')}
             value={formCreateKI.leader_ki_point}
             onChange={val =>
               setFormCreateKI({...formCreateKI, leader_ki_point: val})
             }
           />
           <FormInputBig
-            label="Nhận xét trưởng phòng:"
+            label={t('leader_comment')}
             value={formCreateKI.leader_comment}
             onChangeText={text =>
               setFormCreateKI({...formCreateKI, leader_comment: text})
             }
-            placeholder="Nhận xét..."
+            placeholder={t('comment_placeholder')}
           />
           <QuantitySelect
-            label="Sếp đánh giá:"
+            label={t('boss_evaluation')}
             value={formCreateKI.boss_ki_point}
             onChange={val =>
               setFormCreateKI({...formCreateKI, boss_ki_point: val})
             }
           />
           <FormInputBig
-            label="Nhận xét của sếp:"
+            label={t('boss_comment')}
             value={formCreateKI.boss_comment}
             onChangeText={text =>
               setFormCreateKI({...formCreateKI, boss_comment: text})
             }
-            placeholder="Nhận xét..."
+            placeholder={t('comment_placeholder')}
           />
 
-          <Text style={styles.sectionTitle}>5. Ghi chú từ cấp cao (MM)</Text>
+          <Text style={styles.sectionTitle}>{t('section_5_title')}</Text>
           <FormInputBig
-            label="Ghi chú:"
+            label={t('mm_note')}
             value={formCreateKI.mm_description}
             onChangeText={text =>
               setFormCreateKI({...formCreateKI, mm_description: text})
             }
-            placeholder="Nhập ghi chú..."
+            placeholder={t('enter_note')}
           />
 
-          <Button title="Gửi đánh giá" onPress={handleSubmit} />
+          <Button title={t('submit_button')} onPress={handleSubmit} />
         </ScrollView>
       </View>
     </SafeAreaView>

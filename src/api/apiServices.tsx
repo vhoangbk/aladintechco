@@ -7,6 +7,7 @@ import {
   API_DEPARTMENT_LIST,
   API_EMPLOYEES,
   API_KI,
+  API_ONE_DEPARTMENT,
   API_PERSONAL_INFORMATION,
   API_UPDATE_EMPLOYEE,
   API_UPLOAD_CV,
@@ -69,6 +70,11 @@ export const getDepartmentByName = async (nameDepartment: string) => {
 
 export const getListDepartment = async () => {
   const response = await getRequest(API_DEPARTMENT_LIST);
+  return response;
+};
+
+export const getOneDepartment = async () => {
+  const response = await getRequest(API_ONE_DEPARTMENT);
   return response;
 };
 

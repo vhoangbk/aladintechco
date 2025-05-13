@@ -16,6 +16,7 @@ import {
 import {useSelector} from 'react-redux';
 import {
   getListDepartment,
+  getOneDepartment,
   getPersonalInformation,
   postNewEmployee,
   upLoadImageToServer,
@@ -55,7 +56,13 @@ const AddNewEmployee = ({navigation}: AddNewEmployeeProps) => {
     education: '',
     email: '',
     emergencyContact: 'null',
-    employeeDocuments: null,
+    employeeDocuments: [
+      {
+        documentType: 'CERTIFICATE',
+        documentUrl: 'null',
+        id: 0,
+      },
+    ],
     employeeStatus: 'null',
     english: 'null',
     experience: 'null',
@@ -86,14 +93,14 @@ const AddNewEmployee = ({navigation}: AddNewEmployeeProps) => {
 
   const getUserID = async () => {
     if(!authLogin) return
-    const data = await getListDepartment();
+    const data = await getOneDepartment();
     const userid = data[0].user.id.toString();
     setFormNewEmployee(oldData => ({...oldData, userId: userid}));
   };
 
   const getDepartmentID = async () => {
     if(!authLogin) return
-    const data = await getListDepartment();
+    const data = await getOneDepartment();
     const departmentid = data[0].id;
     setFormNewEmployee(oldData => ({
       ...oldData,
