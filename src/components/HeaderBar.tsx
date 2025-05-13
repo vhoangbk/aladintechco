@@ -11,7 +11,7 @@ export const HeaderBar = ({text,onPress}:{text:string;onPress:()=>void}) => {
                 elevation:10}}>
             <TouchableOpacity onPress={onPress}>
                 <Image 
-                    source={require('../assets/image/icons8-back-48.png')}
+                    source={require('../assets/image/icons8back48.png')}
                     style={{width:30,height:30,justifyContent:'flex-start',margin:10}}/>
             </TouchableOpacity>
             <View style={{alignItems:'center',flex:1,marginRight:40}}>
