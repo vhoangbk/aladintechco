@@ -1,6 +1,6 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import { useCallback, useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   ActivityIndicator,
   Image,
@@ -12,13 +12,13 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import {colorGreen, colorWhite} from '../assets/color';
-import {imageResource} from 'src/assets/imageResource';
+import { colorGreen, colorWhite } from '../assets/color';
+import { imageResource } from 'src/assets/imageResource';
 import ButtonPerson from 'src/components/ButtonPerson';
 import ChangeLanguageBox from 'src/components/ChangeLanguageBox';
 import i18n from 'src/language/i18n';
-import {RootStackParamList} from 'src/types/RootStackParamList';
-import {fontRegular} from 'src/types/typeFont';
+import { RootStackParamList } from 'src/types/RootStackParamList';
+import { fontRegular } from 'src/types/typeFont';
 import { get_AccessKeyStorage, save_AccessKeyStorage } from 'src/commons/AsyncStorage';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from 'src/redux/store';
@@ -32,13 +32,13 @@ type PersonScreenProps = NativeStackScreenProps<
   'PersonScreen'
 >;
 
-const PersonScreen = ({navigation}: PersonScreenProps) => {
+const PersonScreen = ({ navigation }: PersonScreenProps) => {
   const authLogin = useSelector((state: RootState) => state.auth.auth);
   const screenHeight = useWindowDimensions().height;
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [showChangeLanguageBox, setShowChangeLanguageBox] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
-  const [loading,setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [information, setInformation] = useState<PersonalInformationModel>();
 
@@ -53,29 +53,34 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
   const handleLogout = async () => {
     setLoading(true)
     await save_AccessKeyStorage('');
-    console.log('Logout success!',await get_AccessKeyStorage());
+    console.log('Logout success!', await get_AccessKeyStorage());
     dispatch(logout());
     setLoading(false)
 
   };
 
   const fetchPersonalInformation = async () => {
-    setLoading(true)
-    const data = await getPersonalInformation();
-    setInformation(data);
-    setLoading(false)
+    try {
+      setLoading(true)
+      const data = await getPersonalInformation();
+      setInformation(data);
+    } catch (error) {
+      console.log("error")
+    } finally {
+      setLoading(false)
+    }
   };
 
   useFocusEffect(
     useCallback(() => {
-      if(authLogin===true){
+      if (authLogin === true) {
         fetchPersonalInformation();
       }
     }, [authLogin])
   );
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
 
       <Modal visible={loading} transparent={true}>
         <View style={styles.viewLoading}>
@@ -85,7 +90,7 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
 
       <View style={styles.container}>
         {authLogin ? (
-          <TouchableOpacity onPress={()=>navigation.navigate('EditPersonalInfor')}>
+          <TouchableOpacity onPress={() => navigation.navigate('EditPersonalInfor')}>
             <View style={styles.btnEdit}>
               <Text style={styles.txt}>{t('sua')}</Text>
               <Image style={styles.imageEdit} source={imageResource.editicon} />
@@ -95,23 +100,23 @@ const PersonScreen = ({navigation}: PersonScreenProps) => {
 
         <View style={styles.header}>
           {authLogin ? (
-            <Image source={{ uri : `${URL_SERVER}${information?.avatar}`}} style={styles.avatar} />
+            <Image source={{ uri: `${URL_SERVER}${information?.avatar}` }} style={styles.avatar} />
           ) : null}
-          <View style={{marginLeft: 15, justifyContent: 'center'}}>
+          <View style={{ marginLeft: 15, justifyContent: 'center' }}>
             {authLogin ? (
               <>
                 <Text style={styles.name}>{information?.fullName ?? 'null'}</Text>
                 <Text style={styles.email}>{information?.email ?? 'null'}</Text>
               </>
             ) : (
-              <View style={{marginTop:40}}>
-                  <Text style={styles.name}>{t('pleaseLoginTxt')}</Text>
+              <View style={{ marginTop: 40 }}>
+                <Text style={styles.name}>{t('pleaseLoginTxt')}</Text>
               </View>
             )}
           </View>
         </View>
 
-        <View style={[styles.body, {height:screenHeight * 0.65,position: 'absolute', bottom: 0, left:0,right:0}]}>
+        <View style={[styles.body, { height: screenHeight * 0.65, position: 'absolute', bottom: 0, left: 0, right: 0 }]}>
           <TouchableOpacity onPress={openSelectLanguage}>
             <View style={styles.viewNgongu}>
               <Text style={styles.text1}> {t('chonngongu')}:</Text>
@@ -204,7 +209,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginTop: 10,
     width: 200,
-    borderWidth:0,
+    borderWidth: 0,
   },
   email: {
     fontSize: 14,
@@ -228,7 +233,7 @@ const styles = StyleSheet.create({
 
     // Shadow (iOS)
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
 
@@ -254,7 +259,7 @@ const styles = StyleSheet.create({
 
     // Shadow (iOS)
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
 
@@ -264,7 +269,7 @@ const styles = StyleSheet.create({
   imageEdit: {
     width: 20,
     height: 20,
-    marginRight:5
+    marginRight: 5
   },
   txt: {
     fontFamily: fontRegular,
@@ -273,7 +278,7 @@ const styles = StyleSheet.create({
   },
   text1: {
     fontFamily: fontRegular,
-    marginLeft:7
+    marginLeft: 7
   },
   viewLoading: {
     flex: 1,
