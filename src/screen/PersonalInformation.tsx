@@ -1,6 +1,6 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {t} from 'i18next';
-import {useEffect, useState} from 'react';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -13,43 +13,48 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import { URL_SERVER } from 'src/api/apiConfig';
-import {getPersonalInformation} from 'src/api/apiServices';
-import {colorGreen, colorWhite} from 'src/assets/color';
-import {imageResource} from 'src/assets/imageResource';
-import {RootState} from 'src/redux/store';
-import {RootStackParamList} from 'src/types/RootStackParamList';
-import {fontBold, fontRegular} from 'src/types/typeFont';
-import {PersonalInformationModel} from 'src/types/typeModel';
+import { getPersonalInformation } from 'src/api/apiServices';
+import { colorGreen, colorWhite } from 'src/assets/color';
+import { imageResource } from 'src/assets/imageResource';
+import { RootState } from 'src/redux/store';
+import { RootStackParamList } from 'src/types/RootStackParamList';
+import { fontBold, fontRegular } from 'src/types/typeFont';
+import { PersonalInformationModel } from 'src/types/typeModel';
 
 type PersonalInformationProps = NativeStackScreenProps<
   RootStackParamList,
   'PersonalInformation'
 >;
 
-const PersonalInformation = ({navigation, route}: PersonalInformationProps) => {
+const PersonalInformation = ({ navigation, route }: PersonalInformationProps) => {
   const authLogin = useSelector((state: RootState) => state.auth.auth);
   const [information, setInformation] = useState<PersonalInformationModel>();
-  const [loadingData,setLoadingData] = useState<boolean>(false)
+  const [loadingData, setLoadingData] = useState<boolean>(false)
 
   const fetchPersonalInformation = async () => {
-    if(!authLogin) return
-    setLoadingData(true);
-    const data = await getPersonalInformation();
-    setInformation(data);
-    if(data === undefined || data === null ){
-      Alert.alert(
-        "Alert",
-        "Please create new employee!",
-        [
-          { text: "OK", onPress: () => navigation.goBack() }
-        ],
-        { cancelable: false }
-      );
-      return
+    try {
+      if (!authLogin) return
+      setLoadingData(true);
+      const data = await getPersonalInformation();
+      setInformation(data);
+      if (data === undefined || data === null) {
+        Alert.alert(
+          "Alert",
+          "Please create new employee!",
+          [
+            { text: "OK", onPress: () => navigation.goBack() }
+          ],
+          { cancelable: false }
+        );
+        return
+      }
+    } catch (error) {
+      console.log("error")
+    } finally {
+      setLoadingData(false);
     }
-    setLoadingData(false);
   };
 
   useEffect(() => {
@@ -68,11 +73,11 @@ const PersonalInformation = ({navigation, route}: PersonalInformationProps) => {
       <View style={styles.view1}>
         {/* Header */}
         <Header navigation={navigation} route={route} />
-        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           {/*body*/}
           <View style={styles.view2}>
             <Image
-              source={{ uri : `${URL_SERVER}${information?.avatar}`}}
+              source={{ uri: `${URL_SERVER}${information?.avatar}` }}
               style={styles.image1}
               resizeMode="contain"
             />
@@ -182,7 +187,7 @@ const PersonalInformation = ({navigation, route}: PersonalInformationProps) => {
   );
 };
 
-const Header = ({navigation}: PersonalInformationProps) => {
+const Header = ({ navigation }: PersonalInformationProps) => {
   return (
     <View style={styles.header}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -201,9 +206,9 @@ const Header = ({navigation}: PersonalInformationProps) => {
   );
 };
 
-export const RowInformation = ({title, infor}: any) => {
+export const RowInformation = ({ title, infor }: any) => {
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={{ flexDirection: 'row' }}>
       <View style={styles.titleInformationView}>
         <Text style={styles.titleInforTxt}>{title}</Text>
       </View>
@@ -305,7 +310,7 @@ const styles = StyleSheet.create({
   titleInformationView: {
     borderWidth: 0,
     width: 150,
-    marginRight:10
+    marginRight: 10
   },
   userInformationView: {
     borderWidth: 0,

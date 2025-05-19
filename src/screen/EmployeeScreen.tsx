@@ -1,4 +1,4 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import ImageLoad from 'react-native-image-placeholder';
 import {
   ActivityIndicator,
@@ -12,30 +12,30 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
-import {colorBlack, colorGreen, colorWhite} from '../assets/color';
-import {RootState} from 'src/redux/store';
-import {RootStackParamList} from 'src/types/RootStackParamList';
-import {fontBold, fontRegular} from 'src/types/typeFont';
-import {t} from 'i18next';
+import { useSelector } from 'react-redux';
+import { colorBlack, colorGreen, colorWhite } from '../assets/color';
+import { RootState } from 'src/redux/store';
+import { RootStackParamList } from 'src/types/RootStackParamList';
+import { fontBold, fontRegular } from 'src/types/typeFont';
+import { t } from 'i18next';
 import Search from 'src/components/Search';
-import {Department, Employee} from 'src/types/typeModel';
-import {imageResource} from 'src/assets/imageResource';
-import {useCallback, useEffect, useState} from 'react';
+import { Department, Employee } from 'src/types/typeModel';
+import { imageResource } from 'src/assets/imageResource';
+import { useCallback, useEffect, useState } from 'react';
 import {
   getDepartmentByName,
   getEmployees,
   getListDepartment,
 } from 'src/api/apiServices';
-import {URL_SERVER} from 'src/api/apiConfig';
-import {useFocusEffect} from '@react-navigation/native';
+import { URL_SERVER } from 'src/api/apiConfig';
+import { useFocusEffect } from '@react-navigation/native';
 
 type EmployeeScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'EmployeeScreen'
 >;
 
-const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
+const EmployeeScreen = ({ navigation, route }: EmployeeScreenProps) => {
   const authLogin = useSelector((state: RootState) => state.auth.auth);
   const [inputSearch, setInputSearch] = useState<string>();
 
@@ -69,13 +69,13 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
     },
     ...dataDepartment2,
   ];
-  
+
 
   const fetchData = async () => {
     if (!authLogin) return;
     setLoadingData(true);
     const data = await getEmployees();
-    if(data){
+    if (data) {
       setEmployeesArray(data as Employee[]);
     }
     setLoadingData(false);
@@ -85,7 +85,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
     if (!authLogin) return;
     setLoadingData(true);
     const data = await getListDepartment();
-    if(data){
+    if (data) {
       setDataDepartment2(data);
     }
     console.log(dataDepartment2)
@@ -135,7 +135,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colorWhite}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colorWhite }}>
 
       <Modal visible={loadingData} transparent={true}>
         <View style={styles.viewLoading}>
@@ -145,8 +145,8 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
 
       <Header />
 
-      <View style={{flex: 1, marginHorizontal: 15}}>
-        <View style={{flexDirection: 'row'}}>
+      <View style={{ flex: 1, marginHorizontal: 15 }}>
+        <View style={{ flexDirection: 'row' }}>
           <Search
             setValue={(v: any) => setInputSearch(v)}
             value={inputSearch}
@@ -154,17 +154,17 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
           <TouchableOpacity
             style={styles.btnADD}
             onPress={() => navigation.navigate('AddNewEmployee')}>
-            <Text style={{marginHorizontal: 25, color: colorWhite, fontFamily:fontBold}}>{t('add')}</Text>
+            <Text style={{ marginHorizontal: 25, color: colorWhite, fontFamily: fontBold }}>{t('add')}</Text>
           </TouchableOpacity>
         </View>
         <View>
           <FlatList
             data={dataDepartment1}
-            renderItem={({item}) => (
-              <DepartmentItem item={item} onPress={handleSelectDepartment} isSelected={item.id === selectedDepartmentId}/>
+            renderItem={({ item }) => (
+              <DepartmentItem item={item} onPress={handleSelectDepartment} isSelected={item.id === selectedDepartmentId} />
             )}
             horizontal={true}
-            contentContainerStyle={{alignItems: 'center'}}
+            contentContainerStyle={{ alignItems: 'center' }}
             showsHorizontalScrollIndicator={false}
           />
         </View>
@@ -172,15 +172,15 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
         {isSelectAllEmp ? (
           <FlatList
             data={fillterDataAll()}
-            renderItem={({item}: {item: Employee}) => (
-              <EmployeeItem 
-                  item={item} 
-                  navigation={navigation} 
-                  name={item.fullName} 
-                  image={item.avatar}
-                  email={item.email}
-                  level={item.level}
-                  first_daywork={item.firstDayWork} />
+            renderItem={({ item }: { item: Employee }) => (
+              <EmployeeItem
+                item={item}
+                navigation={navigation}
+                name={item.fullName}
+                image={item.avatar}
+                email={item.email}
+                level={item.level}
+                first_daywork={item.firstDayWork} />
             )}
             ListEmptyComponent={
               <View
@@ -196,15 +196,15 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
         ) : (
           <FlatList
             data={fillterDataInDepartment()}
-            renderItem={({item}: {item: Department}) => (
-              <EmployeeItem 
-                  item={item} 
-                  navigation={navigation} 
-                  name={item.user.login} 
-                  image={item.user.imageUrl}
-                  email={item.mail}
-                  level={''}
-                  first_daywork={item.datetime ?? ''} />
+            renderItem={({ item }: { item: Department }) => (
+              <EmployeeItem
+                item={item}
+                navigation={navigation}
+                name={item.user.login}
+                image={item.user.imageUrl}
+                email={item.mail}
+                level={''}
+                first_daywork={item.datetime ?? ''} />
             )}
             ListEmptyComponent={
               <View
@@ -223,7 +223,7 @@ const EmployeeScreen = ({navigation, route}: EmployeeScreenProps) => {
   );
 };
 
-const DepartmentItem = ({item, onPress, isSelected}: any) => {
+const DepartmentItem = ({ item, onPress, isSelected }: any) => {
   return (
     <TouchableOpacity
       onPress={() => onPress(item)}
@@ -235,9 +235,13 @@ const DepartmentItem = ({item, onPress, isSelected}: any) => {
         backgroundColor: isSelected ? colorGreen : colorWhite,
         elevation: 10,
         margin: 3,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
       }}>
       <Text
-        style={{fontFamily: fontBold, marginHorizontal: 20, color: isSelected ? colorWhite : colorBlack}}>
+        style={{ fontFamily: fontBold, marginHorizontal: 20, color: isSelected ? colorWhite : colorBlack }}>
         {item.departmentName}
       </Text>
     </TouchableOpacity>
@@ -264,7 +268,7 @@ const EmployeeItem = ({
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate('DetailEmployeeScreen', {employeeDetail: item})
+        navigation.navigate('DetailEmployeeScreen', { employeeDetail: item })
       }>
       <View
         style={{
@@ -274,18 +278,22 @@ const EmployeeItem = ({
           borderRadius: 10,
           elevation: 6,
           backgroundColor: colorWhite,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 1 },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
         }}>
 
         <ImageLoad
-          source={{uri: `${URL_SERVER}${image}`}}
-          style={{width: 80, height: 80, margin: 10}}
-          isShowActivity = {false}
-          placeholderSource = {imageResource.default}
-          placeholderStyle = {{width: 80, height: 80}}
+          source={{ uri: `${URL_SERVER}${image}` }}
+          style={{ width: 80, height: 80, margin: 10 }}
+          isShowActivity={false}
+          placeholderSource={imageResource.default}
+          placeholderStyle={{ width: 80, height: 80 }}
         />
 
-        <View style={{margin: 10}}>
-          <Text style={{fontFamily: fontBold}}>{name}</Text>
+        <View style={{ margin: 10 }}>
+          <Text style={{ fontFamily: fontBold }}>{name}</Text>
           <Text>{t('email')}: {email}</Text>
           <Text>{t('level')}: {level}</Text>
           <Text>{t('first_daywork')}: {first_daywork}</Text>
@@ -295,12 +303,12 @@ const EmployeeItem = ({
   );
 };
 
-const Frame5 = ({navigation}: EmployeeScreenProps) => {
+const Frame5 = ({ navigation }: EmployeeScreenProps) => {
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.view1}>
         <Text style={styles.txt1}>{t('pleaseLoginTxt')}</Text>
-        <View style={{marginTop: 5}}>
+        <View style={{ marginTop: 5 }}>
           <Button
             title={t('dangnhap')}
             onPress={() => {

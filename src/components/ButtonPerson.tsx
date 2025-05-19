@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
-import {fontRegular} from 'src/types/typeFont';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { fontRegular } from 'src/types/typeFont';
 
 interface Props {
   image: any;
@@ -16,9 +16,9 @@ const ButtonPerson: React.FC<Props> = ({
   onPress,
 }) => {
   return (
-    <TouchableOpacity style={[styles.button, {width}]} onPress={onPress}>
+    <TouchableOpacity style={[styles.button, { width }]} onPress={onPress}>
       <Image source={image} style={styles.icon} />
-      <View style={{flex: 1, marginRight: 30}}>
+      <View style={{ flex: 1, marginRight: 30 }}>
         <Text style={styles.text}>{title}</Text>
       </View>
     </TouchableOpacity>
@@ -35,6 +35,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     elevation: 2,
+    //elevation ios
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
     marginVertical: 6,
     alignSelf: 'center',
   },

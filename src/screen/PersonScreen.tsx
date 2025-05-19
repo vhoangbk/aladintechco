@@ -6,6 +6,7 @@ import {
   Image,
   Modal,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -88,6 +89,7 @@ const PersonScreen = ({ navigation }: PersonScreenProps) => {
         </View>
       </Modal>
 
+      <ScrollView contentContainerStyle={{flex:1}}>
       <View style={styles.container}>
         {authLogin ? (
           <TouchableOpacity onPress={() => navigation.navigate('EditPersonalInfor')}>
@@ -178,6 +180,7 @@ const PersonScreen = ({ navigation }: PersonScreenProps) => {
           )}
         </View>
       </View>
+      </ScrollView>
 
       <ChangeLanguageBox
         showModal={showChangeLanguageBox}

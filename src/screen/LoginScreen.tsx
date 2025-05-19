@@ -1,6 +1,6 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   ActivityIndicator,
   Alert,
@@ -13,10 +13,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {colorBlack, colorGreen, colorWhite} from '../assets/color';
-import {imageResource} from 'src/assets/imageResource';
+import { colorBlack, colorGreen, colorWhite } from '../assets/color';
+import { imageResource } from 'src/assets/imageResource';
 import NutBam from 'src/components/NutBam';
-import {RootStackParamList} from 'src/types/RootStackParamList';
+import { RootStackParamList } from 'src/types/RootStackParamList';
 import { getAccessToken } from 'src/api/apiServices';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from 'src/redux/store';
@@ -28,20 +28,20 @@ type LoginScreenProps = NativeStackScreenProps<
   'LoginScreen'
 >;
 
-const LoginScreen = ({navigation}: LoginScreenProps) => {
-  const {t} = useTranslation();
+const LoginScreen = ({ navigation }: LoginScreenProps) => {
+  const { t } = useTranslation();
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
   const dispatch = useDispatch<AppDispatch>();
-  const [loading,setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
-  const getAccountSaved = async () =>{
+  const getAccountSaved = async () => {
     setLoading(true)
 
     const username = await get_Field_Saved('username');
     const password = await get_Field_Saved('password');
 
-    if(username != null || password != null){
+    if (username != null || password != null) {
       setInputEmail(username!!);
       setInputPassword(password!!);
     }
@@ -50,42 +50,41 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
 
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     getAccountSaved();
-  },[]);
+  }, []);
 
   const handleLogin = async () => {
-
-    setLoading(true)
-
-    if (inputEmail?.trim() === '' || inputPassword?.trim() === '') {
-      Alert.alert(t('alert'), t('alertMessage'), [
-        {text: 'OK', onPress: () => {}},
-      ]);
-      return;
+    try {
+      setLoading(true)
+      if (inputEmail?.trim() === '' || inputPassword?.trim() === '') {
+        Alert.alert(t('alert'), t('alertMessage'), [
+          { text: 'OK', onPress: () => { } },
+        ]);
+        return;
+      }
+      const access_token = await getAccessToken(inputEmail!!, inputPassword!!);
+      if (access_token === null) {
+        Alert.alert('Lỗi', 'Sai tài khoản hoặc mật khẩu!!', [
+          { text: 'OK', onPress: () => { } },
+        ]);
+        return;
+      } else {
+        await save_Account(inputEmail, inputPassword);
+        await save_AccessKeyStorage(access_token);
+        console.log('Login success!');
+        console.log('Saved Account');
+        dispatch(login());
+        navigation.goBack();
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
     }
-
-    const access_token = await getAccessToken(inputEmail!!,inputPassword!!);
-
-    if(access_token === null){
-      Alert.alert('Lỗi', 'Sai tài khoản hoặc mật khẩu!!', [
-        {text: 'OK', onPress: () => {}},
-      ]);
-      return;
-    }else{
-      await save_Account(inputEmail,inputPassword);
-      await save_AccessKeyStorage(access_token);
-      console.log('Login success!');
-      console.log('Saved Account');
-      dispatch(login());
-      navigation.goBack();
-    }
-
-    setLoading(false)
-
   };
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
 
       <Modal visible={loading} transparent={true}>
         <View style={styles.viewLoading}>
@@ -117,7 +116,7 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
         <View style={styles.inputContainer}>
           <Image source={imageResource.iconpassword} style={styles.inputIcon} />
           <TextInput
-          value={inputPassword}
+            value={inputPassword}
             placeholder="Password"
             style={styles.input}
             secureTextEntry
@@ -126,7 +125,7 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
         </View>
 
         <TouchableOpacity onPress={handleLogin}>
-          <View style={{alignItems: 'center'}}>
+          <View style={{ alignItems: 'center' }}>
             <NutBam
               text={t('dangnhap')}
               colorBG={colorGreen}
@@ -137,7 +136,7 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
         </TouchableOpacity>
 
         <TouchableOpacity>
-          <View style={{alignItems: 'center', marginTop: 20}}>
+          <View style={{ alignItems: 'center', marginTop: 20 }}>
             <NutBam
               text={t('dangnhapgg')}
               colorBG={colorWhite}
