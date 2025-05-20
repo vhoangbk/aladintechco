@@ -144,6 +144,7 @@ const AddNewEmployee = ({navigation}: AddNewEmployeeProps) => {
           ],
           { cancelable: false }
         );
+        setLoadingCreate(false);
         return
       }
       const urlAvatar = await upToServer(imageURI);

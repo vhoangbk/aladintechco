@@ -89,97 +89,97 @@ const PersonScreen = ({ navigation }: PersonScreenProps) => {
         </View>
       </Modal>
 
-      <ScrollView contentContainerStyle={{flex:1}}>
-      <View style={styles.container}>
-        {authLogin ? (
-          <TouchableOpacity onPress={() => navigation.navigate('EditPersonalInfor')}>
-            <View style={styles.btnEdit}>
-              <Text style={styles.txt}>{t('sua')}</Text>
-              <Image style={styles.imageEdit} source={imageResource.editicon} />
-            </View>
-          </TouchableOpacity>
-        ) : null}
-
-        <View style={styles.header}>
+      <ScrollView contentContainerStyle={{ flex: 1 }}>
+        <View style={styles.container}>
           {authLogin ? (
-            <Image source={{ uri: `${URL_SERVER}${information?.avatar}` }} style={styles.avatar} />
-          ) : null}
-          <View style={{ marginLeft: 15, justifyContent: 'center' }}>
-            {authLogin ? (
-              <>
-                <Text style={styles.name}>{information?.fullName ?? 'null'}</Text>
-                <Text style={styles.email}>{information?.email ?? 'null'}</Text>
-              </>
-            ) : (
-              <View style={{ marginTop: 40 }}>
-                <Text style={styles.name}>{t('pleaseLoginTxt')}</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('EditPersonalInfor')}>
+              <View style={styles.btnEdit}>
+                <Text style={styles.txt}>{t('sua')}</Text>
+                <Image style={styles.imageEdit} source={imageResource.editicon} />
               </View>
+            </TouchableOpacity>
+          ) : null}
+
+          <View style={styles.header}>
+            {authLogin ? (
+              <Image source={{ uri: `${URL_SERVER}${information?.avatar}` }} style={styles.avatar} />
+            ) : null}
+            <View style={{ marginLeft: 15, justifyContent: 'center' }}>
+              {authLogin ? (
+                <>
+                  <Text style={styles.name}>{information?.fullName ?? 'Null data'}</Text>
+                  <Text style={styles.email}>{information?.email ?? 'Null data'}</Text>
+                </>
+              ) : (
+                <View style={{ marginTop: 40 }}>
+                  <Text style={styles.name}>{t('pleaseLoginTxt')}</Text>
+                </View>
+              )}
+            </View>
+          </View>
+
+          <View style={[styles.body, { height: screenHeight * 0.62, position: 'absolute', bottom: 0, left: 0, right: 0 }]}>
+            <TouchableOpacity onPress={openSelectLanguage}>
+              <View style={styles.viewNgongu}>
+                <Text style={styles.text1}> {t('chonngongu')}:</Text>
+                <Image
+                  source={
+                    i18n.language === 'vi'
+                      ? imageResource.covietnam
+                      : imageResource.coanh
+                  }
+                  style={styles.logo2}
+                  resizeMode="contain"
+                />
+              </View>
+            </TouchableOpacity>
+
+            {authLogin ? (
+              <ButtonPerson
+                image={imageResource.iconuser1}
+                title={t('thongtin')}
+                onPress={() => {
+                  navigation.navigate('PersonalInformation');
+                }}
+              />
+            ) : null}
+
+            {authLogin ? (
+              <ButtonPerson
+                image={imageResource.iconkiempl}
+                title={t('ki_employee')}
+                onPress={() => navigation.navigate('KIEmployeeScreen')}
+              />
+            ) : null}
+            <ButtonPerson
+              image={imageResource.iconphone1}
+              title={t('lienhe')}
+              onPress={() => {
+                navigation.navigate('ContactUs');
+              }}
+            />
+            <ButtonPerson
+              image={imageResource.iconabout1}
+              title={t('vechungtoi')}
+              onPress={() => {
+                navigation.navigate('AboutUs');
+              }}
+            />
+            {!authLogin ? (
+              <ButtonPerson
+                image={imageResource.loginicon}
+                title={t('dangnhap')}
+                onPress={handleLogin}
+              />
+            ) : (
+              <ButtonPerson
+                image={imageResource.logouticon}
+                title={t('dangxuat')}
+                onPress={handleLogout}
+              />
             )}
           </View>
         </View>
-
-        <View style={[styles.body, { height: screenHeight * 0.65, position: 'absolute', bottom: 0, left: 0, right: 0 }]}>
-          <TouchableOpacity onPress={openSelectLanguage}>
-            <View style={styles.viewNgongu}>
-              <Text style={styles.text1}> {t('chonngongu')}:</Text>
-              <Image
-                source={
-                  i18n.language === 'vi'
-                    ? imageResource.covietnam
-                    : imageResource.coanh
-                }
-                style={styles.logo2}
-                resizeMode="contain"
-              />
-            </View>
-          </TouchableOpacity>
-
-          {authLogin ? (
-            <ButtonPerson
-              image={imageResource.iconuser1}
-              title={t('thongtin')}
-              onPress={() => {
-                navigation.navigate('PersonalInformation');
-              }}
-            />
-          ) : null}
-
-          {authLogin ? (
-            <ButtonPerson
-              image={imageResource.iconkiempl}
-              title={t('ki_employee')}
-              onPress={() => navigation.navigate('KIEmployeeScreen')}
-            />
-          ) : null}
-          <ButtonPerson
-            image={imageResource.iconphone1}
-            title={t('lienhe')}
-            onPress={() => {
-              navigation.navigate('ContactUs');
-            }}
-          />
-          <ButtonPerson
-            image={imageResource.iconabout1}
-            title={t('vechungtoi')}
-            onPress={() => {
-              navigation.navigate('AboutUs');
-            }}
-          />
-          {!authLogin ? (
-            <ButtonPerson
-              image={imageResource.loginicon}
-              title={t('dangnhap')}
-              onPress={handleLogin}
-            />
-          ) : (
-            <ButtonPerson
-              image={imageResource.logouticon}
-              title={t('dangxuat')}
-              onPress={handleLogout}
-            />
-          )}
-        </View>
-      </View>
       </ScrollView>
 
       <ChangeLanguageBox
@@ -199,12 +199,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderWidth: 0,
     alignSelf: 'center',
-    marginVertical: 30,
+    margin: 20,
   },
   avatar: {
     width: 90,
     height: 90,
-    borderRadius: 35,
+    borderRadius: 20,
     backgroundColor: '#fff',
   },
   name: {
@@ -217,11 +217,14 @@ const styles = StyleSheet.create({
   email: {
     fontSize: 14,
     color: '#fff',
+    borderWidth:0,
+    width: 200,
   },
   body: {
     backgroundColor: colorWhite,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
+    borderWidth:0
   },
   viewNgongu: {
     backgroundColor: colorWhite,
@@ -230,17 +233,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     borderWidth: 0,
-    // width:130,
     alignSelf: 'center',
     marginVertical: 20,
 
-    // Shadow (iOS)
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
 
-    // Shadow (Android)
     elevation: 5,
     marginBottom: 50,
   },
